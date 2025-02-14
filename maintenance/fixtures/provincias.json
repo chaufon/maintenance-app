@@ -1,0 +1,2158 @@
+[
+{
+  "model": "common.provincia",
+  "pk": "0101",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.827",
+    "modify_date": "2024-11-18T23:56:54.827",
+    "is_active": true,
+    "name": "CHACHAPOYAS",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0102",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.843",
+    "modify_date": "2024-11-18T23:56:54.844",
+    "is_active": true,
+    "name": "BAGUA",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0103",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.855",
+    "modify_date": "2024-11-18T23:56:54.855",
+    "is_active": true,
+    "name": "BONGARA",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0104",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.866",
+    "modify_date": "2024-11-18T23:56:54.866",
+    "is_active": true,
+    "name": "CONDORCANQUI",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0105",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.875",
+    "modify_date": "2024-11-18T23:56:54.875",
+    "is_active": true,
+    "name": "LUYA",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0106",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.884",
+    "modify_date": "2024-11-18T23:56:54.884",
+    "is_active": true,
+    "name": "RODRIGUEZ DE MENDOZA",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0107",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.892",
+    "modify_date": "2024-11-18T23:56:54.892",
+    "is_active": true,
+    "name": "UTCUBAMBA",
+    "departamento": "01"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0201",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.898",
+    "modify_date": "2024-11-18T23:56:54.898",
+    "is_active": true,
+    "name": "HUARAZ",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0202",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.905",
+    "modify_date": "2024-11-18T23:56:54.905",
+    "is_active": true,
+    "name": "AIJA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0203",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.911",
+    "modify_date": "2024-11-18T23:56:54.911",
+    "is_active": true,
+    "name": "ANTONIO RAYMONDI",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0204",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.919",
+    "modify_date": "2024-11-18T23:56:54.919",
+    "is_active": true,
+    "name": "ASUNCION",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0205",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.926",
+    "modify_date": "2024-11-18T23:56:54.926",
+    "is_active": true,
+    "name": "BOLOGNESI",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0206",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.931",
+    "modify_date": "2024-11-18T23:56:54.931",
+    "is_active": true,
+    "name": "CARHUAZ",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0207",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.936",
+    "modify_date": "2024-11-18T23:56:54.936",
+    "is_active": true,
+    "name": "CARLOS FERMIN FITZCARRALD",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0208",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.942",
+    "modify_date": "2024-11-18T23:56:54.942",
+    "is_active": true,
+    "name": "CASMA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0209",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.948",
+    "modify_date": "2024-11-18T23:56:54.948",
+    "is_active": true,
+    "name": "CORONGO",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0210",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.955",
+    "modify_date": "2024-11-18T23:56:54.955",
+    "is_active": true,
+    "name": "HUARI",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0211",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.962",
+    "modify_date": "2024-11-18T23:56:54.962",
+    "is_active": true,
+    "name": "HUARMEY",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0212",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.968",
+    "modify_date": "2024-11-18T23:56:54.968",
+    "is_active": true,
+    "name": "HUAYLAS",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0213",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.976",
+    "modify_date": "2024-11-18T23:56:54.976",
+    "is_active": true,
+    "name": "MARISCAL LUZURIAGA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0214",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.982",
+    "modify_date": "2024-11-18T23:56:54.982",
+    "is_active": true,
+    "name": "OCROS",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0215",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.988",
+    "modify_date": "2024-11-18T23:56:54.988",
+    "is_active": true,
+    "name": "PALLASCA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0216",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:54.994",
+    "modify_date": "2024-11-18T23:56:54.994",
+    "is_active": true,
+    "name": "POMABAMBA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0217",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.000",
+    "modify_date": "2024-11-18T23:56:55.000",
+    "is_active": true,
+    "name": "RECUAY",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0218",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.007",
+    "modify_date": "2024-11-18T23:56:55.007",
+    "is_active": true,
+    "name": "SANTA",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0219",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.014",
+    "modify_date": "2024-11-18T23:56:55.014",
+    "is_active": true,
+    "name": "SIHUAS",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0220",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.021",
+    "modify_date": "2024-11-18T23:56:55.021",
+    "is_active": true,
+    "name": "YUNGAY",
+    "departamento": "02"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0301",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.027",
+    "modify_date": "2024-11-18T23:56:55.027",
+    "is_active": true,
+    "name": "ABANCAY",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0302",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.035",
+    "modify_date": "2024-11-18T23:56:55.035",
+    "is_active": true,
+    "name": "ANDAHUAYLAS",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0303",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.042",
+    "modify_date": "2024-11-18T23:56:55.042",
+    "is_active": true,
+    "name": "ANTABAMBA",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0304",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.051",
+    "modify_date": "2024-11-18T23:56:55.051",
+    "is_active": true,
+    "name": "AYMARAES",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0305",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.061",
+    "modify_date": "2024-11-18T23:56:55.061",
+    "is_active": true,
+    "name": "COTABAMBAS",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0306",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.069",
+    "modify_date": "2024-11-18T23:56:55.069",
+    "is_active": true,
+    "name": "CHINCHEROS",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0307",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.076",
+    "modify_date": "2024-11-18T23:56:55.076",
+    "is_active": true,
+    "name": "GRAU",
+    "departamento": "03"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0401",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.082",
+    "modify_date": "2024-11-18T23:56:55.082",
+    "is_active": true,
+    "name": "AREQUIPA",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0402",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.089",
+    "modify_date": "2024-11-18T23:56:55.089",
+    "is_active": true,
+    "name": "CAMANA",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0403",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.097",
+    "modify_date": "2024-11-18T23:56:55.097",
+    "is_active": true,
+    "name": "CARAVELI",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0404",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.103",
+    "modify_date": "2024-11-18T23:56:55.103",
+    "is_active": true,
+    "name": "CASTILLA",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0405",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.111",
+    "modify_date": "2024-11-18T23:56:55.111",
+    "is_active": true,
+    "name": "CAYLLOMA",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0406",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.118",
+    "modify_date": "2024-11-18T23:56:55.118",
+    "is_active": true,
+    "name": "CONDESUYOS",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0407",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.126",
+    "modify_date": "2024-11-18T23:56:55.126",
+    "is_active": true,
+    "name": "ISLAY",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0408",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.135",
+    "modify_date": "2024-11-18T23:56:55.135",
+    "is_active": true,
+    "name": "LA UNION",
+    "departamento": "04"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0501",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.145",
+    "modify_date": "2024-11-18T23:56:55.145",
+    "is_active": true,
+    "name": "HUAMANGA",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0502",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.154",
+    "modify_date": "2024-11-18T23:56:55.154",
+    "is_active": true,
+    "name": "CANGALLO",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0503",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.164",
+    "modify_date": "2024-11-18T23:56:55.164",
+    "is_active": true,
+    "name": "HUANCA SANCOS",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0504",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.172",
+    "modify_date": "2024-11-18T23:56:55.172",
+    "is_active": true,
+    "name": "HUANTA",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0505",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.178",
+    "modify_date": "2024-11-18T23:56:55.178",
+    "is_active": true,
+    "name": "LA MAR",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0506",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.184",
+    "modify_date": "2024-11-18T23:56:55.184",
+    "is_active": true,
+    "name": "LUCANAS",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0507",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.190",
+    "modify_date": "2024-11-18T23:56:55.190",
+    "is_active": true,
+    "name": "PARINACOCHAS",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0508",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.196",
+    "modify_date": "2024-11-18T23:56:55.196",
+    "is_active": true,
+    "name": "PAUCAR DEL SARA SARA",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0509",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.202",
+    "modify_date": "2024-11-18T23:56:55.202",
+    "is_active": true,
+    "name": "SUCRE",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0510",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.210",
+    "modify_date": "2024-11-18T23:56:55.210",
+    "is_active": true,
+    "name": "VICTOR FAJARDO",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0511",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.216",
+    "modify_date": "2024-11-18T23:56:55.216",
+    "is_active": true,
+    "name": "VILCAS HUAMAN",
+    "departamento": "05"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0601",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.222",
+    "modify_date": "2024-11-18T23:56:55.222",
+    "is_active": true,
+    "name": "CAJAMARCA",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0602",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.228",
+    "modify_date": "2024-11-18T23:56:55.228",
+    "is_active": true,
+    "name": "CAJABAMBA",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0603",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.236",
+    "modify_date": "2024-11-18T23:56:55.236",
+    "is_active": true,
+    "name": "CELENDIN",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0604",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.245",
+    "modify_date": "2024-11-18T23:56:55.245",
+    "is_active": true,
+    "name": "CHOTA",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0605",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.251",
+    "modify_date": "2024-11-18T23:56:55.251",
+    "is_active": true,
+    "name": "CONTUMAZA",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0606",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.256",
+    "modify_date": "2024-11-18T23:56:55.256",
+    "is_active": true,
+    "name": "CUTERVO",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0607",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.262",
+    "modify_date": "2024-11-18T23:56:55.262",
+    "is_active": true,
+    "name": "HUALGAYOC",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0608",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.268",
+    "modify_date": "2024-11-18T23:56:55.268",
+    "is_active": true,
+    "name": "JAEN",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0609",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.277",
+    "modify_date": "2024-11-18T23:56:55.277",
+    "is_active": true,
+    "name": "SAN IGNACIO",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0610",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.287",
+    "modify_date": "2024-11-18T23:56:55.287",
+    "is_active": true,
+    "name": "SAN MARCOS",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0611",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.296",
+    "modify_date": "2024-11-18T23:56:55.296",
+    "is_active": true,
+    "name": "SAN MIGUEL",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0612",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.304",
+    "modify_date": "2024-11-18T23:56:55.304",
+    "is_active": true,
+    "name": "SAN PABLO",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0613",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.313",
+    "modify_date": "2024-11-18T23:56:55.313",
+    "is_active": true,
+    "name": "SANTA CRUZ",
+    "departamento": "06"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0701",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.322",
+    "modify_date": "2024-11-18T23:56:55.322",
+    "is_active": true,
+    "name": "CALLAO",
+    "departamento": "07"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0801",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.330",
+    "modify_date": "2024-11-18T23:56:55.330",
+    "is_active": true,
+    "name": "CUSCO",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0802",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.337",
+    "modify_date": "2024-11-18T23:56:55.337",
+    "is_active": true,
+    "name": "ACOMAYO",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0803",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.343",
+    "modify_date": "2024-11-18T23:56:55.343",
+    "is_active": true,
+    "name": "ANTA",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0804",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.350",
+    "modify_date": "2024-11-18T23:56:55.350",
+    "is_active": true,
+    "name": "CALCA",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0805",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.356",
+    "modify_date": "2024-11-18T23:56:55.356",
+    "is_active": true,
+    "name": "CANAS",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0806",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.361",
+    "modify_date": "2024-11-18T23:56:55.361",
+    "is_active": true,
+    "name": "CANCHIS",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0807",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.368",
+    "modify_date": "2024-11-18T23:56:55.368",
+    "is_active": true,
+    "name": "CHUMBIVILCAS",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0808",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.374",
+    "modify_date": "2024-11-18T23:56:55.374",
+    "is_active": true,
+    "name": "ESPINAR",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0809",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.381",
+    "modify_date": "2024-11-18T23:56:55.381",
+    "is_active": true,
+    "name": "LA CONVENCION",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0810",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.388",
+    "modify_date": "2024-11-18T23:56:55.388",
+    "is_active": true,
+    "name": "PARURO",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0811",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.395",
+    "modify_date": "2024-11-18T23:56:55.395",
+    "is_active": true,
+    "name": "PAUCARTAMBO",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0812",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.402",
+    "modify_date": "2024-11-18T23:56:55.402",
+    "is_active": true,
+    "name": "QUISPICANCHI",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0813",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.409",
+    "modify_date": "2024-11-18T23:56:55.409",
+    "is_active": true,
+    "name": "URUBAMBA",
+    "departamento": "08"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0901",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.415",
+    "modify_date": "2024-11-18T23:56:55.415",
+    "is_active": true,
+    "name": "HUANCAVELICA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0902",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.422",
+    "modify_date": "2024-11-18T23:56:55.422",
+    "is_active": true,
+    "name": "ACOBAMBA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0903",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.429",
+    "modify_date": "2024-11-18T23:56:55.429",
+    "is_active": true,
+    "name": "ANGARAES",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0904",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.435",
+    "modify_date": "2024-11-18T23:56:55.435",
+    "is_active": true,
+    "name": "CASTROVIRREYNA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0905",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.442",
+    "modify_date": "2024-11-18T23:56:55.442",
+    "is_active": true,
+    "name": "CHURCAMPA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0906",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.449",
+    "modify_date": "2024-11-18T23:56:55.449",
+    "is_active": true,
+    "name": "HUAYTARA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "0907",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.456",
+    "modify_date": "2024-11-18T23:56:55.456",
+    "is_active": true,
+    "name": "TAYACAJA",
+    "departamento": "09"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1001",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.464",
+    "modify_date": "2024-11-18T23:56:55.464",
+    "is_active": true,
+    "name": "HUANUCO",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1002",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.471",
+    "modify_date": "2024-11-18T23:56:55.471",
+    "is_active": true,
+    "name": "AMBO",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1003",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.477",
+    "modify_date": "2024-11-18T23:56:55.477",
+    "is_active": true,
+    "name": "DOS DE MAYO",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1004",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.484",
+    "modify_date": "2024-11-18T23:56:55.484",
+    "is_active": true,
+    "name": "HUACAYBAMBA",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1005",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.491",
+    "modify_date": "2024-11-18T23:56:55.491",
+    "is_active": true,
+    "name": "HUAMALIES",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1006",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.498",
+    "modify_date": "2024-11-18T23:56:55.498",
+    "is_active": true,
+    "name": "LEONCIO PRADO",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1007",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.505",
+    "modify_date": "2024-11-18T23:56:55.505",
+    "is_active": true,
+    "name": "MARAÑON",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1008",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.512",
+    "modify_date": "2024-11-18T23:56:55.512",
+    "is_active": true,
+    "name": "PACHITEA",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1009",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.518",
+    "modify_date": "2024-11-18T23:56:55.518",
+    "is_active": true,
+    "name": "PUERTO INCA",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1010",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.525",
+    "modify_date": "2024-11-18T23:56:55.525",
+    "is_active": true,
+    "name": "LAURICOCHA",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1011",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.532",
+    "modify_date": "2024-11-18T23:56:55.532",
+    "is_active": true,
+    "name": "YAROWILCA",
+    "departamento": "10"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1101",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.539",
+    "modify_date": "2024-11-18T23:56:55.539",
+    "is_active": true,
+    "name": "ICA",
+    "departamento": "11"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1102",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.546",
+    "modify_date": "2024-11-18T23:56:55.546",
+    "is_active": true,
+    "name": "CHINCHA",
+    "departamento": "11"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1103",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.553",
+    "modify_date": "2024-11-18T23:56:55.553",
+    "is_active": true,
+    "name": "NAZCA",
+    "departamento": "11"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1104",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.560",
+    "modify_date": "2024-11-18T23:56:55.560",
+    "is_active": true,
+    "name": "PALPA",
+    "departamento": "11"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1105",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.567",
+    "modify_date": "2024-11-18T23:56:55.567",
+    "is_active": true,
+    "name": "PISCO",
+    "departamento": "11"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1201",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.574",
+    "modify_date": "2024-11-18T23:56:55.574",
+    "is_active": true,
+    "name": "HUANCAYO",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1202",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.581",
+    "modify_date": "2024-11-18T23:56:55.581",
+    "is_active": true,
+    "name": "CONCEPCION",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1203",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.588",
+    "modify_date": "2024-11-18T23:56:55.588",
+    "is_active": true,
+    "name": "CHANCHAMAYO",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1204",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.595",
+    "modify_date": "2024-11-18T23:56:55.595",
+    "is_active": true,
+    "name": "JAUJA",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1205",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.601",
+    "modify_date": "2024-11-18T23:56:55.601",
+    "is_active": true,
+    "name": "JUNIN",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1206",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.608",
+    "modify_date": "2024-11-18T23:56:55.608",
+    "is_active": true,
+    "name": "SATIPO",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1207",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.615",
+    "modify_date": "2024-11-18T23:56:55.615",
+    "is_active": true,
+    "name": "TARMA",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1208",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.622",
+    "modify_date": "2024-11-18T23:56:55.622",
+    "is_active": true,
+    "name": "YAULI",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1209",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.629",
+    "modify_date": "2024-11-18T23:56:55.629",
+    "is_active": true,
+    "name": "CHUPACA",
+    "departamento": "12"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1301",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.636",
+    "modify_date": "2024-11-18T23:56:55.636",
+    "is_active": true,
+    "name": "TRUJILLO",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1302",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.642",
+    "modify_date": "2024-11-18T23:56:55.642",
+    "is_active": true,
+    "name": "ASCOPE",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1303",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.649",
+    "modify_date": "2024-11-18T23:56:55.649",
+    "is_active": true,
+    "name": "BOLIVAR",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1304",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.656",
+    "modify_date": "2024-11-18T23:56:55.656",
+    "is_active": true,
+    "name": "CHEPEN",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1305",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.663",
+    "modify_date": "2024-11-18T23:56:55.663",
+    "is_active": true,
+    "name": "JULCAN",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1306",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.669",
+    "modify_date": "2024-11-18T23:56:55.669",
+    "is_active": true,
+    "name": "OTUZCO",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1307",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.675",
+    "modify_date": "2024-11-18T23:56:55.675",
+    "is_active": true,
+    "name": "PACASMAYO",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1308",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.681",
+    "modify_date": "2024-11-18T23:56:55.681",
+    "is_active": true,
+    "name": "PATAZ",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1309",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.687",
+    "modify_date": "2024-11-18T23:56:55.687",
+    "is_active": true,
+    "name": "SANCHEZ CARRION",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1310",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.692",
+    "modify_date": "2024-11-18T23:56:55.692",
+    "is_active": true,
+    "name": "SANTIAGO DE CHUCO",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1311",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.698",
+    "modify_date": "2024-11-18T23:56:55.698",
+    "is_active": true,
+    "name": "GRAN CHIMU",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1312",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.704",
+    "modify_date": "2024-11-18T23:56:55.704",
+    "is_active": true,
+    "name": "VIRU",
+    "departamento": "13"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1401",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.710",
+    "modify_date": "2024-11-18T23:56:55.710",
+    "is_active": true,
+    "name": "CHICLAYO",
+    "departamento": "14"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1402",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.716",
+    "modify_date": "2024-11-18T23:56:55.716",
+    "is_active": true,
+    "name": "FERREÑAFE",
+    "departamento": "14"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1403",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.721",
+    "modify_date": "2024-11-18T23:56:55.721",
+    "is_active": true,
+    "name": "LAMBAYEQUE",
+    "departamento": "14"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1501",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.727",
+    "modify_date": "2024-11-18T23:56:55.727",
+    "is_active": true,
+    "name": "LIMA",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1502",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.733",
+    "modify_date": "2024-11-18T23:56:55.733",
+    "is_active": true,
+    "name": "BARRANCA",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1503",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.740",
+    "modify_date": "2024-11-18T23:56:55.740",
+    "is_active": true,
+    "name": "CAJATAMBO",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1504",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.746",
+    "modify_date": "2024-11-18T23:56:55.746",
+    "is_active": true,
+    "name": "CANTA",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1505",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.751",
+    "modify_date": "2024-11-18T23:56:55.751",
+    "is_active": true,
+    "name": "CAÑETE",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1506",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.758",
+    "modify_date": "2024-11-18T23:56:55.758",
+    "is_active": true,
+    "name": "HUARAL",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1507",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.766",
+    "modify_date": "2024-11-18T23:56:55.766",
+    "is_active": true,
+    "name": "HUAROCHIRI",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1508",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.773",
+    "modify_date": "2024-11-18T23:56:55.773",
+    "is_active": true,
+    "name": "HUAURA",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1509",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.779",
+    "modify_date": "2024-11-18T23:56:55.779",
+    "is_active": true,
+    "name": "OYON",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1510",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.785",
+    "modify_date": "2024-11-18T23:56:55.785",
+    "is_active": true,
+    "name": "YAUYOS",
+    "departamento": "15"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1601",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.791",
+    "modify_date": "2024-11-18T23:56:55.791",
+    "is_active": true,
+    "name": "MAYNAS",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1602",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.797",
+    "modify_date": "2024-11-18T23:56:55.797",
+    "is_active": true,
+    "name": "ALTO AMAZONAS",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1603",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.861",
+    "modify_date": "2024-11-18T23:56:55.861",
+    "is_active": true,
+    "name": "LORETO",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1604",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.867",
+    "modify_date": "2024-11-18T23:56:55.867",
+    "is_active": true,
+    "name": "MARISCAL RAMON CASTILLA",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1605",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.874",
+    "modify_date": "2024-11-18T23:56:55.874",
+    "is_active": true,
+    "name": "REQUENA",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1606",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.883",
+    "modify_date": "2024-11-18T23:56:55.883",
+    "is_active": true,
+    "name": "UCAYALI",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1607",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.891",
+    "modify_date": "2024-11-18T23:56:55.891",
+    "is_active": true,
+    "name": "DATEM DEL MARAÑON",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1608",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.901",
+    "modify_date": "2024-11-18T23:56:55.901",
+    "is_active": true,
+    "name": "PUTUMAYO",
+    "departamento": "16"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1701",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.908",
+    "modify_date": "2024-11-18T23:56:55.908",
+    "is_active": true,
+    "name": "TAMBOPATA",
+    "departamento": "17"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1702",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.915",
+    "modify_date": "2024-11-18T23:56:55.915",
+    "is_active": true,
+    "name": "MANU",
+    "departamento": "17"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1703",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.924",
+    "modify_date": "2024-11-18T23:56:55.924",
+    "is_active": true,
+    "name": "TAHUAMANU",
+    "departamento": "17"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1801",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.849",
+    "modify_date": "2024-11-18T23:56:55.849",
+    "is_active": true,
+    "name": "MARISCAL NIETO",
+    "departamento": "18"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1802",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.933",
+    "modify_date": "2024-11-18T23:56:55.933",
+    "is_active": true,
+    "name": "GENERAL SANCHEZ CERRO",
+    "departamento": "18"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1803",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.942",
+    "modify_date": "2024-11-18T23:56:55.942",
+    "is_active": true,
+    "name": "ILO",
+    "departamento": "18"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1901",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.948",
+    "modify_date": "2024-11-18T23:56:55.948",
+    "is_active": true,
+    "name": "PASCO",
+    "departamento": "19"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1902",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.957",
+    "modify_date": "2024-11-18T23:56:55.957",
+    "is_active": true,
+    "name": "DANIEL ALCIDES CARRION",
+    "departamento": "19"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "1903",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.966",
+    "modify_date": "2024-11-18T23:56:55.966",
+    "is_active": true,
+    "name": "OXAPAMPA",
+    "departamento": "19"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2001",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.973",
+    "modify_date": "2024-11-18T23:56:55.973",
+    "is_active": true,
+    "name": "PIURA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2002",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.982",
+    "modify_date": "2024-11-18T23:56:55.982",
+    "is_active": true,
+    "name": "AYABACA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2003",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.991",
+    "modify_date": "2024-11-18T23:56:55.991",
+    "is_active": true,
+    "name": "HUANCABAMBA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2004",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.996",
+    "modify_date": "2024-11-18T23:56:55.996",
+    "is_active": true,
+    "name": "MORROPON",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2005",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.003",
+    "modify_date": "2024-11-18T23:56:56.003",
+    "is_active": true,
+    "name": "PAITA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2006",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.009",
+    "modify_date": "2024-11-18T23:56:56.009",
+    "is_active": true,
+    "name": "SULLANA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2007",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.015",
+    "modify_date": "2024-11-18T23:56:56.015",
+    "is_active": true,
+    "name": "TALARA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2008",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.021",
+    "modify_date": "2024-11-18T23:56:56.021",
+    "is_active": true,
+    "name": "SECHURA",
+    "departamento": "20"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2101",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.027",
+    "modify_date": "2024-11-18T23:56:56.027",
+    "is_active": true,
+    "name": "PUNO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2102",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.034",
+    "modify_date": "2024-11-18T23:56:56.034",
+    "is_active": true,
+    "name": "AZANGARO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2103",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.039",
+    "modify_date": "2024-11-18T23:56:56.039",
+    "is_active": true,
+    "name": "CARABAYA",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2104",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.045",
+    "modify_date": "2024-11-18T23:56:56.045",
+    "is_active": true,
+    "name": "CHUCUITO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2105",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.052",
+    "modify_date": "2024-11-18T23:56:56.052",
+    "is_active": true,
+    "name": "EL COLLAO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2106",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.057",
+    "modify_date": "2024-11-18T23:56:56.057",
+    "is_active": true,
+    "name": "HUANCANE",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2107",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.063",
+    "modify_date": "2024-11-18T23:56:56.063",
+    "is_active": true,
+    "name": "LAMPA",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2108",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.070",
+    "modify_date": "2024-11-18T23:56:56.070",
+    "is_active": true,
+    "name": "MELGAR",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2109",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.077",
+    "modify_date": "2024-11-18T23:56:56.077",
+    "is_active": true,
+    "name": "MOHO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2110",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.084",
+    "modify_date": "2024-11-18T23:56:56.084",
+    "is_active": true,
+    "name": "SAN ANTONIO DE PUTINA",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2111",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.090",
+    "modify_date": "2024-11-18T23:56:56.090",
+    "is_active": true,
+    "name": "SAN ROMAN",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2112",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.096",
+    "modify_date": "2024-11-18T23:56:56.096",
+    "is_active": true,
+    "name": "SANDIA",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2113",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.102",
+    "modify_date": "2024-11-18T23:56:56.102",
+    "is_active": true,
+    "name": "YUNGUYO",
+    "departamento": "21"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2201",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.108",
+    "modify_date": "2024-11-18T23:56:56.108",
+    "is_active": true,
+    "name": "MOYOBAMBA",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2202",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.114",
+    "modify_date": "2024-11-18T23:56:56.114",
+    "is_active": true,
+    "name": "BELLAVISTA",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2203",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.119",
+    "modify_date": "2024-11-18T23:56:56.119",
+    "is_active": true,
+    "name": "EL DORADO",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2204",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.125",
+    "modify_date": "2024-11-18T23:56:56.125",
+    "is_active": true,
+    "name": "HUALLAGA",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2205",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.132",
+    "modify_date": "2024-11-18T23:56:56.132",
+    "is_active": true,
+    "name": "LAMAS",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2206",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.138",
+    "modify_date": "2024-11-18T23:56:56.138",
+    "is_active": true,
+    "name": "MARISCAL CACERES",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2207",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.143",
+    "modify_date": "2024-11-18T23:56:56.143",
+    "is_active": true,
+    "name": "PICOTA",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2208",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.150",
+    "modify_date": "2024-11-18T23:56:56.150",
+    "is_active": true,
+    "name": "RIOJA",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2209",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.158",
+    "modify_date": "2024-11-18T23:56:56.158",
+    "is_active": true,
+    "name": "SAN MARTIN",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2210",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.855",
+    "modify_date": "2024-11-18T23:56:55.855",
+    "is_active": true,
+    "name": "TOCACHE",
+    "departamento": "22"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2301",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.164",
+    "modify_date": "2024-11-18T23:56:56.164",
+    "is_active": true,
+    "name": "TACNA",
+    "departamento": "23"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2302",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.170",
+    "modify_date": "2024-11-18T23:56:56.170",
+    "is_active": true,
+    "name": "CANDARAVE",
+    "departamento": "23"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2303",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.178",
+    "modify_date": "2024-11-18T23:56:56.178",
+    "is_active": true,
+    "name": "JORGE BASADRE",
+    "departamento": "23"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2304",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.187",
+    "modify_date": "2024-11-18T23:56:56.187",
+    "is_active": true,
+    "name": "TARATA",
+    "departamento": "23"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2401",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:56.196",
+    "modify_date": "2024-11-18T23:56:56.196",
+    "is_active": true,
+    "name": "TUMBES",
+    "departamento": "24"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2402",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.804",
+    "modify_date": "2024-11-18T23:56:55.804",
+    "is_active": true,
+    "name": "CONTRALMIRANTE VILLAR",
+    "departamento": "24"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2403",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.814",
+    "modify_date": "2024-11-18T23:56:55.814",
+    "is_active": true,
+    "name": "ZARUMILLA",
+    "departamento": "24"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2501",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.823",
+    "modify_date": "2024-11-18T23:56:55.823",
+    "is_active": true,
+    "name": "CORONEL PORTILLO",
+    "departamento": "25"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2502",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.831",
+    "modify_date": "2024-11-18T23:56:55.831",
+    "is_active": true,
+    "name": "ATALAYA",
+    "departamento": "25"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2503",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.837",
+    "modify_date": "2024-11-18T23:56:55.837",
+    "is_active": true,
+    "name": "PADRE ABAD",
+    "departamento": "25"
+  }
+},
+{
+  "model": "common.provincia",
+  "pk": "2504",
+  "fields": {
+    "creation_date": "2024-11-18T23:56:55.843",
+    "modify_date": "2024-11-18T23:56:55.843",
+    "is_active": true,
+    "name": "PURUS",
+    "departamento": "25"
+  }
+}
+]

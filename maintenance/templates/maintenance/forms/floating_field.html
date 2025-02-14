@@ -1,0 +1,12 @@
+<div class="form-floating{% if field.field.hide %} d-none{% endif %}" id="div_{{ field.auto_id }}">
+  {{ field }}
+  {{ field.label_tag }}
+  {% if field.errors %}
+    {% for error in field.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+  {% if field.help_text %}
+    <span class="form-text ms-1">{{ field.help_text|safe }}</span>
+  {% endif %}
+</div>

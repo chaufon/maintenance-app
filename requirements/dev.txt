@@ -1,0 +1,9 @@
+-r base.txt
+
+black==25.1.0
+flake8==7.1.1
+django-extensions==3.2.3
+ipython==8.32.0
+pre_commit==4.1.0
+isort==6.0.0
+django-silk==5.3.2

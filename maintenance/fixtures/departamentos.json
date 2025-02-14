@@ -1,0 +1,252 @@
+[
+{
+  "model": "common.departamento",
+  "pk": "01",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.898",
+    "modify_date": "2024-11-18T23:47:24.898",
+    "is_active": true,
+    "name": "AMAZONAS"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "02",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.902",
+    "modify_date": "2024-11-18T23:47:24.902",
+    "is_active": true,
+    "name": "ANCASH"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "03",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.907",
+    "modify_date": "2024-11-18T23:47:24.907",
+    "is_active": true,
+    "name": "APURIMAC"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "04",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.912",
+    "modify_date": "2024-11-18T23:47:24.912",
+    "is_active": true,
+    "name": "AREQUIPA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "05",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.918",
+    "modify_date": "2024-11-18T23:47:24.918",
+    "is_active": true,
+    "name": "AYACUCHO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "06",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.923",
+    "modify_date": "2024-11-18T23:47:24.924",
+    "is_active": true,
+    "name": "CAJAMARCA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "07",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.929",
+    "modify_date": "2024-11-18T23:47:24.929",
+    "is_active": true,
+    "name": "CALLAO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "08",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.934",
+    "modify_date": "2024-11-18T23:47:24.934",
+    "is_active": true,
+    "name": "CUSCO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "09",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.939",
+    "modify_date": "2024-11-18T23:47:24.939",
+    "is_active": true,
+    "name": "HUANCAVELICA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "10",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.944",
+    "modify_date": "2024-11-18T23:47:24.944",
+    "is_active": true,
+    "name": "HUANUCO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "11",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.949",
+    "modify_date": "2024-11-18T23:47:24.949",
+    "is_active": true,
+    "name": "ICA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "12",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.953",
+    "modify_date": "2024-11-18T23:47:24.953",
+    "is_active": true,
+    "name": "JUNIN"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "13",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.958",
+    "modify_date": "2024-11-18T23:47:24.958",
+    "is_active": true,
+    "name": "LA LIBERTAD"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "14",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.964",
+    "modify_date": "2024-11-18T23:47:24.964",
+    "is_active": true,
+    "name": "LAMBAYEQUE"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "15",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.969",
+    "modify_date": "2024-11-18T23:47:24.969",
+    "is_active": true,
+    "name": "LIMA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "16",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.974",
+    "modify_date": "2024-11-18T23:47:24.974",
+    "is_active": true,
+    "name": "LORETO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "17",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:25.000",
+    "modify_date": "2024-11-18T23:47:25.000",
+    "is_active": true,
+    "name": "MADRE DE DIOS"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "18",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.989",
+    "modify_date": "2024-11-18T23:47:24.989",
+    "is_active": true,
+    "name": "MOQUEGUA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "19",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:25.006",
+    "modify_date": "2024-11-18T23:47:25.006",
+    "is_active": true,
+    "name": "PASCO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "20",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:25.012",
+    "modify_date": "2024-11-18T23:47:25.012",
+    "is_active": true,
+    "name": "PIURA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "21",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:25.017",
+    "modify_date": "2024-11-18T23:47:25.017",
+    "is_active": true,
+    "name": "PUNO"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "22",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.994",
+    "modify_date": "2024-11-18T23:47:24.994",
+    "is_active": true,
+    "name": "SAN MARTIN"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "23",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:25.021",
+    "modify_date": "2024-11-18T23:47:25.021",
+    "is_active": true,
+    "name": "TACNA"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "24",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.979",
+    "modify_date": "2024-11-18T23:47:24.979",
+    "is_active": true,
+    "name": "TUMBES"
+  }
+},
+{
+  "model": "common.departamento",
+  "pk": "25",
+  "fields": {
+    "creation_date": "2024-11-18T23:47:24.984",
+    "modify_date": "2024-11-18T23:47:24.984",
+    "is_active": true,
+    "name": "UCAYALI"
+  }
+}
+]

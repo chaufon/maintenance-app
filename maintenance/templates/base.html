@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{% static 'maintenance/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'maintenance/css/bootstrap-icons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'maintenance/css/datepicker-bs5.min.css' %}">
+  <link rel="stylesheet" href="{% static 'maintenance/css/base.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<main class="container-fluid">
+  {% if user.is_authenticated %}
+    <div class="row">
+      {% include 'common/components/common/components/navbar.html' %}
+    </div>
+  {% endif %}
+  {% if subtitle %}
+    <section id="welcome" class="row py-4">
+      <h1 class="fs-3">{{ subtitle }}</h1>
+    </section>
+  {% endif %}
+  {% if user.is_authenticated %}
+    {% block filters %}{% endblock filters %}
+  {% endif %}
+  {% block content %}{% endblock content %}
+</main>
+{% block footer %}{% endblock footer %}
+<script src="{% static 'maintenance/js/vendor/htmx.min.js' %}"></script>
+<script src="{% static 'maintenance/js/vendor/sweetalert2.js' %}"></script>
+<script src="{% static 'maintenance/js/vendor/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'maintenance/js/vendor/datepicker-full.min.js' %}"></script>
+<script src="{% static 'maintenance/js/vendor/es.js' %}"></script>
+<script src="{% static 'maintenance/js/vendor/inputmask.min.js' %}"></script>
+{#<script src="{% static 'maintenance/js/vendor/color-mode.js' %}"></script>#}
+{% block extra_js %}{% endblock %}
+</body>
+</html>
+

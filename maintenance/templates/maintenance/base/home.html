@@ -1,0 +1,46 @@
+{% extends 'maintenance/base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'maintenance/css/base.css' %}">
+{% endblock extra_css %}
+{% block filters %}
+  <div class="row">
+    {% include "maintenance/forms/non_field_errors.html" %}
+  </div>
+  <div class="row mb-1">
+    <form class="col-md-6 col-lg-8" id="search-filters">
+      {{ form.param }}
+      <div id="search-indicator">
+        {% include 'maintenance/components/icons.html#searching' %}
+      </div>
+    </form>
+    <div class="col-md-6 col-lg-4 text-end">
+      {% if user_can.add %}
+        {% include "maintenance/components/buttons.html#base-add" %}
+      {% endif %}
+      {% if user_can.import %}
+        {% include "maintenance/components/buttons.html#base-import" %}
+      {% endif %}
+      {% if user_can.export %}
+        {% include "maintenance/components/buttons.html#base-export" %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock filters %}
+{% block content %}
+  <div class="modal fade" tabindex="-1" data-bs-keyboard="false" data-bs-backdrop="static"
+       aria-labelledby="Creación/Edición" aria-hidden="true" id="modal-form">
+    <div class="modal-dialog modal-fullscreen-lg-down {{ modal_size }} modal-dialog-scrollable"
+         id="modal-form-dialog" hx-target="this">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      {% include list_template %}
+    </div>
+  </div>
+{% endblock %}
+{% block extra_js %}
+  <script src="{% static 'maintenance/js/common.js' %}"></script>
+  <script src="{% static 'maintenance/js/base.js' %}"></script>
+{% endblock extra_js %}

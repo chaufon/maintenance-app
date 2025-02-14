@@ -1,0 +1,16 @@
+<div class="form-check form-switch my-3{% if field.field.hide %} d-none{% endif %}"
+     id="div_{{ field.auto_id }}">
+  {{ field }}
+  <label class="form-check-label ms-3" for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {% if field.help_text %}
+    <span class="ms-3 mt-n1 form-text">{{ field.help_text|safe }}</span>
+  {% endif %}
+  {% if field.errors %}
+    {% for error in field.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+  {% if field.help_text %}
+    <span class="form-text ms-1">{{ field.help_text|safe }}</span>
+  {% endif %}
+</div>

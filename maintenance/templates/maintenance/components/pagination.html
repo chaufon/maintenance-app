@@ -1,0 +1,50 @@
+{% if pages %}
+  <div class="col-12 mt-2">
+    <nav aria-label="Navegación resultados de búsqueda">
+      <ul class="pagination justify-content-end">
+        <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
+          <button type="button" class="page-link"
+            {% if page_obj.has_previous %}
+                  hx-get="{{ urls.list }}?page={{ page_obj.previous_page_number }}"
+            {% endif %}
+                  hx-target="#search-results" hx-indicator="#search-indicator"
+                  hx-swap="outerHTML" hx-include="#search-filters">
+            <i class="bi bi-chevron-left px-3"></i>
+          </button>
+        </li>
+
+        {% for num in pages %}
+          {% if num == page_obj.number %}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">{{ num }}</span>
+            </li>
+          {% elif num == "..." %}
+            <li class="page-item" aria-current="page">
+              <span class="page-link">{{ num }}</span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <button type="button" class="page-link"
+                      hx-get="{{ urls.list }}?page={{ num }}"
+                      hx-target="#search-results" hx-indicator="#search-indicator"
+                      hx-swap="outerHTML" hx-include="#search-filters">
+                {{ num }}
+              </button>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
+          <button type="button" class="page-link"
+            {% if page_obj.has_next %}
+                  hx-get="{{ urls.list }}?page={{ page_obj.next_page_number }}"
+            {% endif %}
+                  hx-target="#search-results" hx-indicator="#search-indicator"
+                  hx-swap="outerHTML" hx-include="#search-filters">
+            <i class="bi bi-chevron-right px-3"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+{% endif %}

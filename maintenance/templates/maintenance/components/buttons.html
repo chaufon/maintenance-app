@@ -1,0 +1,143 @@
+{% load partials %}
+
+<div id="maintenance-edit">
+  {% partialdef maintenance-edit %}
+    <button type="button" class="btn btn-warning"
+            hx-target="#modal-form-dialog" hx-include="this" hx-get="{{ object.edit_url }}"
+      {% if inverse_buttons %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"
+      {% endif %}
+    >
+      <i class="bi bi-pencil{% if inverse_buttons %}"></i>{% else %} me-1"></i>Editar{% endif %}
+    </button>
+  {% endpartialdef maintenance-edit %}
+</div>
+
+<div id="maintenance-delete">
+  {% partialdef maintenance-delete %}
+    <button type="button" class="btn btn-danger" hx-delete="{{ object.delete_url }}"
+            hx-trigger="confirmed"
+            onClick="swalDelete.fire().then((r) => {
+                  if (r.isConfirmed) {
+                    htmx.trigger(this, 'confirmed');
+                  }
+                })">
+      <i class="bi bi-trash me-1"></i>Eliminar
+    </button>
+  {% endpartialdef maintenance-delete %}
+</div>
+
+<div id="maintenance-read">
+  {% partialdef maintenance-read %}
+    <button type="button" class="btn btn-secondary"
+            hx-target="#modal-form-dialog" hx-get="{{ object.read_url }}"
+      {% if inverse_buttons %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Ver"
+      {% endif %}
+    >
+      <i class="bi bi-eye{% if inverse_buttons %}"></i>{% else %} me-1"></i>Ver{% endif %}
+    </button>
+  {% endpartialdef maintenance-read %}
+</div>
+
+<div id="maintenance-history">
+  {% partialdef maintenance-history %}
+    <button type="button" class="btn btn-info"
+            hx-target="#modal-form-dialog" hx-get="{{ object.history_url }}"
+      {% if inverse_buttons %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Histórico"
+      {% endif %}
+    >
+      <i class="bi bi-clock-history{% if inverse_buttons %}"></i>{% else %} me-1"></i>
+        Histórico{% endif %}
+    </button>
+  {% endpartialdef maintenance-history %}
+</div>
+
+<div id="maintenance-reset-password">
+  {% partialdef maintenance-reset-password %}
+    <button type="button" class="btn btn-secondary" hx-get="{{ object.reset_url }}"
+            hx-target="#modal-form-dialog">
+      <i class="bi bi-key me-1"></i>Reset
+    </button>
+  {% endpartialdef maintenance-reset-password %}
+</div>
+
+<div id="maintenance-add">
+  {% partialdef maintenance-add %}
+    <button type="button" class="btn btn-success{% if inverse_buttons %} h-100{% endif %}"
+            hx-get="{{ urls.add }}"
+            hx-target="#modal-form-dialog">
+      <i class="bi bi-plus-lg me-1"></i>Añadir
+    </button>
+  {% endpartialdef maintenance-add %}
+</div>
+
+<div id="maintenance-import">
+  {% partialdef maintenance-import %}
+    <button type="button" class="btn btn-outline-info{% if inverse_buttons %} w-100 mb-1{% endif %}"
+            hx-get="{{ urls.import }}" hx-target="#modal-form-dialog">
+      <i class="bi bi-cloud-upload me-1"></i>Importar
+    </button>
+  {% endpartialdef maintenance-import %}
+</div>
+
+<div id="maintenance-export">
+  {% partialdef maintenance-export %}
+    <button type="submit" formaction="{{ urls.export }}" form="search-filters" formmethod="get"
+            class="btn btn-outline-success{% if inverse_buttons %} w-100 mb-1{% endif %}">
+      <i class="bi bi-file-earmark-excel me-1"></i>Exportar
+    </button>
+  {% endpartialdef maintenance-export %}
+</div>
+
+<div id="maintenance-import-demo">
+  {% partialdef maintenance-import-demo %}
+    <a href="{{ urls.import_demo }}" class="btn btn-outline-success">
+      <i class="bi bi-file-earmark-excel me-1"></i>Descargar ejemplo
+    </a>
+  {% endpartialdef maintenance-import-demo %}
+</div>
+
+
+<div id="maintenance-comment">
+  {% partialdef maintenance-comment %}
+    {% if user.can_comment_venta %}
+    <button type="button" class="btn btn-primary"
+            hx-target="#modal-form-dialog" hx-get="{{ object.comment_url }}"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Comentarios"
+    >
+      <i class="bi bi-chat-fill"></i>
+      {#      <i class="bi bi-chat-dots"></i>#}
+    </button>
+    {% endif %}
+  {% endpartialdef maintenance-comment %}
+</div>
+
+<div id="report-search">
+  {% partialdef report-search %}
+    <button type="button" class="btn btn-primary w-100 mb-1" hx-get="{{ form.hx_get }}"
+            hx-target="#search-results" hx-indicator="#search-indicator"
+            hx-include="#search-filters">
+      <i class="bi bi-search me-1"></i>Buscar
+    </button>
+  {% endpartialdef report-search %}
+</div>
+
+<div id="modal-cancelar">
+  {% partialdef modal-cancelar %}
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+      <i class="bi bi-x-lg me-1"></i>Cancelar
+    </button>
+  {% endpartialdef modal-cancelar %}
+</div>
+
+<div id="modal-enviar">
+  {% partialdef modal-enviar %}
+    <button type="submit" class="btn btn-primary" id="btn-modal-enviar">
+      <div class="unsent"><i class="bi bi-send me-1"></i>Enviar</div>
+      <div class="sent d-none">{% include "maintenance/common/components/icons.html#sending" %}</div>
+    </button>
+  {% endpartialdef modal-enviar %}
+</div>
+

@@ -1,0 +1,11 @@
+#search-indicator {
+  opacity: 0;
+}
+
+#search-indicator.htmx-request {
+  opacity: 1;
+}
+
+#div_id_equipo.htmx-added, #div_id_accesorio.htmx-added {
+  opacity: 0;
+}

@@ -1,0 +1,31 @@
+{% load partials %}
+
+<div id="true-false">
+  {% partialdef true-false %}
+    {% if value %}
+      <i class="bi bi-check-circle text-success fs-4"></i>
+    {% else %}
+      <i class="bi bi-x-circle text-danger fs-4"></i>
+    {% endif %}
+  {% endpartialdef true-false %}
+</div>
+
+<div id="searching">
+  {% partialdef searching %}
+    <span class="spinner-grow spinner-grow-sm text-primary ms-1 fs-6"></span>
+    <span class="ms-1 fs-6">buscando...</span>
+  {% endpartialdef searching %}
+</div>
+
+<div id="sending">
+  {% partialdef sending %}
+    <span class="spinner-grow spinner-grow-sm text-white ms-1 fs-6"></span>
+    <span class="ms-1 fs-6">Enviando</span>
+  {% endpartialdef sending %}
+</div>
+
+<div id="divisor">
+  {% partialdef divisor %}
+    <hr class="border border-primary border-2 opacity-25">
+  {% endpartialdef divisor %}
+</div>
