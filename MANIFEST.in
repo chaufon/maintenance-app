@@ -1,0 +1,5 @@
+recursive-include maintenance/docs *
+include maintenance/fixtures/*
+include maintenance/scripts/*
+recursive-include maintenance/static *
+recursive-include maintenance/templates *
