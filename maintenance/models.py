@@ -21,8 +21,9 @@ class ManagerOnlyActive(models.Manager):
         return super().get_queryset().filter(is_active=True)
 
 
-class CommonModel(models.Model):
-    creation_date = models.DateTimeField(
+class BaseModel(models.Model):
+    DELETED_TEXT = "ELIMINADO"
+    create_date = models.DateTimeField(
         auto_now_add=True, editable=False, verbose_name="Fecha de creación"
     )
     modify_date = models.DateTimeField(
@@ -37,8 +38,8 @@ class CommonModel(models.Model):
         return cls.__name__.lower()
 
     @property
-    def creation_date_str(self):
-        return self.creation_date.strftime(DATETIME_FORMAT)
+    def create_date_str(self):
+        return self.create_date.strftime(DATETIME_FORMAT)
 
 
 class MaintenanceMixin:
@@ -80,14 +81,14 @@ class MaintenanceMixin:
         )
 
 
-class BaseCatalogo(CommonModel, MaintenanceMixin):
+class BaseCatalogo(BaseModel, MaintenanceMixin):
     name = models.CharField("Nombre", max_length=250, unique=True)
     is_active = models.BooleanField("Activo", default=True)
     objects = ManagerOnlyActive()
     todos = models.Manager()
 
     def __str__(self):
-        return f"{'' if self.is_active else 'ELIMINADO - '}{self.name}"
+        return f"{'' if self.is_active else self.DELETED_TEXT + ' - '}{self.name}"
 
     class Meta:
         abstract = True
@@ -99,11 +100,8 @@ class BaseCatalogo(CommonModel, MaintenanceMixin):
 
 @pghistory.track()
 class Departamento(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")
+    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
-
-    def __str__(self):
-        return self.name
 
     @property
     def es_lima_o_callao(self):
@@ -112,19 +110,13 @@ class Departamento(BaseCatalogo):
 
 @pghistory.track()
 class Provincia(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")
+    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
 
 
 @pghistory.track()
 class Distrito(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")
+    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name

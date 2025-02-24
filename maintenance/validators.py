@@ -24,6 +24,8 @@ def validate_file_xlsx(file):
 
 
 def cellphone_number(number):
+    if not number.isdigit():
+        raise ValidationError("Solo se permiten caracteres numéricos")
     if not number.startswith("9"):
         raise ValidationError("Números celulares comienzan con '9'")
     if len(number) != 9:

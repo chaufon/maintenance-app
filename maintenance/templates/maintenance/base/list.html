@@ -15,7 +15,7 @@
         <tr>
           <td class="align-middle">{{ object.pk }}</td>
           <td class="align-middle">{{ object.name }}</td>
-          <td class="align-middle">{{ object.creation_date }}</td>
+          <td class="align-middle">{{ object.create_date }}</td>
           <td class="align-middle">
             {% with value=object.is_active %}
               {% include "maintenance/components/icons.html#true-false" %}
