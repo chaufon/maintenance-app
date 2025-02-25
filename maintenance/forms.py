@@ -34,7 +34,7 @@ class BootstrapFormatMixin:
                 "class": f"form-{tipo}",
                 "autocomplete": "off",
                 "placeholder": field.label,
-                "data-date-picker": "true" if isinstance(field, forms.DateField) else "false",
+                "data-date-picker": ("true" if isinstance(field, forms.DateField) else "false"),
             }
             field.disabled = readonly
             field.label_suffix = ""

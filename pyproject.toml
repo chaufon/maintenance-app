@@ -1,0 +1,14 @@
+[tool.isort]
+profile = "black"
+py_version=313
+line_length="100"
+skip=[".gitignore",]
+known_django=["django"]
+sections=["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+
+[tool.black]
+line-length = 100
+target-version = ['py313']
+skip-magic-trailing-comma = true
+

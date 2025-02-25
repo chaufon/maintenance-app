@@ -99,10 +99,7 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_IMPORT: "ObjectsImported",
         API_ACTION_RESET: "Contraseña reseteada correctamente",
     }
-    field_list = {
-        API_ACTION_EXPORT: ["id", "name"],
-        API_ACTION_LIST: ["id", "name", "is_active"],
-    }
+    field_list = {API_ACTION_EXPORT: ["id", "name"], API_ACTION_LIST: ["id", "name", "is_active"]}
     select_related = tuple()
     title = "Partner"
     event = {}
@@ -301,7 +298,9 @@ class MaintenanceAPIView(TemplateView):
         qs = qs.filter(name__icontains=param) if param else qs
         return self.apply_order_by(qs)
 
-    def get_data_list(self, fields_list: list, paginated: bool = True, add_obj: bool = True) -> list:
+    def get_data_list(
+        self, fields_list: list, paginated: bool = True, add_obj: bool = True
+    ) -> list:
         data = list()
         object_list = list()
         if paginated:

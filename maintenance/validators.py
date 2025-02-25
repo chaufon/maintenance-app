@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 
 
 def validate_file_xls(file):
-    XLS_MAGIC_NUMBER = b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
+    XLS_MAGIC_NUMBER = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
 
     file.seek(0)
     file_header = file.read(8)
@@ -13,7 +13,7 @@ def validate_file_xls(file):
 
 
 def validate_file_xlsx(file):
-    XLSX_MAGIC_NUMBER = b"\x50\x4B\x03\x04"
+    XLSX_MAGIC_NUMBER = b"\x50\x4b\x03\x04"
 
     file.seek(0)
     file_header = file.read(8)
