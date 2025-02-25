@@ -1,23 +1,36 @@
-# http://editorconfig.org
+# https://editorconfig.org
 root = true
 
+# Unix-style newlines with a newline ending every file
 [*]
-max_line_length = 100
 charset = utf-8
+indent_style = space
+indent_size = 2
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
+max_line_length = 100  # Preferred line length
 
-[*.{py,rst,ini}]
-indent_style = space
+# Python files
+[*.{py,pyi}]
 indent_size = 4
 
-[*.{html,css,scss,json,js,yml}]
-indent_style = space
-indent_size = 2
-
+# Documentation
 [*.md]
 trim_trailing_whitespace = false
 
+# Configuration files
+[*.{ini,cfg,conf}]
+indent_size = 4
+
+# Shell scripts
+[*.sh]
+indent_size = 4
+
+# Makefiles must use tabs
 [Makefile]
+indent_style = tab
+
+# Git files
+[.git*]
 indent_style = tab
