@@ -53,29 +53,6 @@
                        href="{% url 'users:rol:home' %}">Roles</a>
                 </li>
               {% endif %}
-              {% if user.can_list_cf %}
-                <li><a class="dropdown-item text-center text-md-start"
-                       href="{{ user.get_cf_url }}">CF</a>
-                </li>
-              {% endif %}
-              {% if user.can_list_base %}
-                <li><a class="dropdown-item text-center text-md-start"
-                       href="{{ user.get_base_url }}">Bases</a>
-                </li>
-              {% endif %}
-              {% if user.can_list_campaign %}
-                <li><a class="dropdown-item text-center text-md-start"
-                       href="{{ user.get_campaign_url }}">Campañas</a>
-                </li>
-              {% endif %}
-              {% if user.can_list_backofficeobs %}
-                <li>
-                  <a class="dropdown-item text-center text-md-start"
-                     href="{{ user.get_backofficeobs_url }}">
-                    Observaciones Back Office
-                  </a>
-                </li>
-              {% endif %}
               {% if user.can_list_ubigeo %}
                 <li>
                   <a class="dropdown-item text-center text-md-start"
