@@ -32,7 +32,7 @@ class LoginTestCase(TestCase):
     def test_get_login_page(self):
         response = self.client.get(settings.LOGIN_URL)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "maintenance/common/login.html")
+        self.assertTemplateUsed(response, "maintenance/login.html")
 
     def test_succesful_login(self):
         response = self.client.post(
@@ -46,7 +46,7 @@ class LoginTestCase(TestCase):
             settings.LOGIN_URL, {"username": "90000000", "password": "wrongpassword"}
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "maintenance/common/login.html")
+        self.assertTemplateUsed(response, "maintenance/login.html")
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     def test_failed_login_disabled_user(self):
@@ -56,5 +56,5 @@ class LoginTestCase(TestCase):
             settings.LOGIN_URL, {"username": "90000000", "password": "test_password"}
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "maintenance/common/login.html")
+        self.assertTemplateUsed(response, "maintenance/login.html")
         self.assertFalse(response.wsgi_request.user.is_authenticated)

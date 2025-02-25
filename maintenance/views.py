@@ -11,7 +11,7 @@ from django.http import (
     HttpResponseNotAllowed,
     HttpResponseNotFound,
 )
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import TemplateView
 
@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 
 
 class MaintenanceLoginView(LoginView):
-    template_name = "maintenance/common/login.html"
+    template_name = "maintenance/login.html"
     redirect_authenticated_user = True
 
     def form_valid(self, form):
@@ -61,27 +61,21 @@ class MaintenanceLoginView(LoginView):
         user.clear_other_sessions()
         return super().form_valid(form)
 
-    def get_success_url(self):
-        user = self.request.user
-        if user.es_root or (not user.can_list_venta and not user.es_op_invitado):
-            return reverse("users:user:home")
-        else:
-            app = "renovacion" if user.es_renovacion else "portabilidad"
-            model = "reporte" if user.es_op_invitado else "venta"
-            return reverse(f"{app}:{model}:home")
-
 
 class MaintenanceLogoutView(LogoutView):
     http_method_names = ["get"]
 
-    def get(self, request, *args, **kwargs):  # Needed to launch our own LogoutView
+    def get(self, request, *args, **kwargs):  # Needed to launch this custom LogoutView
         return self.post(request, *args, **kwargs)
 
 
 class MaintenanceAPIView(TemplateView):
     model = None
+    action = ""
     app = ""
     model_name = ""
+    nombre = ""
+    nombre_plural = ""
     search_formclass = SearchForm
     resource = None
     resource_demo = None
@@ -90,23 +84,33 @@ class MaintenanceAPIView(TemplateView):
     import_formclass = ImportForm
     order_by = ("-is_active", "name")
     search_placeholder = "Buscar por nombre"
-    event_deleted = "ObjectDeleted"
-    event_added = "ObjectAdded"
-    event_edited = "ObjectEdited"
     event_delete_error = "ObjectNotDeleted"
-    event_reset = "PasswordUpdated"
-    event_imported = "ObjectsImported"
+    events_name = {
+        API_ACTION_ADD: "ObjectAdded",
+        API_ACTION_DELETE: "ObjectDeleted",
+        API_ACTION_EDIT: "ObjectEdited",
+        API_ACTION_IMPORT: "ObjectsImported",
+        API_ACTION_RESET: "PasswordUpdated",
+    }
+    events_msg = {
+        API_ACTION_ADD: "{} creado correctamente",
+        API_ACTION_DELETE: "{} eliminado correctamente",
+        API_ACTION_EDIT: "{} actualizado correctamente",
+        API_ACTION_IMPORT: "ObjectsImported",
+        API_ACTION_RESET: "Contraseña reseteada correctamente",
+    }
+    field_list = {
+        API_ACTION_EXPORT: ["id", "name"],
+        API_ACTION_LIST: ["id", "name", "is_active"],
+    }
     select_related = tuple()
     title = "Partner"
     event = {}
-    action = ""
     object = None
     object_pk = None
     paginator = None
     page = 1
     objects_per_page = 20
-    nombre = ""
-    nombre_plural = ""
     form = None
     user_can = dict()
     urls = dict()
@@ -127,11 +131,9 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_COMMENT,
     )
     user = None
-    rol = None
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
-        self.rol = self.user.rol
         self.action = request.path.split("/")[3] or API_ACTION_HOME
         self.object_pk = kwargs.pop("object_pk", None)
         if self.object_pk:
@@ -152,11 +154,13 @@ class MaintenanceAPIView(TemplateView):
         self.app = self.model._meta.app_label
         self.nombre = self.model._meta.verbose_name.title()
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
+
+        base_url = f"{self.app}:{self.model_name}"
         self.urls = {
-            API_ACTION_ADD: reverse_lazy(f"{self.app}:{self.model_name}:{API_ACTION_ADD}"),
-            API_ACTION_LIST: reverse_lazy(f"{self.app}:{self.model_name}:{API_ACTION_LIST}"),
-            API_ACTION_EXPORT: reverse_lazy(f"{self.app}:{self.model_name}:{API_ACTION_EXPORT}"),
-            API_ACTION_IMPORT: reverse_lazy(f"{self.app}:{self.model_name}:{API_ACTION_IMPORT}"),
+            API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}"),
+            API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}"),
+            API_ACTION_EXPORT: reverse(f"{base_url}:{API_ACTION_EXPORT}"),
+            API_ACTION_IMPORT: reverse(f"{base_url}:{API_ACTION_IMPORT}"),
         }
         self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
         return super().dispatch(request, *args, **kwargs)
@@ -205,19 +209,23 @@ class MaintenanceAPIView(TemplateView):
         context["modal_readonly"] = self.action in (API_ACTION_READ, API_ACTION_HISTORY)
         context["user_can"] = self.user_can
         context["urls"] = self.urls
-        context["rol"] = self.rol
         context["user"] = self.user
         context["object"] = self.object
+        if self.action == API_ACTION_LIST:
+            fields_list = self.field_list[self.action]
+            context["header_list"] = self.model.get_headers_list(fields_list)
+            context["data_list"] = self.get_data_list(fields_list, add_obj=False)
+
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)
 
     def _render_no_html(self):
-        if self.action == API_ACTION_ADD:
-            event = {self.event_added: f"{self.nombre.title()} creado correctamente"}
-        elif self.action == API_ACTION_EDIT:
-            event = {self.event_edited: f"{self.nombre.title()} actualizado correctamente"}
-        elif self.action == API_ACTION_RESET:
-            event = {self.event_reset: "Contraseña reseteada correctamente"}
+        if self.action in [API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_RESET]:
+            event = {
+                self.events_name[self.action]: self.events_msg[self.action].format(
+                    self.nombre.title()
+                )
+            }
         else:
             event = self.event
         return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(event)})
@@ -281,13 +289,45 @@ class MaintenanceAPIView(TemplateView):
         except ValidationError as e:
             self.event = {self.event_delete_error: str(e.message)}
         else:
-            self.event = {self.event_deleted: f"{self.nombre.title()} eliminado correctamente"}
+            self.event = {
+                self.events_name[self.action]: self.events_msg[self.action].format(
+                    self.nombre.title()
+                )
+            }
         return self._render_no_html()
 
     def form_valid_search(self, qs: QuerySet, cleaned_data: dict) -> QuerySet:
         param = cleaned_data["param"]
         qs = qs.filter(name__icontains=param) if param else qs
         return self.apply_order_by(qs)
+
+    def get_data_list(self, fields_list: list, paginated: bool = True, add_obj: bool = True) -> list:
+        data = list()
+        object_list = list()
+        if paginated:
+            page_obj = self.paginator.get_page(self.page) if self.paginator else None
+            if page_obj:
+                object_list = page_obj.object_list
+        else:
+            object_list = self._get_queryset()
+
+        for obj in object_list:
+            data.append(obj.get_row_data(fields_list, add_obj))
+        return data
+
+    def render_xlsx(self):
+        filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
+        fields_list = self.field_list[self.action]  # API_ACTION_EXPORT
+        headers_list = self.model.get_headers_list(fields_list)
+        data_list = self.get_data_list(fields_list, add_obj=False)
+        dataset = Dataset()
+        dataset.headers = headers_list
+        for data in data_list:
+            dataset.append([i["value"].upper() for i in data])
+        dataset.title = self.nombre_plural.upper()
+        response = HttpResponse(dataset.xlsx, content_type=XLSX_CONTENT_TYPE)
+        response["Content-Disposition"] = f"attachment; filename={filename}"
+        return response
 
     def _render_xlsx(self, demo: bool = False):
         if demo:
@@ -301,7 +341,7 @@ class MaintenanceAPIView(TemplateView):
         response["Content-Disposition"] = f"attachment; filename={filename}"
         return response
 
-    def _import_xlsx(self):
+    def import_xlsx(self):
         msg_error = f"Error al importar {self.model_name}s"
         if self.user.es_root:
             raise ValidationError("Root no puede importar usuarios")
@@ -333,29 +373,7 @@ class MaintenanceAPIView(TemplateView):
             logger.error(f"{msg_error}. Empty lines: {empty}")
 
         self.event = {
-            self.event_imported: (
-                f"{new} {self.nombre.title() if new == 1 else self.nombre_plural.title()} "
-                f"importado{'' if new == 1 else 's'} correctamente"
-            )
-        }
-        return self._render_no_html()
-
-    def _import_xlsx_antiguo(self):
-        file_to_import = self.form.cleaned_data["file"]
-        ds = Dataset().load(file_to_import.read())
-        self.resource = self.resource_demo or self.resource  # TODO
-        resource = self.resource()
-        result = resource.import_data(ds, dry_run=True)
-        if result.has_errors():
-            self.form.add_error(
-                None,
-                "Importación interrumpida. Se encontraron errores con la data del archivo subido",
-            )
-            return self._render_html()
-        result = resource.import_data(ds, dry_run=False)
-        new = result.totals["new"]
-        self.event = {
-            self.event_imported: (
+            self.events_name[self.action]: (
                 f"{new} {self.nombre.title() if new == 1 else self.nombre_plural.title()} "
                 f"importado{'' if new == 1 else 's'} correctamente"
             )
@@ -364,7 +382,7 @@ class MaintenanceAPIView(TemplateView):
 
     def form_valid_edit(self):
         if self.action == API_ACTION_IMPORT:
-            return self._import_xlsx()
+            return self.import_xlsx()
         _ = self.form.save()
 
     def get_modal_size(self):

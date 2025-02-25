@@ -160,8 +160,7 @@ psycopg-c==3.2.4
 psycopg==3.2.4
 django-pghistory==3.5.2
 django-template-partials==24.4
-django-import-export[xlsx]==4.2.0  # TODO still need it?
-django-import-export[xls]==4.2.0  # TODO still need it?
+tablib[xlsx]==3.8.0
 sentry-sdk[django]==2.20.0
 
 ```
@@ -195,3 +194,32 @@ gunicorn==23.0.0
 
 ## USE
 1. navbar template and context_processors.py
+
+## EXAMPLES
+
+### Redirect logic after login
+
+```python
+class MyLoginView(MaintenanceLoginView):
+    
+    def get_success_url(self):
+        user = self.request.user
+        if user.es_root or (not user.can_list_venta and not user.es_op_invitado):
+            return reverse("users:user:home")
+        else:
+            app = "renovacion" if user.es_renovacion else "portabilidad"
+            model = "reporte" if user.es_op_invitado else "venta"
+            return reverse(f"{app}:{model}:home")
+```
+
+
+## TODOs
+
+* Modal size customization
+* Javascript/CSS sources integration
+* CSS customization
+
+
+## NEW FEATURES
+
+* Command management to add new actions (ADVANCED)

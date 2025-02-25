@@ -16,15 +16,15 @@
         </div>
       </button>
       <ul class="navbar-nav ms-md-auto p-2 ">
-      {% if user.can_list_venta %}
-        <li class="nav-item px-3 d-flex flex-column justify-content-center">
-          <a
-            class="nav-link text-center {% if menu_active == menu.ventas %}border-bottom border-primary-subtle border-3{% endif %}"
-            href="{{ user.get_venta_url }}">
-            <i class="bi bi-wallet2 me-1 fs-5"></i>Ventas
-          </a>
-        </li>
-      {% endif %}
+        {% if user.can_list_venta %}
+          <li class="nav-item px-3 d-flex flex-column justify-content-center">
+            <a
+              class="nav-link text-center {% if menu_active == menu.ventas %}border-bottom border-primary-subtle border-3{% endif %}"
+              href="{{ user.get_venta_url }}">
+              <i class="bi bi-wallet2 me-1 fs-5"></i>Ventas
+            </a>
+          </li>
+        {% endif %}
         {% if user.can_report_venta %}
           <li class="nav-item px-3 d-flex flex-md-column justify-content-center">
             <a
@@ -36,8 +36,10 @@
         {% endif %}
         {% if user.can_list_maintenance %}
           <li class="nav-item px-3 d-flex flex-column justify-content-center dropdown">
-            <a class="nav-link dropdown-toggle text-center{% if menu_active == menu.mantenimientos %} border-bottom border-primary-subtle border-3{% endif %}"
-               href="#" role="button" data-bs-toggle="dropdown" data-bs-target="#mantenimientos-menu" aria-expanded="false">
+            <a
+              class="nav-link dropdown-toggle text-center{% if menu_active == menu.mantenimientos %} border-bottom border-primary-subtle border-3{% endif %}"
+              href="#" role="button" data-bs-toggle="dropdown" data-bs-target="#mantenimientos-menu"
+              aria-expanded="false">
               <i class="bi bi-gear me-1 fs-5"></i>Mantenimientos
             </a>
             <ul class="dropdown-menu dropdown-menu-start" id="mantenimientos-menu">
@@ -94,22 +96,6 @@
                   </a>
                 </li>
               {% endif %}
-              {% if user.can_list_equipo %}
-                <li>
-                  <a class="dropdown-item text-center text-md-start"
-                     href="{{ user.get_equipo_url }}">
-                    Equipos y Accesorios
-                  </a>
-                </li>
-              {% endif %}
-            {% if user.can_list_pdv %}
-                <li>
-                  <a class="dropdown-item text-center text-md-start"
-                     href="{{ user.get_pdv_url }}">
-                    Puntos de Venta
-                  </a>
-                </li>
-              {% endif %}
             </ul>
           </li>
         {% endif %}
@@ -145,7 +131,7 @@
             </li>
             <li data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Rol">
               <a class="dropdown-item text-center text-md-start disabled" href="#">
-                <i class="bi bi-person-vcard me-1"></i>{{ user.rol.name|title }}
+                <i class="bi bi-person-vcard me-1"></i>{{ user.role_str|title }}
               </a>
             </li>
           </ul>

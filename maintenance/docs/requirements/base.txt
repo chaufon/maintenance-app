@@ -4,6 +4,5 @@ psycopg-c==3.2.4
 psycopg==3.2.4
 django-pghistory==3.5.2
 django-template-partials==24.4
-django-import-export[xlsx]==4.2.0  # TODO still need it?
-django-import-export[xls]==4.2.0  # TODO still need it?
 sentry-sdk[django]==2.20.0
+tablib[xlsx]==3.8.0

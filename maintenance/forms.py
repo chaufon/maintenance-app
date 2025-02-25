@@ -7,7 +7,7 @@ from maintenance.validators import validate_file_xlsx
 
 
 class FloatingFormRenderer(TemplatesSetting):
-    field_template_name = "maintenance/common/forms/floating_field.html"
+    field_template_name = "maintenance/forms/floating_field.html"
 
 
 class SearchInput(forms.TextInput):
@@ -15,8 +15,8 @@ class SearchInput(forms.TextInput):
 
 
 class BootstrapFormatMixin:
-    radio_template = "maintenance/common/forms/radio_field.html"
-    file_template = "maintenance/common/forms/file_field.html"
+    radio_template = "maintenance/forms/radio_field.html"
+    file_template = "maintenance/forms/file_field.html"
 
     def format_fields(self, readonly: bool = False) -> None:
         for field_name in self.fields:
@@ -54,7 +54,6 @@ class UnicornioBaseModelForm(forms.ModelForm, BootstrapFormatMixin):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)
-        self.rol = self.user.rol if self.user else None
         readonly = kwargs.pop("readonly", False)
         super().__init__(*args, **kwargs)
         self.format_fields(readonly)
@@ -112,7 +111,7 @@ class ImportForm(forms.Form, BootstrapFormatMixin):
 
 
 class DepartamentoEditForm(UnicornioBaseModelForm):
-    template_name = "maintenance/common/departamento/departamento_edit_form.html"
+    template_name = "maintenance/departamento/departamento_edit_form.html"
 
     class Meta:
         model = Departamento
@@ -120,7 +119,7 @@ class DepartamentoEditForm(UnicornioBaseModelForm):
 
 
 class ProvinciaEditForm(UnicornioBaseModelForm):
-    template_name = "maintenance/common/provincia/provincia_edit_form.html"
+    template_name = "maintenance/provincia/provincia_edit_form.html"
 
     class Meta:
         model = Provincia
@@ -128,7 +127,7 @@ class ProvinciaEditForm(UnicornioBaseModelForm):
 
 
 class DistritoEditForm(UnicornioBaseModelForm):
-    template_name = "maintenance/common/distrito/distrito_edit_form.html"
+    template_name = "maintenance/distrito/distrito_edit_form.html"
 
     class Meta:
         model = Distrito

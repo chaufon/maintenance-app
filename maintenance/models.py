@@ -97,6 +97,28 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
         self.name = self.name.upper()
         super().save(*args, **kwargs)
 
+    @classmethod
+    def get_headers_list(cls, fields_list: list) -> list:
+        headers = list()
+        for field_name in fields_list:
+            headers.append(cls._meta.get_field(field_name).verbose_name.title())
+        return headers
+
+    def get_row_data(self, fields_list: tuple, add_obj: bool) -> list:
+        data = list()
+        for field_name in fields_list:
+            field_str = getattr(self, field_name + "_str", None)
+            data.append(
+                {
+                    "value": str(field_str if field_str else getattr(self, field_name, "")),
+                    "class": "",  # TODO
+                    "object": None,  # TODO
+                }
+            )
+        if add_obj:
+            data.append({"object": self})
+        return data
+
 
 @pghistory.track()
 class Departamento(BaseCatalogo):
