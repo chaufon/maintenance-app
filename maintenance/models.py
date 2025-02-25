@@ -80,23 +80,6 @@ class MaintenanceMixin:
             args=(self.pk,),
         )
 
-
-class BaseCatalogo(BaseModel, MaintenanceMixin):
-    name = models.CharField("Nombre", max_length=250, unique=True)
-    is_active = models.BooleanField("Activo", default=True)
-    objects = ManagerOnlyActive()
-    todos = models.Manager()
-
-    def __str__(self):
-        return f"{'' if self.is_active else self.DELETED_TEXT + ' - '}{self.name}"
-
-    class Meta:
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        self.name = self.name.upper()
-        super().save(*args, **kwargs)
-
     @classmethod
     def get_headers_list(cls, fields_list: list) -> list:
         headers = list()
@@ -118,6 +101,23 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
         if add_obj:
             data.append({"object": self})
         return data
+
+
+class BaseCatalogo(BaseModel, MaintenanceMixin):
+    name = models.CharField("Nombre", max_length=250, unique=True)
+    is_active = models.BooleanField("Activo", default=True)
+    objects = ManagerOnlyActive()
+    todos = models.Manager()
+
+    def __str__(self):
+        return f"{'' if self.is_active else self.DELETED_TEXT + ' - '}{self.name}"
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.upper()
+        super().save(*args, **kwargs)
 
 
 @pghistory.track()
