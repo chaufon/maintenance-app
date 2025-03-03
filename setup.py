@@ -11,7 +11,7 @@ setup(
         "psycopg-c>=3.2.5",
         "django-pghistory>=3.5.2",
         "django-template-partials>=24.4",
-        "entry-sdk[django]>=2.22.0",
+        "sentry-sdk[django]>=2.22.0",
         "tablib[xlsx]>=3.8.0"
     ],
 )
