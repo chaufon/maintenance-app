@@ -1,9 +1,9 @@
 from django.urls import include, path
 
-app_name = "common"
+app_name = "maintenance"
 
 urlpatterns = [
-    path("departamento/", include("apps.common.urls.departamento", namespace="departamento")),
-    path("provincia/", include("apps.common.urls.provincia", namespace="provincia")),
-    path("distrito/", include("apps.common.urls.distrito", namespace="distrito")),
+    path("departamento/", include("maintenance.urls.departamento", namespace="departamento")),
+    path("provincia/", include("maintenance.urls.provincia", namespace="provincia")),
+    path("distrito/", include("maintenance.urls.distrito", namespace="distrito")),
 ]

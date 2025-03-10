@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse_lazy
+from django.urls import reverse
 
 import pghistory
 
@@ -45,37 +45,37 @@ class BaseModel(models.Model):
 class MaintenanceMixin:
     @property
     def edit_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_EDIT}", args=(self.pk,)
         )
 
     @property
     def delete_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_DELETE}", args=(self.pk,)
         )
 
     @property
     def read_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_READ}", args=(self.pk,)
         )
 
     @property
     def reset_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_RESET}", args=(self.pk,)
         )
 
     @property
     def history_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_HISTORY}", args=(self.pk,)
         )
 
     @property
     def partial_plus_url(self):
-        return reverse_lazy(
+        return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_PARTIAL_PLUS}",
             args=(self.pk,),
         )
