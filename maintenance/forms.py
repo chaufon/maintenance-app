@@ -47,7 +47,7 @@ class BootstrapFormatMixin:
                 )
 
 
-class UnicornioBaseModelForm(forms.ModelForm, BootstrapFormatMixin):
+class MaintenanceBaseModelForm(forms.ModelForm, BootstrapFormatMixin):
     error_css_class = "is-invalid"
     required_css_class = "fw-bolder"
     default_renderer = FloatingFormRenderer
@@ -110,7 +110,7 @@ class ImportForm(forms.Form, BootstrapFormatMixin):
         self.format_fields()
 
 
-class DepartamentoEditForm(UnicornioBaseModelForm):
+class DepartamentoEditForm(MaintenanceBaseModelForm):
     template_name = "maintenance/departamento/departamento_edit_form.html"
 
     class Meta:
@@ -118,7 +118,7 @@ class DepartamentoEditForm(UnicornioBaseModelForm):
         fields = ("name", "codigo")
 
 
-class ProvinciaEditForm(UnicornioBaseModelForm):
+class ProvinciaEditForm(MaintenanceBaseModelForm):
     template_name = "maintenance/provincia/provincia_edit_form.html"
 
     class Meta:
@@ -126,7 +126,7 @@ class ProvinciaEditForm(UnicornioBaseModelForm):
         fields = ("name", "codigo", "departamento")
 
 
-class DistritoEditForm(UnicornioBaseModelForm):
+class DistritoEditForm(MaintenanceBaseModelForm):
     template_name = "maintenance/distrito/distrito_edit_form.html"
 
     class Meta:
