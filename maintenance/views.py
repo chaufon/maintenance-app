@@ -26,7 +26,6 @@ from maintenance.constants import (
     API_ACTION_HISTORY,
     API_ACTION_HOME,
     API_ACTION_IMPORT,
-    API_ACTION_IMPORT_DEMO,
     API_ACTION_LIST,
     API_ACTION_MODAL_TITLE,
     API_ACTION_PARTIAL,
@@ -47,7 +46,6 @@ from maintenance.forms import (
 )
 from maintenance.history import HistoryList
 from maintenance.models import Departamento, Distrito, Provincia
-from maintenance.resources import DepartamentoResource, DistritoResource, ProvinciaResource
 
 logger = logging.getLogger(__name__)
 
@@ -77,8 +75,6 @@ class MaintenanceAPIView(TemplateView):
     nombre = ""
     nombre_plural = ""
     search_formclass = SearchForm
-    resource = None
-    resource_demo = None
     edit_formclass = None
     reset_formclass = None
     import_formclass = ImportForm
@@ -122,7 +118,6 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_LIST,
         API_ACTION_EXPORT,
         API_ACTION_IMPORT,
-        API_ACTION_IMPORT_DEMO,
         API_ACTION_RESET,
         API_ACTION_HISTORY,
         API_ACTION_COMMENT,
@@ -243,10 +238,8 @@ class MaintenanceAPIView(TemplateView):
             self.form = self.edit_formclass(
                 request.GET, instance=self.object, **self.get_form_kwargs()
             )
-        elif self.action == API_ACTION_IMPORT_DEMO:
-            return self._render_xlsx(demo=True)
         elif self.action == API_ACTION_EXPORT:
-            return self._render_xlsx()
+            return self.render_xlsx()
         elif self.action == API_ACTION_HISTORY:
             self.form = HistoryList(self.object).get_accordion()
         elif self.action == API_ACTION_IMPORT:
@@ -328,18 +321,6 @@ class MaintenanceAPIView(TemplateView):
         response["Content-Disposition"] = f"attachment; filename={filename}"
         return response
 
-    def _render_xlsx(self, demo: bool = False):
-        if demo:
-            self.resource = self.resource_demo or self.resource
-        filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
-        dataset = self.resource().export(
-            queryset=self.model.objects.none() if demo else self._get_queryset()
-        )
-        dataset.title = self.nombre_plural.upper()
-        response = HttpResponse(dataset.xlsx, content_type=XLSX_CONTENT_TYPE)
-        response["Content-Disposition"] = f"attachment; filename={filename}"
-        return response
-
     def import_xlsx(self):
         msg_error = f"Error al importar {self.model_name}s"
         if self.user.es_root:
@@ -397,14 +378,12 @@ class MaintenanceAPIView(TemplateView):
 
 class DepartamentoAPIView(MaintenanceAPIView):
     model = Departamento
-    resource = DepartamentoResource
     edit_formclass = DepartamentoEditForm
     order_by = ("pk",)
 
 
 class ProvinciaAPIView(MaintenanceAPIView):
     model = Provincia
-    resource = ProvinciaResource
     edit_formclass = ProvinciaEditForm
     order_by = ("pk",)
     select_related = ("departamento",)
@@ -412,7 +391,6 @@ class ProvinciaAPIView(MaintenanceAPIView):
 
 class DistritoAPIView(MaintenanceAPIView):
     model = Distrito
-    resource = DistritoResource
     edit_formclass = DistritoEditForm
     order_by = ("pk",)
     select_related = ("provincia", "provincia__departamento")
