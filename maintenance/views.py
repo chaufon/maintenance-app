@@ -97,7 +97,7 @@ class MaintenanceAPIView(TemplateView):
     }
     field_list = {API_ACTION_EXPORT: ["id", "name"], API_ACTION_LIST: ["id", "name", "is_active"]}
     select_related = tuple()
-    title = "Partner"
+    title = "Project"
     event = {}
     object = None
     object_pk = None
