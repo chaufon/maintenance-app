@@ -323,9 +323,6 @@ class MaintenanceAPIView(TemplateView):
 
     def import_xlsx(self):
         msg_error = f"Error al importar {self.model_name}s"
-        if self.user.es_root:
-            raise ValidationError("Root no puede importar usuarios")
-
         file_to_import = self.form.cleaned_data["file"]
         dataset = Dataset().load(file_to_import, format="xlsx")
 
@@ -336,13 +333,13 @@ class MaintenanceAPIView(TemplateView):
         new = 0
         empty = 0
         for data in dataset.dict:
-            clean_data = {k: v for k, v in data.items() if k in clean_headers}
-            if not any(clean_data.values()):
+            cleaned_data = {k: v for k, v in data.items() if k in clean_headers}
+            if not any(cleaned_data.values()):
                 empty += 1
                 continue
 
             try:
-                _ = self.model.objects.create(**clean_data)
+                self.form_valid_import(cleaned_data)
             except Exception as e:  # NOQA
                 logger.error(f"{msg_error}. Error: {e}")
                 continue
@@ -359,6 +356,9 @@ class MaintenanceAPIView(TemplateView):
             )
         }
         return self._render_no_html()
+
+    def form_valid_import(self, cleaned_data: dict) -> None:
+        _ = self.model.objects.create(**cleaned_data)
 
     def form_valid_edit(self):
         if self.action == API_ACTION_IMPORT:
