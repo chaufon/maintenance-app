@@ -56,19 +56,19 @@
               {% if user.can_list_ubigeo %}
                 <li>
                   <a class="dropdown-item text-center text-md-start"
-                     href="{% url 'ubigeo:departamento:home' %}">
+                     href="{% url 'maintenance:departamento:home' %}">
                     Departamentos
                   </a>
                 </li>
                 <li>
                   <a class="dropdown-item text-center text-md-start"
-                     href="{% url 'ubigeo:provincia:home' %}">
+                     href="{% url 'maintenance:provincia:home' %}">
                     Provincias
                   </a>
                 </li>
                 <li>
                   <a class="dropdown-item text-center text-md-start"
-                     href="{% url 'ubigeo:distrito:home' %}">
+                     href="{% url 'maintenance:distrito:home' %}">
                     Distritos
                   </a>
                 </li>
@@ -98,17 +98,9 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Acceso">
-              <a class="dropdown-item text-center text-md-start disabled" href="#">
-                <i class="bi bi-people me-1"></i>{{ user.access_str|title }}
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
             <li data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Rol">
               <a class="dropdown-item text-center text-md-start disabled" href="#">
-                <i class="bi bi-person-vcard me-1"></i>{{ user.role_str|title }}
+                <i class="bi bi-person-vcard me-1"></i>{{ user.role|title }}
               </a>
             </li>
           </ul>

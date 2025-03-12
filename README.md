@@ -45,7 +45,7 @@ views directly):**
 
    urlpatterns = [
        ...
-       path('ubigeo/', include('maintenance.urls')),
+       path('maintenance/', include('maintenance.urls')),
        ...
    ]
    ```
