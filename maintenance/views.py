@@ -206,7 +206,7 @@ class MaintenanceAPIView(TemplateView):
         if self.action == API_ACTION_LIST:
             fields_list = self.field_list[self.action]
             context["header_list"] = self.model.get_headers_list(fields_list)
-            context["data_list"] = self.get_data_list(fields_list, add_obj=False)
+            context["data_list"] = self.get_data_list(fields_list, add_obj=True)
 
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)

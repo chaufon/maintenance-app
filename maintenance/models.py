@@ -95,7 +95,6 @@ class MaintenanceMixin:
                 {
                     "value": str(field_str if field_str else getattr(self, field_name, "")),
                     "class": "",  # TODO
-                    "object": self,
                 }
             )
         if add_obj:

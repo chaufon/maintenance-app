@@ -14,7 +14,15 @@
         <tr>
           {% for data in row %}
             {% if not data.object %}
-              <td class="align-middle {{ data.class }}">{{ data.value }}</td>
+              <td class="align-middle {{ data.class }}">
+              {% if data.value == 'True' or data.value == 'False' %}
+                {% with value=data.value %}
+                  {% include "maintenance/components/icons.html#true-false" %}
+                {% endwith %}
+              {% else %}
+                {{ data.value }}
+              {% endif %}
+              </td>
             {% else %}
               {% with object=data.object %}
                 <td class="align-middle text-end">
