@@ -128,7 +128,7 @@ class History:
         user = None
         if self.context and "user" in self.context:
             try:
-                user = User.todos.select_related("rol").get(pk=self.context.get("user"))
+                user = User.todos.select_related("role").get(pk=self.context.get("user"))
             except User.DoesNotExist:
                 pass
         return user
@@ -147,16 +147,13 @@ class History:
                     accion = API_ACTION_RESET_STR
                 elif "last_login" in self.diffs:
                     self.show_accordion = False
-            elif len(self.diffs) == 2:
-                if all(
-                    [i in self.diffs for i in ("current_editor_id", "current_editor_fecha")]
-                ):  # TODO project related
-                    self.accordion_body = False
-                    accion = (
-                        HISTORY_EDITOR_CANCEL
-                        if self.diffs["current_editor_id"][0]
-                        else HISTORY_EDITOR
-                    )
+            elif len(self.diffs) == 2 and all(
+                [i in self.diffs for i in ("current_editor_id", "current_editor_fecha")]
+            ):  # TODO project related
+                self.accordion_body = False
+                accion = (
+                    HISTORY_EDITOR_CANCEL if self.diffs["current_editor_id"][0] else HISTORY_EDITOR
+                )
         return accion
 
 
