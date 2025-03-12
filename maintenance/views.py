@@ -126,6 +126,8 @@ class MaintenanceAPIView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
+        if self.user.is_superuser:
+            return HttpResponseForbidden()
         self.action = request.path.split("/")[3] or API_ACTION_HOME
         self.object_pk = kwargs.pop("object_pk", None)
         if self.object_pk:
