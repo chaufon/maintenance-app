@@ -96,7 +96,10 @@ class MyLoginView(MaintenanceLoginView):
 * Modal size customization per variable
 * Javascript/CSS sources integration
 * SCSS customization
+* Show error message on login form
+* Show error when importing
 
 ## NEW FEATURES
 
 * Command management to add new actions (ADVANCED)
+* Captcha
