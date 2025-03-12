@@ -1,4 +1,4 @@
-{% extends 'maintenance/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'maintenance/css/base.css' %}">
@@ -16,13 +16,13 @@
     </form>
     <div class="col-md-6 col-lg-4 text-end">
       {% if user_can.add %}
-        {% include "maintenance/components/buttons.html#base-add" %}
+        {% include "maintenance/components/buttons.html#add" %}
       {% endif %}
       {% if user_can.import %}
-        {% include "maintenance/components/buttons.html#base-import" %}
+        {% include "maintenance/components/buttons.html#import" %}
       {% endif %}
       {% if user_can.export %}
-        {% include "maintenance/components/buttons.html#base-export" %}
+        {% include "maintenance/components/buttons.html#export" %}
       {% endif %}
     </div>
   </div>

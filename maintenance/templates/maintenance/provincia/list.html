@@ -26,15 +26,15 @@
           <td class="align-middle text-end">
             {% if object.is_active %}
               {% if user_can.edit %}
-                {% include "maintenance/components/buttons.html#base-edit" %}
+                {% include "maintenance/components/buttons.html#edit" %}
               {% else %}
-                {% include "maintenance/components/buttons.html#base-read" %}
+                {% include "maintenance/components/buttons.html#read" %}
               {% endif %}
               {% if user_can.delete %}
-                {% include "maintenance/components/buttons.html#base-delete" %}
+                {% include "maintenance/components/buttons.html#delete" %}
               {% endif %}
               {% if user_can.history %}
-                {% include "maintenance/components/buttons.html#base-history" %}
+                {% include "maintenance/components/buttons.html#history" %}
               {% endif %}
             {% endif %}
           </td>
