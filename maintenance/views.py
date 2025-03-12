@@ -380,6 +380,10 @@ class DepartamentoAPIView(MaintenanceAPIView):
     model = Departamento
     edit_formclass = DepartamentoEditForm
     order_by = ("pk",)
+    field_list = {
+        API_ACTION_EXPORT: ["codigo", "name"],
+        API_ACTION_LIST: ["codigo", "name"],
+    }
 
 
 class ProvinciaAPIView(MaintenanceAPIView):
@@ -387,6 +391,10 @@ class ProvinciaAPIView(MaintenanceAPIView):
     edit_formclass = ProvinciaEditForm
     order_by = ("pk",)
     select_related = ("departamento",)
+    field_list = {
+        API_ACTION_EXPORT: ["codigo", "name", "departamento"],
+        API_ACTION_LIST: ["codigo", "name", "departamento"],
+    }
 
 
 class DistritoAPIView(MaintenanceAPIView):
@@ -394,3 +402,7 @@ class DistritoAPIView(MaintenanceAPIView):
     edit_formclass = DistritoEditForm
     order_by = ("pk",)
     select_related = ("provincia", "provincia__departamento")
+    field_list = {
+        API_ACTION_EXPORT: ["codigo", "name", "provincia"],
+        API_ACTION_LIST: ["codigo", "name", "provincia"],
+    }
