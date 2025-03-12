@@ -125,6 +125,10 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
         self.name = self.name.upper()
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        self.is_active = False
+        return self.save(*args, **kwargs)
+
 
 @pghistory.track()
 class Departamento(BaseCatalogo):
