@@ -311,7 +311,7 @@ class MaintenanceAPIView(TemplateView):
         filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
         fields_list = self.field_list[self.action]  # API_ACTION_EXPORT
         headers_list = self.model.get_headers_list(fields_list)
-        data_list = self.get_data_list(fields_list, add_obj=False)
+        data_list = self.get_data_list(fields_list, paginated=False, add_obj=False)
         dataset = Dataset()
         dataset.headers = headers_list
         for data in data_list:
