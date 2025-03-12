@@ -41,6 +41,10 @@ class BaseModel(models.Model):
     def create_date_str(self):
         return self.create_date.strftime(DATETIME_FORMAT)
 
+    @property
+    def modify_date_str(self):
+        return self.modify_date.strftime(DATETIME_FORMAT)
+
 
 class MaintenanceMixin:
     @property
@@ -84,7 +88,10 @@ class MaintenanceMixin:
     def get_headers_list(cls, fields_list: list) -> list:
         headers = list()
         for field_name in fields_list:
-            headers.append(cls._meta.get_field(field_name).verbose_name.title())
+            try:
+                headers.append(cls._meta.get_field(field_name).verbose_name.title())
+            except Exception:  # NOQA
+                headers.append(field_name.title())
         return headers
 
     def get_row_data(self, fields_list: tuple, add_obj: bool) -> list:
@@ -141,3 +148,7 @@ class Distrito(BaseCatalogo):
     name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+
+    @property
+    def departamento_str(self):
+        return self.provincia.departamento
