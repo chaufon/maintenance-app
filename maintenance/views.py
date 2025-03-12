@@ -382,7 +382,7 @@ class DepartamentoAPIView(MaintenanceAPIView):
     order_by = ("pk",)
     field_list = {
         API_ACTION_EXPORT: ["codigo", "name"],
-        API_ACTION_LIST: ["codigo", "name"],
+        API_ACTION_LIST: ["codigo", "name", "create_date", "modify_date", "is_active"],
     }
 
 
@@ -393,7 +393,14 @@ class ProvinciaAPIView(MaintenanceAPIView):
     select_related = ("departamento",)
     field_list = {
         API_ACTION_EXPORT: ["codigo", "name", "departamento"],
-        API_ACTION_LIST: ["codigo", "name", "departamento"],
+        API_ACTION_LIST: [
+            "codigo",
+            "name",
+            "departamento",
+            "create_date",
+            "modify_date",
+            "is_active",
+        ],
     }
 
 
@@ -403,6 +410,14 @@ class DistritoAPIView(MaintenanceAPIView):
     order_by = ("pk",)
     select_related = ("provincia", "provincia__departamento")
     field_list = {
-        API_ACTION_EXPORT: ["codigo", "name", "provincia"],
-        API_ACTION_LIST: ["codigo", "name", "provincia"],
+        API_ACTION_EXPORT: ["codigo", "name", "departamento", "provincia"],
+        API_ACTION_LIST: [
+            "codigo",
+            "name",
+            "departamento",
+            "provincia",
+            "create_date",
+            "modify_date",
+            "is_active",
+        ],
     }
