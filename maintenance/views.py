@@ -95,7 +95,10 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_IMPORT: "ObjectsImported",
         API_ACTION_RESET: "Contraseña reseteada correctamente",
     }
-    field_list = {API_ACTION_EXPORT: ["id", "name"], API_ACTION_LIST: ["id", "name", "is_active"]}
+    field_list = {
+        API_ACTION_EXPORT: ["id", "name"],
+        API_ACTION_LIST: ["id", "name", "create_date", "modify_date", "is_active"],
+    }
     select_related = tuple()
     title = "Project"
     event = {}
