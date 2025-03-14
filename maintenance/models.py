@@ -122,7 +122,8 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
         abstract = True
 
     def save(self, *args, **kwargs):
-        self.name = self.name.upper()
+        if self.name:
+            self.name = self.name.upper()
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
