@@ -19,9 +19,12 @@
     </div>
   {% endif %}
   {% if subtitle %}
-    <section id="welcome" class="row py-4">
-      <h1 class="fs-3">{{ subtitle }}</h1>
-    </section>
+    <div id="welcome" class="row py-4">
+      <div class="col-lg-6 fs-3 h1">{{ subtitle }}</div>
+      <div class="col-lg-6 d-flex justify-content-end">
+        {% block extra-buttons %}{% endblock extra-buttons %}
+      </div>
+    </div>
   {% endif %}
   {% if user.is_authenticated %}
     {% block filters %}{% endblock filters %}
