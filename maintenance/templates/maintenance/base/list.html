@@ -43,7 +43,7 @@
                     {% endif %}
                     </td>
                     </tr>
-                    {% if not is_related %}
+                    {% if object.has_related_model %}
                       <div class="collapse" id="collapse-{{ object.pk }}"></div>
                     {% endif %}
                   {% else %}
