@@ -27,6 +27,9 @@
               {% with object=data.object %}
                 <td class="align-middle text-end">
                   {% if object.is_active %}
+                    {% if object.has_related_model %}
+                      {% include "maintenance/components/buttons.html#related" %}
+                    {% endif %}
                     {% if user_can.edit %}
                       {% include "maintenance/components/buttons.html#edit" %}
                     {% else %}
