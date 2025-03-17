@@ -9,7 +9,6 @@ from maintenance.constants import (
     API_ACTION_HISTORY,
     API_ACTION_PARTIAL_PLUS,
     API_ACTION_READ,
-    API_ACTION_RELATED,
     API_ACTION_RESET,
     DATETIME_FORMAT,
     DPTO_CODIGO_CALLAO,
@@ -83,12 +82,6 @@ class MaintenanceMixin:
         return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_PARTIAL_PLUS}",
             args=(self.pk,),
-        )
-
-    @property
-    def related_url(self):
-        return reverse(
-            f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_RELATED}", args=(self.pk,)
         )
 
     @classmethod

@@ -143,9 +143,7 @@
 
 <div id="related">
   {% partialdef related %}
-    <button type="button" class="btn btn-outline-success" data-bs-toggle="collapse"
-            data-bs-target="#collapse-{{ object.pk }}" aria-expanded="false"
-            aria-controls="collapse-{{ object.pk }}" hx-target="#collapse-{{ object.pk }}"
+    <button type="button" class="btn btn-outline-success" hx-target="#collapse-{{ object.pk }}"
             hx-get="{{ object.related_url }}">
       <i class="bi bi-exposure me-1"></i>
         Mostrar objetos relacionados
