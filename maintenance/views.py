@@ -448,7 +448,12 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.template_name = (
             f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
         )
-        return super().dispatch(request, *args, **kwargs)
+        # Default
+        if request.method.lower() in self.http_method_names:
+            handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+        else:
+            handler = self.http_method_not_allowed
+        return handler(request, *args, **kwargs)
 
     def update_context(self):
         return {"subtitle": f"Listado de {self.nombre_plural.title()}", "is_related": True}
