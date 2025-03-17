@@ -32,6 +32,7 @@ from maintenance.constants import (
     API_ACTION_PARTIAL_PLUS,
     API_ACTION_PARTIAL_SEARCH,
     API_ACTION_READ,
+    API_ACTION_RELATED,
     API_ACTION_RESET,
     MENU_MANTENIMIENTOS,
     XLSX_CONTENT_TYPE,
@@ -140,12 +141,16 @@ class MaintenanceAPIView(TemplateView):
                 )
             except self.model.ObjectDoesNotExist:
                 return HttpResponseNotFound()
+            else:
+                if self.action == API_ACTION_RELATED:
+                    self.is_related = True
+                    self.related_action = request.path.split("/")[4] or API_ACTION_LIST
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
-        if not self.user.eval_perm(self.action, self.model_name, self.object):
+        if not self.user.eval_perm(self.action, self.model_name, self.object, self.related_action):
             return HttpResponseForbidden()
         self.user_can = {  # TODO remove
-            action: self.user.eval_perm(action, self.model_name)
+            action: self.user.eval_perm(action, self.model_name, related_action=self.related_action)
             for action in self.actions_with_perms
         }
         self.app = self.model._meta.app_label
@@ -379,6 +384,79 @@ class MaintenanceAPIView(TemplateView):
 
     def update_context(self):
         return {}
+
+
+class RelatedMaintenanceAPIView(MaintenanceAPIView):
+    model = None
+    parent_model = None
+    parent_model_name = ""
+    edit_formclass = None
+    select_related = tuple()
+    order_by = ("-is_active", "name")
+    actions_with_perms = (
+        API_ACTION_ADD,
+        API_ACTION_DELETE,
+        API_ACTION_EDIT,
+        API_ACTION_LIST,
+        API_ACTION_HISTORY,
+        API_ACTION_PARTIAL,
+        API_ACTION_READ,
+    )
+    parent_pk = None
+    parent_object = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.user = request.user
+        if self.user.is_superuser:
+            return HttpResponseForbidden()
+        self.action = request.path.split("/")[4] or API_ACTION_LIST
+        self.object_pk = kwargs.pop("object_pk", None)
+        self.parent_pk = kwargs.pop("parent_pk", None)
+        if self.parent_pk:
+            try:
+                self.parent_object = self.parent_model.objects.get(pk=self.parent_pk)
+            except self.parent_model.ObjectDoesNotExist:
+                return HttpResponseNotFound()
+            else:
+                if self.object_pk:
+                    try:
+                        self.object = self.model.todos.get(pk=self.object_pk)
+                    except self.model.ObjectDoesNotExist:
+                        return HttpResponseNotFound()
+
+        self.parent_model_name = self.parent_model._meta.model_name
+        self.model_name = self.model._meta.model_name
+
+        for action in self.actions_with_perms:
+            if action in (API_ACTION_ADD, API_ACTION_DELETE, API_ACTION_EDIT, API_ACTION_PARTIAL):
+                perm = self.user.eval_perm(API_ACTION_EDIT, self.parent_model_name)
+            elif action in (API_ACTION_LIST, API_ACTION_READ):
+                perm = self.user.eval_perm(API_ACTION_LIST, self.parent_model_name)
+            elif action == API_ACTION_HISTORY:
+                perm = self.user.eval_perm(API_ACTION_HISTORY, self.parent_model_name)
+            else:
+                perm = False
+            self.user_can[action] = perm
+
+        if not self.user_can[self.action]:
+            return HttpResponseForbidden()
+
+        self.app = self.model._meta.app_label
+        self.nombre = self.model._meta.verbose_name.title()
+        self.nombre_plural = self.model._meta.verbose_name_plural.title()
+
+        base_url = f"{self.app}:{self.parent_model_name}:{API_ACTION_RELATED}"
+        self.urls = {
+            API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}", args=(self.parent_pk,)),
+            API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}", args=(self.parent_pk,)),
+        }
+        self.template_name = (
+            f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def update_context(self):
+        return {"subtitle": f"Listado de {self.nombre_plural.title()}", "is_related": True}
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
