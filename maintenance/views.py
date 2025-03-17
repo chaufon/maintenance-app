@@ -32,7 +32,6 @@ from maintenance.constants import (
     API_ACTION_PARTIAL_PLUS,
     API_ACTION_PARTIAL_SEARCH,
     API_ACTION_READ,
-    API_ACTION_RELATED,
     API_ACTION_RESET,
     MENU_MANTENIMIENTOS,
     XLSX_CONTENT_TYPE,
@@ -405,7 +404,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.user = request.user
         if self.user.is_superuser:
             return HttpResponseForbidden()
-        self.action = request.path.split("/")[4] or API_ACTION_LIST
+        self.action = request.path.split("/")[5] or API_ACTION_LIST
         self.object_pk = kwargs.pop("object_pk", None)
         self.parent_pk = kwargs.pop("parent_pk", None)
         if self.parent_pk:
@@ -441,7 +440,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.nombre = self.model._meta.verbose_name.title()
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
 
-        base_url = f"{self.app}:{self.parent_model_name}:{API_ACTION_RELATED}"
+        base_url = f"{self.app}:{self.parent_model_name}:{self.model_name}"
         self.urls = {
             API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}", args=(self.parent_pk,)),
             API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}", args=(self.parent_pk,)),
