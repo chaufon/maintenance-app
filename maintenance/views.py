@@ -456,7 +456,11 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return handler(request, *args, **kwargs)
 
     def update_context(self):
-        return {"subtitle": f"Listado de {self.nombre_plural.title()}", "is_related": True}
+        return {
+            "subtitle": f"Listado de {self.nombre_plural.title()}",
+            "is_related": True,
+            "related_length": len(self.field_list[API_ACTION_LIST]) + 1,
+        }
 
 
 class DepartamentoAPIView(MaintenanceAPIView):

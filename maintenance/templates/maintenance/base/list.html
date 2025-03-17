@@ -44,7 +44,11 @@
                     </td>
                     </tr>
                     {% if object.has_related_model %}
-                      <div class="collapse" id="collapse-{{ object.pk }}"></div>
+                      <tr>
+                        <td{% if related_length %} colspan="{{ related_length }}"{% endif %}>
+                          <div class="collapse" id="collapse-{{ object.pk }}"></div>
+                        </td>
+                      </tr>
                     {% endif %}
                   {% else %}
                     Objeto eliminado / Reactivar (si se puede) {# TODO #}
