@@ -1,4 +1,4 @@
-<div class="row p-0" id="search-results">
+<div class="row p-0" id="search-results-related"{% endif %}>
   <div class="col-12 table-responsive pe-1">
     <table class="table table-hover border-1">
       <thead class="table-light">
@@ -27,9 +27,6 @@
               {% with object=data.object %}
                 <td class="align-middle text-end">
                   {% if object.is_active %}
-                    {% if object.has_related_model %}
-                      {% include "maintenance/components/buttons.html#related" %}
-                    {% endif %}
                     {% if user_can.edit %}
                       {% include "maintenance/components/buttons.html#edit" %}
                     {% else %}
@@ -41,21 +38,11 @@
                     {% if user_can.history %}
                       {% include "maintenance/components/buttons.html#history" %}
                     {% endif %}
-                    </td>
-                    </tr>
-                    {% if object.has_related_model %}
-                      <tr>
-                        <td{% if related_length %} colspan="{{ related_length }}"{% endif %}>
-                          <div class="collapse" id="collapse-{{ object.pk }}"></div>
-                        </td>
-                      </tr>
-                    {% endif %}
                   {% else %}
                     Objeto eliminado / Reactivar (si se puede) {# TODO #}
-                    </td>
-                    </tr>
                   {% endif %}
-
+                </td>
+              </tr>
               {% endwith %}
             {% endif %}
           {% endfor %}
@@ -63,5 +50,4 @@
       </tbody>
     </table>
   </div>
-  {% include "maintenance/components/pagination.html" %}
 </div>

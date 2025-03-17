@@ -212,6 +212,7 @@ class MaintenanceAPIView(TemplateView):
             fields_list = self.field_list[self.action]
             context["header_list"] = self.model.get_headers_list(fields_list)
             context["data_list"] = self.get_data_list(fields_list, add_obj=True)
+            context["related_length"] = len(fields_list) + 1
 
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)
@@ -457,9 +458,8 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
 
     def update_context(self):
         return {
+            "list_template": f"{self.app}/{self.parent_model_name}/{self.model_name}/{API_ACTION_LIST}.html",  # NOQA
             "subtitle": f"Listado de {self.nombre_plural.title()}",
-            "is_related": True,
-            "related_length": len(self.field_list[API_ACTION_LIST]) + 1,
         }
 
 
