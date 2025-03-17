@@ -141,16 +141,12 @@ class MaintenanceAPIView(TemplateView):
                 )
             except self.model.ObjectDoesNotExist:
                 return HttpResponseNotFound()
-            else:
-                if self.action == API_ACTION_RELATED:
-                    self.is_related = True
-                    self.related_action = request.path.split("/")[4] or API_ACTION_LIST
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
-        if not self.user.eval_perm(self.action, self.model_name, self.object, self.related_action):
+        if not self.user.eval_perm(self.action, self.model_name, self.object):
             return HttpResponseForbidden()
         self.user_can = {  # TODO remove
-            action: self.user.eval_perm(action, self.model_name, related_action=self.related_action)
+            action: self.user.eval_perm(action, self.model_name)
             for action in self.actions_with_perms
         }
         self.app = self.model._meta.app_label
