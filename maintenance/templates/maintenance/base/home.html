@@ -3,6 +3,19 @@
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'maintenance/css/base.css' %}">
 {% endblock extra_css %}
+
+{% block extra-buttons %}
+  {% if user_can.add %}
+    {% include "maintenance/components/buttons.html#add" %}
+  {% endif %}
+  {% if user_can.import %}
+    {% include "maintenance/components/buttons.html#import" %}
+  {% endif %}
+  {% if user_can.export %}
+    {% include "maintenance/components/buttons.html#export" %}
+  {% endif %}
+{% endblock extra-buttons %}
+
 {% block filters %}
   <div class="row">
     {% include "maintenance/forms/non_field_errors.html" %}
@@ -14,19 +27,9 @@
         {% include 'maintenance/components/icons.html#searching' %}
       </div>
     </form>
-    <div class="col-md-6 col-lg-4 text-end">
-      {% if user_can.add %}
-        {% include "maintenance/components/buttons.html#add" %}
-      {% endif %}
-      {% if user_can.import %}
-        {% include "maintenance/components/buttons.html#import" %}
-      {% endif %}
-      {% if user_can.export %}
-        {% include "maintenance/components/buttons.html#export" %}
-      {% endif %}
-    </div>
   </div>
 {% endblock filters %}
+
 {% block content %}
   <div class="modal fade" tabindex="-1" data-bs-keyboard="false" data-bs-backdrop="static"
        aria-labelledby="Creación/Edición" aria-hidden="true" id="modal-form">

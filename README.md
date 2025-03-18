@@ -98,8 +98,13 @@ class MyLoginView(MaintenanceLoginView):
 * SCSS customization
 * Show error message on login form
 * Show error when importing
+* Change password for everybody
+* Pagination always at the end of the page
+* Remove modify_date from History detail
+* Autofocus on single field forms
 
 ## NEW FEATURES
 
 * Command management to add new actions (ADVANCED)
 * Captcha
+* Sticky table headers
