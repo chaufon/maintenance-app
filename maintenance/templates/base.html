@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{% static 'maintenance/css/datepicker-bs5.min.css' %}">
   <link rel="stylesheet" href="{% static 'maintenance/css/maintenance.css' %}">
   {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/project.css' %}">
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <main class="container-fluid">
@@ -40,6 +41,7 @@
 <script src="{% static 'maintenance/js/vendor/inputmask.min.js' %}"></script>
 {#<script src="{% static 'maintenance/js/vendor/color-mode.js' %}"></script>#}
 {% block extra_js %}{% endblock %}
+<script src="{% static 'js/project.js' %}"></script>
 </body>
 </html>
 
