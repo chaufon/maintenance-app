@@ -1,3 +1,10 @@
+let collapseItem;
+
+function toggleCollapse(el, show=true) {
+  collapseItem = bootstrap.Collapse.getOrCreateInstance(el);
+  show ? collapseItem.show() : collapseItem.hide();
+}
+
 let tooltipList = [];
 
 function loadToolTip() {

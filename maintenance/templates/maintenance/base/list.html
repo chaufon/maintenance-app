@@ -1,6 +1,14 @@
-<div class="row p-0" id="search-results">
-  <div class="col-12 table-responsive pe-1">
-    <table class="table table-hover border-1">
+{% if is_related and user_can.add %}
+  <div class="row p-0 m-3">
+    <div class="col-12 text-start">
+      {% include "maintenance/components/buttons.html#add" %}
+    </div>
+  </div>
+{% endif %}
+
+<div class="row p-0" id="search-results{{ related_tag }}">
+  <div class="col-12 table-responsive">
+    <table class="table {% if not is_related %}table-hover{% endif %} border-1">
       <thead class="table-light">
       <tr>
         {% for header in header_list %}
@@ -28,7 +36,8 @@
                 <td class="align-middle text-end">
                   {% if object.is_active %}
                     {% if object.has_related_model %}
-                      {% include "maintenance/components/buttons.html#related" %}
+                      {% include "maintenance/components/buttons.html#related-hide" %}
+                      {% include "maintenance/components/buttons.html#related-show" %}
                     {% endif %}
                     {% if user_can.edit %}
                       {% include "maintenance/components/buttons.html#edit" %}
@@ -44,9 +53,11 @@
                     </td>
                     </tr>
                     {% if object.has_related_model %}
-                      <tr>
-                        <td{% if related_length %} colspan="{{ related_length }}"{% endif %}>
-                          <div class="collapse" id="collapse-{{ object.pk }}"></div>
+                      <tr class="related-row">
+                        <td colspan="{{ related_length }}" class="py-0">
+                          <div class="collapse container border pb-5"
+                               id="collapse-related-{{ object.pk }}">
+                          </div>
                         </td>
                       </tr>
                     {% endif %}
@@ -55,7 +66,6 @@
                     </td>
                     </tr>
                   {% endif %}
-
               {% endwith %}
             {% endif %}
           {% endfor %}
@@ -63,5 +73,7 @@
       </tbody>
     </table>
   </div>
-  {% include "maintenance/components/pagination.html" %}
+  {% if not is_related %}
+    {% include "maintenance/components/pagination.html" %}
+  {% endif %}
 </div>

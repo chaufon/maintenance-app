@@ -55,6 +55,30 @@ document.addEventListener("ObjectsImported", (e) => {
     text: e.detail.value,
   })
 })
+document.addEventListener("ObjectAddedRelated", (e) => {
+  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
+  const relatedEvent = "ObjectAddedRelated" + e.detail.pk;
+  htmx.trigger(relatedBtn, relatedEvent);
+  swalSuccess.fire({
+    title: e.detail.title
+  })
+})
+document.addEventListener("ObjectDeletedRelated", (e) => {
+  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
+  const relatedEvent = "ObjectDeletedRelated" + e.detail.pk;
+  htmx.trigger(relatedBtn, relatedEvent);
+  swalSuccess.fire({
+    title: e.detail.title
+  })
+})
+document.addEventListener("ObjectEditedRelated", (e) => {
+  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
+  const relatedEvent = "ObjectEditedRelated" + e.detail.pk;
+  htmx.trigger(relatedBtn, relatedEvent);
+  swalSuccess.fire({
+    title: e.detail.title
+  })
+})
 
 document.addEventListener("shown.bs.modal", () => {
   const btnEnviar = document.getElementById("btn-modal-enviar");
@@ -67,4 +91,22 @@ document.addEventListener("shown.bs.modal", () => {
     })
   }
 
+})
+
+htmx.on("htmx:afterSettle", (e) => {
+  const targetEl = e.detail.target;
+  if (targetEl.id.startsWith("collapse-related-")) {
+    const idEl = targetEl.id.replace("collapse-related-", "");
+    const hideEl = document.getElementById("related-hide-" + idEl);
+    const showEl = document.getElementById("related-show-" + idEl);
+
+    toggleCollapse(targetEl);
+    showEl.classList.add("d-none");
+    hideEl.classList.remove("d-none");
+    hideEl.addEventListener("click", () => {
+      toggleCollapse(targetEl, false);
+      hideEl.classList.add("d-none");
+      showEl.classList.remove("d-none");
+    })
+  }
 })

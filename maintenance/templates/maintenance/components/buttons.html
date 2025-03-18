@@ -2,53 +2,56 @@
 
 <div id="edit">
   {% partialdef edit %}
-    <button type="button" class="btn btn-warning"
+    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}warning"
             hx-target="#modal-form-dialog" hx-include="this" hx-get="{{ object.edit_url }}"
-      {% if inverse_buttons %}
+      {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Editar"
       {% endif %}
     >
-      <i class="bi bi-pencil{% if inverse_buttons %}"></i>{% else %} me-1"></i>Editar{% endif %}
+      <i class="bi bi-pencil{% if button_no_text %}"></i>{% else %} me-1"></i>Editar{% endif %}
     </button>
   {% endpartialdef edit %}
 </div>
 
 <div id="delete">
   {% partialdef delete %}
-    <button type="button" class="btn btn-danger" hx-delete="{{ object.delete_url }}"
-            hx-trigger="confirmed"
+    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}danger"
+            hx-delete="{{ object.delete_url }}" hx-trigger="confirmed"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"
+      {% endif %}
             onClick="swalDelete.fire().then((r) => {
                   if (r.isConfirmed) {
                     htmx.trigger(this, 'confirmed');
                   }
                 })">
-      <i class="bi bi-trash me-1"></i>Eliminar
+      <i class="bi bi-trash {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
     </button>
   {% endpartialdef delete %}
 </div>
 
 <div id="read">
   {% partialdef read %}
-    <button type="button" class="btn btn-secondary"
+    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}secondary"
             hx-target="#modal-form-dialog" hx-get="{{ object.read_url }}"
-      {% if inverse_buttons %}
+      {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Ver"
       {% endif %}
     >
-      <i class="bi bi-eye{% if inverse_buttons %}"></i>{% else %} me-1"></i>Ver{% endif %}
+      <i class="bi bi-eye{% if button_no_text %}"></i>{% else %} me-1"></i>Ver{% endif %}
     </button>
   {% endpartialdef read %}
 </div>
 
 <div id="history">
   {% partialdef history %}
-    <button type="button" class="btn btn-info"
+    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}info"
             hx-target="#modal-form-dialog" hx-get="{{ object.history_url }}"
-      {% if inverse_buttons %}
+      {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Histórico"
       {% endif %}
     >
-      <i class="bi bi-clock-history{% if inverse_buttons %}"></i>{% else %} me-1"></i>
+      <i class="bi bi-clock-history{% if button_no_text %}"></i>{% else %} me-1"></i>
         Histórico{% endif %}
     </button>
   {% endpartialdef history %}
@@ -65,17 +68,17 @@
 
 <div id="add">
   {% partialdef add %}
-    <button type="button" class="btn btn-success{% if inverse_buttons %} h-100{% endif %}"
+    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}success"
             hx-get="{{ urls.add }}"
             hx-target="#modal-form-dialog">
-      <i class="bi bi-plus-lg me-1"></i>Añadir
+      <i class="bi bi-plus-lg me-1"></i>Añadir{% if is_related %} {{ nombre }}{% endif %}
     </button>
   {% endpartialdef add %}
 </div>
 
 <div id="import">
   {% partialdef import %}
-    <button type="button" class="btn btn-outline-info{% if inverse_buttons %} w-100 mb-1{% endif %}"
+    <button type="button" class="btn btn-outline-info"
             hx-get="{{ urls.import }}" hx-target="#modal-form-dialog">
       <i class="bi bi-cloud-upload me-1"></i>Importar
     </button>
@@ -85,7 +88,7 @@
 <div id="export">
   {% partialdef export %}
     <button type="submit" formaction="{{ urls.export }}" form="search-filters" formmethod="get"
-            class="btn btn-outline-success{% if inverse_buttons %} w-100 mb-1{% endif %}">
+            class="btn btn-outline-success">
       <i class="bi bi-file-earmark-excel me-1"></i>Exportar
     </button>
   {% endpartialdef export %}
@@ -103,13 +106,13 @@
 <div id="comment">
   {% partialdef comment %}
     {% if user.can_comment_venta %}
-    <button type="button" class="btn btn-primary"
-            hx-target="#modal-form-dialog" hx-get="{{ object.comment_url }}"
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Comentarios"
-    >
-      <i class="bi bi-chat-fill"></i>
-      {#      <i class="bi bi-chat-dots"></i>#}
-    </button>
+      <button type="button" class="btn btn-primary"
+              hx-target="#modal-form-dialog" hx-get="{{ object.comment_url }}"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Comentarios"
+      >
+        <i class="bi bi-chat-fill"></i>
+        {#      <i class="bi bi-chat-dots"></i>#}
+      </button>
     {% endif %}
   {% endpartialdef comment %}
 </div>
@@ -141,12 +144,28 @@
   {% endpartialdef modal-enviar %}
 </div>
 
-<div id="related">
-  {% partialdef related %}
-    <button type="button" class="btn btn-outline-success" hx-target="#collapse-{{ object.pk }}"
-            hx-get="{{ object.related_url }}">
-      <i class="bi bi-exposure me-1"></i>
-        Mostrar objetos relacionados
+<div id="related-show">
+  {% partialdef related-show %}
+    <button type="button" class="btn btn-outline-primary" id="related-show-{{ object.pk }}"
+            hx-target="#collapse-related-{{ object.pk }}" hx-get="{{ object.related_url }}"
+    >
+      <i class="bi bi-caret-down-fill me-1"></i>
+      Mostrar
     </button>
-  {% endpartialdef related %}
+  {% endpartialdef related-show %}
+</div>
+
+<div id="related-hide">
+  {% partialdef related-hide %}
+    <button type="button" class="btn btn-outline-secondary d-none"
+            id="related-hide-{{ object.pk }}"
+            hx-target="#collapse-related-{{ object.pk }}" hx-get="{{ object.related_url }}"
+            hx-trigger="ObjectEditedRelated{{ object.pk }} from:body,
+            ObjectAddedRelated{{ object.pk }} from:body,
+            ObjectDeletedRelated{{ object.pk }} from:body"
+    >
+      <i class="bi bi-caret-up-fill me-1"></i>
+      Ocultar
+    </button>
+  {% endpartialdef related-hide %}
 </div>

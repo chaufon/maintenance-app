@@ -9,3 +9,7 @@
 #div_id_equipo.htmx-added, #div_id_accesorio.htmx-added {
   opacity: 0;
 }
+
+.table-hover tbody tr.related-row:hover {
+  --bs-table-hover-bg: transparent !important;
+}

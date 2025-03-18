@@ -61,7 +61,6 @@ class MaintenanceBaseModelForm(forms.ModelForm, BootstrapFormatMixin):
 
 class SearchForm(forms.Form):
     default_renderer = FloatingFormRenderer
-    hx_get = ""
     param = forms.CharField(
         required=False,
         widget=SearchInput(
@@ -78,16 +77,13 @@ class SearchForm(forms.Form):
             }
         ),
     )
-    user = None
 
     def __init__(self, *args, **kwargs):
         placeholder = kwargs.pop("placeholder", "")
-        self.hx_get = kwargs.pop("hx_get", "")
-        self.user = kwargs.pop("user", None)
+        hx_get = kwargs.pop("hx_get", "")
+        _ = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
-        self.fields["param"].widget.attrs.update(
-            {"placeholder": placeholder, "hx-get": self.hx_get}
-        )
+        self.fields["param"].widget.attrs.update({"placeholder": placeholder, "hx-get": hx_get})
         self.fields["param"].label = placeholder
 
     def clean_param(self):

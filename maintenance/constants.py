@@ -77,3 +77,6 @@ DPTO_CODIGO_CALLAO = "07"
 
 TRUE_STR = "SÍ"
 FALSE_STR = "NO"
+
+RELATED_TAG = "-related"
+RELATED_NAME = "Related"

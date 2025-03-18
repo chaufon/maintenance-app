@@ -34,6 +34,8 @@ from maintenance.constants import (
     API_ACTION_READ,
     API_ACTION_RESET,
     MENU_MANTENIMIENTOS,
+    RELATED_NAME,
+    RELATED_TAG,
     XLSX_CONTENT_TYPE,
     XLSX_DATETIME_FORMAT,
 )
@@ -126,6 +128,7 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_COMMENT,
     )
     user = None
+    is_related = False
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -180,7 +183,7 @@ class MaintenanceAPIView(TemplateView):
     def get_select_related(self) -> tuple:
         return self.select_related or tuple()
 
-    def _get_queryset(self):
+    def get_queryset(self):
         self.form = self.search_formclass(self.request.GET, **self.get_form_kwargs())
         if self.form.is_valid():
             qs = self.form_valid_search(
@@ -213,6 +216,8 @@ class MaintenanceAPIView(TemplateView):
             context["header_list"] = self.model.get_headers_list(fields_list)
             context["data_list"] = self.get_data_list(fields_list, add_obj=True)
             context["related_length"] = len(fields_list) + 1
+            context["is_related"] = self.is_related
+            context["related_tag"] = RELATED_TAG if self.is_related else ""
 
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)
@@ -237,7 +242,7 @@ class MaintenanceAPIView(TemplateView):
             )  # only for venta supervisor filter
             self.form = self.search_formclass(request.GET, **self.get_form_kwargs())
         elif self.action == API_ACTION_LIST:
-            self.paginator = Paginator(self._get_queryset(), self.objects_per_page)
+            self.paginator = Paginator(self.get_queryset(), self.objects_per_page)
         elif self.action == API_ACTION_READ:
             self.form = self.edit_formclass(instance=self.object, **self.get_form_kwargs())
         elif self.action in (API_ACTION_PARTIAL, API_ACTION_PARTIAL_PLUS):
@@ -307,7 +312,7 @@ class MaintenanceAPIView(TemplateView):
             if page_obj:
                 object_list = page_obj.object_list
         else:
-            object_list = self._get_queryset()
+            object_list = self.get_queryset()
 
         for obj in object_list:
             data.append(obj.get_row_data(fields_list, add_obj))
@@ -398,8 +403,14 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         API_ACTION_PARTIAL,
         API_ACTION_READ,
     )
+    events_name = {
+        API_ACTION_ADD: f"ObjectAdded{RELATED_NAME}",
+        API_ACTION_DELETE: f"ObjectDeleted{RELATED_NAME}",
+        API_ACTION_EDIT: f"ObjectEdited{RELATED_NAME}",
+    }
     parent_pk = None
     parent_object = None
+    is_related = True
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -407,7 +418,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             return HttpResponseForbidden()
         self.action = request.path.split("/")[5] or API_ACTION_LIST
         self.object_pk = kwargs.pop("object_pk", None)
-        self.parent_pk = kwargs.pop("parent_pk", None)
+        self.parent_pk = kwargs.pop("parent_pk")
         if self.parent_pk:
             try:
                 self.parent_object = self.parent_model.objects.get(pk=self.parent_pk)
@@ -460,7 +471,33 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return {
             "list_template": f"{self.app}/{self.parent_model_name}/{self.model_name}/{API_ACTION_LIST}.html",  # NOQA
             "subtitle": f"Listado de {self.nombre_plural.title()}",
+            "button_no_text": True,
         }
+
+    def get_queryset(self):
+        filters = {self.parent_model_name: self.parent_object}
+        qs = self.model.todos.select_related(*self.get_select_related()).filter(**filters)
+        return self.apply_order_by(qs)
+
+    def _render_no_html(self):
+        if self.action in (API_ACTION_ADD, API_ACTION_EDIT):
+            event = {
+                self.events_name[self.action]: self.events_msg[self.action].format(
+                    self.nombre.title()
+                )
+            }
+        else:  # API_ACTION_DELETE:
+            event = self.event
+        related_event_name = self.events_name[self.action]
+        related_event_data = {"title": event[related_event_name], "pk": str(self.parent_pk)}
+        return HttpResponse(
+            status=204, headers={"HX-Trigger": json.dumps({related_event_name: related_event_data})}
+        )
+
+    def form_valid_edit(self):
+        obj = self.form.save(commit=False)
+        setattr(obj, self.parent_model_name, self.parent_object)
+        obj.save()
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
