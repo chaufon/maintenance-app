@@ -130,6 +130,7 @@ class MaintenanceAPIView(TemplateView):
     user = None
     is_related = False
     upload_files = False
+    button_no_text = False
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -220,6 +221,7 @@ class MaintenanceAPIView(TemplateView):
             context["data_list"] = self.get_data_list(fields_list, add_obj=True)
             context["related_length"] = len(fields_list) + 1
             context["is_related"] = self.is_related
+            context["button_no_text"] = self.button_no_text
             context["related_tag"] = RELATED_TAG if self.is_related else ""
 
         context.update(self.update_context())
@@ -414,6 +416,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     parent_pk = None
     parent_object = None
     is_related = True
+    button_no_text = True
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -474,7 +477,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return {
             "list_template": f"{self.app}/{self.parent_model_name}/{self.model_name}/{API_ACTION_LIST}.html",  # NOQA
             "subtitle": f"Listado de {self.nombre_plural.title()}",
-            "button_no_text": True,
         }
 
     def get_queryset(self):

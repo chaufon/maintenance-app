@@ -5,15 +5,17 @@
 {% endblock extra_css %}
 
 {% block extra-buttons %}
-  {% if user_can.add %}
-    {% include "maintenance/components/buttons.html#add" %}
-  {% endif %}
-  {% if user_can.import %}
-    {% include "maintenance/components/buttons.html#import" %}
-  {% endif %}
-  {% if user_can.export %}
-    {% include "maintenance/components/buttons.html#export" %}
-  {% endif %}
+  {% with button_no_text=False %}
+    {% if user_can.add %}
+      {% include "maintenance/components/buttons.html#add" %}
+    {% endif %}
+    {% if user_can.import %}
+      {% include "maintenance/components/buttons.html#import" %}
+    {% endif %}
+    {% if user_can.export %}
+      {% include "maintenance/components/buttons.html#export" %}
+    {% endif %}
+  {% endwith %}
 {% endblock extra-buttons %}
 
 {% block filters %}
