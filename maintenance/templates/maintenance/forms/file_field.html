@@ -1,9 +1,6 @@
 <div class="col-12 mb-2" id="div_{{ field.auto_id }}">
   <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
   {{ field }}
-  {% if field.help_text %}
-    <span class="ms-3 mt-n1 form-text">{{ field.help_text|safe }}</span>
-  {% endif %}
   {% if field.errors %}
     {% for error in field.errors %}
       <div class="invalid-feedback">{{ error }}</div>
