@@ -94,6 +94,32 @@
   {% endpartialdef export %}
 </div>
 
+<div id="start">
+  {% partialdef start %}
+    <button type="button" class="btn btn-primary"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Procesar"
+      {% endif %}
+            hx-get="{{ urls.start }}" hx-target="#modal-form-dialog">
+      <i class="bi bi-play-circle{% if button_no_text %}"></i>{% else %} me-1"></i>
+        Procesar{% endif %}
+    </button>
+  {% endpartialdef start %}
+</div>
+
+<div id="pause">
+  {% partialdef pause %}
+    <button type="button" class="btn btn-danger"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Pausar"
+      {% endif %}
+            hx-get="{{ urls.pause }}" hx-target="#modal-form-dialog">
+      <i class="bi bi-pause-circle{% if button_no_text %}"></i>{% else %} me-1"></i>
+        Pausar{% endif %}
+    </button>
+  {% endpartialdef pause %}
+</div>
+
 <div id="import-demo">
   {% partialdef import-demo %}
     <a href="{{ urls.import_demo }}" class="btn btn-outline-success">
@@ -147,25 +173,34 @@
 <div id="related-show">
   {% partialdef related-show %}
     <button type="button" class="btn btn-outline-primary" id="related-show-{{ object.pk }}"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar"
+      {% endif %}
             hx-target="#collapse-related-{{ object.pk }}" hx-get="{{ object.related_url }}"
     >
-      <i class="bi bi-caret-down-fill me-1"></i>
-      Mostrar
+      <i class="bi bi-caret-down-fill{% if button_no_text %}"></i>{% else %} me-1"></i>
+        Mostrar{% endif %}
     </button>
   {% endpartialdef related-show %}
 </div>
+
 
 <div id="related-hide">
   {% partialdef related-hide %}
     <button type="button" class="btn btn-outline-secondary d-none"
             id="related-hide-{{ object.pk }}"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Ocultar"
+      {% endif %}
             hx-target="#collapse-related-{{ object.pk }}" hx-get="{{ object.related_url }}"
             hx-trigger="ObjectEditedRelated{{ object.pk }} from:body,
             ObjectAddedRelated{{ object.pk }} from:body,
             ObjectDeletedRelated{{ object.pk }} from:body"
     >
-      <i class="bi bi-caret-up-fill me-1"></i>
-      Ocultar
+      <i class="bi bi-caret-up-fill{% if button_no_text %}"></i>{% else %} me-1"></i>
+        Ocultar{% endif %}
     </button>
   {% endpartialdef related-hide %}
 </div>
+
+
