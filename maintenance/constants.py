@@ -4,7 +4,10 @@ DATETIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT
 DATETIME_FULL = f"{DATETIME_FORMAT}:%S"
 
 XLSX_DATETIME_FORMAT = "%d_%m_%Y_%H_%M_%S"
-XLSX_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+CONTENT_TYPE_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+CONTENT_TYPE_XLS = "application/vnd.ms-excel"
+CONTENT_TYPE_ZIP = "application/zip"
+CONTENT_TYPE_MP3 = "audio/mpeg"
 
 MENU_VENTAS = "1"
 MENU_REPORTES = "2"

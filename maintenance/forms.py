@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 from django.forms.renderers import TemplatesSetting
 
 from maintenance.models import Departamento, Distrito, Provincia
-from maintenance.validators import validate_file_xlsx
+from maintenance.validators import is_xlsx
 
 
 class FloatingFormRenderer(TemplatesSetting):
@@ -98,7 +98,7 @@ class ImportForm(forms.Form, BootstrapFormatMixin):
     required_css_class = "fw-bolder"
     default_renderer = FloatingFormRenderer
 
-    file = forms.FileField(label="Archivo", required=True, validators=(validate_file_xlsx,))
+    file = forms.FileField(label="Archivo", required=True, validators=(is_xlsx,))
 
     def __init__(self, *args, **kwargs):
         _ = kwargs.pop("user", None)

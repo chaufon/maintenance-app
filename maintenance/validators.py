@@ -1,26 +1,34 @@
 from django.core.exceptions import ValidationError
 
+from maintenance.constants import CONTENT_TYPE_MP3, CONTENT_TYPE_XLSX, CONTENT_TYPE_ZIP
 
-def validate_file_xls(file):
-    XLS_MAGIC_NUMBER = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
 
+def get_file_content_type(file):
+    import magic
+
+    file_buffer = file.read(2048)
     file.seek(0)
-    file_header = file.read(8)
-    file.seek(0)
-
-    if not file_header.startswith(XLS_MAGIC_NUMBER):
-        raise ValidationError("Solo archivos Excel '.xls' son permitidos")
+    return magic.from_buffer(file_buffer, mime=True)
 
 
-def validate_file_xlsx(file):
-    XLSX_MAGIC_NUMBER = b"\x50\x4b\x03\x04"
+def is_zip(file):
+    content_type = get_file_content_type(file)
+    return content_type == CONTENT_TYPE_ZIP
 
-    file.seek(0)
-    file_header = file.read(8)
-    file.seek(0)
 
-    if not file_header.startswith(XLSX_MAGIC_NUMBER):
-        raise ValidationError("Solo archivos Excel '.xlsx' son permitidos")
+def is_mp3(file):
+    content_type = get_file_content_type(file)
+    return content_type == CONTENT_TYPE_MP3
+
+
+def is_xlsx(file):
+    content_type = get_file_content_type(file)
+    return content_type == CONTENT_TYPE_XLSX
+
+
+def is_xls(file):
+    content_type = get_file_content_type(file)
+    return content_type == "application/vnd.ms-excel"
 
 
 def cellphone_number(number):

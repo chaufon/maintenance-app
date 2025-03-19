@@ -33,10 +33,10 @@ from maintenance.constants import (
     API_ACTION_PARTIAL_SEARCH,
     API_ACTION_READ,
     API_ACTION_RESET,
+    CONTENT_TYPE_XLSX,
     MENU_MANTENIMIENTOS,
     RELATED_NAME,
     RELATED_TAG,
-    XLSX_CONTENT_TYPE,
     XLSX_DATETIME_FORMAT,
 )
 from maintenance.forms import (
@@ -331,7 +331,7 @@ class MaintenanceAPIView(TemplateView):
         for data in data_list:
             dataset.append([i["value"].upper() for i in data])
         dataset.title = self.nombre_plural.upper()
-        response = HttpResponse(dataset.xlsx, content_type=XLSX_CONTENT_TYPE)
+        response = HttpResponse(dataset.xlsx, content_type=CONTENT_TYPE_XLSX)
         response["Content-Disposition"] = f"attachment; filename={filename}"
         return response
 
