@@ -1,5 +1,5 @@
 <form hx-post="{{ request.path }}" class="modal-content"
-  {% if modal_is_import %}hx-encoding="multipart/form-data"{% endif %}>
+  {% if upload_files %}hx-encoding="multipart/form-data"{% endif %}>
   <div class="modal-header">
     <h5 class="modal-title">{{ modal_title }}</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>

@@ -129,6 +129,7 @@ class MaintenanceAPIView(TemplateView):
     )
     user = None
     is_related = False
+    upload_files = False
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -163,6 +164,8 @@ class MaintenanceAPIView(TemplateView):
             API_ACTION_IMPORT: reverse(f"{base_url}:{API_ACTION_IMPORT}"),
         }
         self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
+        if not self.upload_files:  # if not explicitly enabled, check if action is import
+            self.upload_files = self.action == API_ACTION_IMPORT
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self) -> dict:
@@ -205,7 +208,7 @@ class MaintenanceAPIView(TemplateView):
         context["nombre"] = self.nombre.title()
         context["modal_title"] = f"{API_ACTION_MODAL_TITLE.get(self.action)} {self.nombre.title()}"
         context["modal_size"] = self.get_modal_size()
-        context["modal_is_import"] = self.action == API_ACTION_IMPORT
+        context["upload_files"] = self.upload_files
         context["modal_readonly"] = self.action in (API_ACTION_READ, API_ACTION_HISTORY)
         context["user_can"] = self.user_can
         context["urls"] = self.urls
@@ -264,7 +267,7 @@ class MaintenanceAPIView(TemplateView):
     def post(self, request, *args, **kwargs):
         if self.action in (API_ACTION_ADD, API_ACTION_EDIT):
             self.form = self.edit_formclass(
-                request.POST, instance=self.object, **self.get_form_kwargs()
+                request.POST, request.FILES, instance=self.object, **self.get_form_kwargs()
             )
         elif self.action == API_ACTION_RESET:
             self.form = self.reset_formclass(
