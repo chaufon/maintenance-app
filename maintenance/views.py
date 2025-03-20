@@ -150,7 +150,7 @@ class MaintenanceAPIView(TemplateView):
         if not self.user.eval_perm(self.action, self.model_name, self.object):
             return HttpResponseForbidden()
         self.user_can = {  # TODO remove
-            action: self.user.eval_perm(action, self.model_name)
+            action: self.user.eval_perm(self.action, self.model_name)
             for action in self.actions_with_perms
         }
         self.app = self.model._meta.app_label
