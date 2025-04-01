@@ -2,7 +2,7 @@ import json
 import logging
 
 from django.contrib.auth.views import LoginView, LogoutView
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.core.paginator import Paginator
 from django.db.models import QuerySet
 from django.http import (
@@ -52,6 +52,69 @@ from maintenance.models import Departamento, Distrito, Provincia
 logger = logging.getLogger(__name__)
 
 
+class WebEvents:
+    events_name = {
+        API_ACTION_ADD: "ObjectAdded",
+        API_ACTION_DELETE: "ObjectDeleted",
+        API_ACTION_EDIT: "ObjectEdited",
+        API_ACTION_IMPORT: "ObjectsImported",
+        API_ACTION_RESET: "PasswordUpdated",
+    }
+    events_msg = {
+        API_ACTION_ADD: "{} creado correctamente",
+        API_ACTION_DELETE: "{} eliminado correctamente",
+        API_ACTION_EDIT: "{} actualizado correctamente",
+        API_ACTION_IMPORT: "Importación correcta. {}",
+        API_ACTION_RESET: "Contraseña reseteada correctamente",
+    }
+    events_fail_name = {
+        API_ACTION_ADD: "ObjectAddedFail",
+        API_ACTION_DELETE: "ObjectDeletedFail",
+        API_ACTION_EDIT: "ObjectEditedFail",
+        API_ACTION_IMPORT: "ObjectsImportedFail",
+        API_ACTION_RESET: "PasswordUpdatedFail",
+    }
+    events_fail_msg = {
+        API_ACTION_ADD: "{} no se ha creado",
+        API_ACTION_DELETE: "{} no se ha eliminado",
+        API_ACTION_EDIT: "{} no se guardaron los cambios",
+        API_ACTION_IMPORT: "Se encontraron errores. {}",
+        API_ACTION_RESET: "No se actualizó contraseña",
+    }
+    related = False
+
+    def __init__(self, action: str, related: bool = False):
+        self.action = action
+        self.related = related
+        if self.related:
+            for k, v in self.events_name.items():
+                self.events_name.update({k: f"{v}{RELATED_NAME}"})
+                self.events_fail_name.update({k: f"{v}Fail{RELATED_NAME}"})
+
+    def get_name(self):
+        return self.events_name.get(self.action)
+
+    def get_msg(self):
+        return self.events_msg.get(self.action)
+
+    def get_fail_name(self):
+        return self.events_fail_name.get(self.action)
+
+    def get_fail_msg(self):
+        return self.events_fail_msg.get(self.action)
+
+    def get_event(self, success: bool, msg: str = "") -> dict:
+        return self.get_success_event() if success else self.get_fail_event(msg)
+
+    def get_success_event(self, msg: str = "") -> dict:
+        title = self.get_msg().format(msg)
+        return {self.get_name(): ({"title": title} if self.related else title)}
+
+    def get_fail_event(self, msg: str = "") -> dict:
+        fail_title = self.get_fail_msg().format(msg)
+        return {self.get_fail_name(): ({"title": fail_title} if self.related else fail_title)}
+
+
 class MaintenanceLoginView(LoginView):
     template_name = "maintenance/login.html"
     redirect_authenticated_user = True
@@ -82,28 +145,12 @@ class MaintenanceAPIView(TemplateView):
     import_formclass = ImportForm
     order_by = ("-is_active", "name")
     search_placeholder = "Buscar por nombre"
-    event_delete_error = "ObjectNotDeleted"
-    events_name = {
-        API_ACTION_ADD: "ObjectAdded",
-        API_ACTION_DELETE: "ObjectDeleted",
-        API_ACTION_EDIT: "ObjectEdited",
-        API_ACTION_IMPORT: "ObjectsImported",
-        API_ACTION_RESET: "PasswordUpdated",
-    }
-    events_msg = {
-        API_ACTION_ADD: "{} creado correctamente",
-        API_ACTION_DELETE: "{} eliminado correctamente",
-        API_ACTION_EDIT: "{} actualizado correctamente",
-        API_ACTION_IMPORT: "ObjectsImported",
-        API_ACTION_RESET: "Contraseña reseteada correctamente",
-    }
     field_list = {
         API_ACTION_EXPORT: ["id", "name"],
         API_ACTION_LIST: ["id", "name", "create_date", "modify_date", "is_active"],
     }
     select_related = tuple()
     title = "Project"
-    event = {}
     object = None
     object_pk = None
     paginator = None
@@ -131,6 +178,7 @@ class MaintenanceAPIView(TemplateView):
     is_related = False
     upload_files = False
     button_no_text = False
+    events = None
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -167,6 +215,7 @@ class MaintenanceAPIView(TemplateView):
         self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
         if not self.upload_files:  # if not explicitly enabled, check if action is import
             self.upload_files = self.action == API_ACTION_IMPORT
+        self.events = WebEvents(self.action)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self) -> dict:
@@ -227,16 +276,10 @@ class MaintenanceAPIView(TemplateView):
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)
 
-    def _render_no_html(self):
-        if self.action in [API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_RESET]:
-            event = {
-                self.events_name[self.action]: self.events_msg[self.action].format(
-                    self.nombre.title()
-                )
-            }
-        else:
-            event = self.event
-        return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(event)})
+    def _render_no_html(self, success, msg):
+        return HttpResponse(
+            status=204, headers={"HX-Trigger": json.dumps(self.events.get_event(success, msg))}
+        )
 
     def get(self, request, *args, **kwargs):
         if self.action == API_ACTION_HOME:
@@ -282,7 +325,7 @@ class MaintenanceAPIView(TemplateView):
 
         if self.form.is_valid():
             self.form_valid_edit()
-            return self._render_no_html()
+            return self._render_no_html(success=True, msg=self.nombre.title())
         else:
             self.form.format_errors()
             return self._render_html(**kwargs)
@@ -290,17 +333,16 @@ class MaintenanceAPIView(TemplateView):
     def delete(self, request, *args, **kwargs):
         if self.action != API_ACTION_DELETE:
             return HttpResponseNotAllowed(permitted_methods=["get"])
+
         try:
             self.object.delete()
         except ValidationError as e:
-            self.event = {self.event_delete_error: str(e.message)}
+            success = False
+            msg = str(e.message)
         else:
-            self.event = {
-                self.events_name[self.action]: self.events_msg[self.action].format(
-                    self.nombre.title()
-                )
-            }
-        return self._render_no_html()
+            msg = self.nombre.title()
+            success = True
+        return self._render_no_html(success, msg)
 
     def form_valid_search(self, qs: QuerySet, cleaned_data: dict) -> QuerySet:
         param = cleaned_data["param"]
@@ -338,16 +380,18 @@ class MaintenanceAPIView(TemplateView):
         return response
 
     def import_xlsx(self):
-        msg_error = f"Error al importar {self.model_name}s"
         file_to_import = self.form.cleaned_data["file"]
         dataset = Dataset().load(file_to_import, format="xlsx")
 
         if not dataset.headers:
-            raise ValidationError("Error con el archivo")
+            return self._render_no_html(success=False, msg="Error con el archivo")
+
         clean_headers = [h for h in dataset.headers if h is not None]
 
         new = 0
         empty = 0
+        errors = 0
+        msg_error = ""
         for data in dataset.dict:
             cleaned_data = {k: v for k, v in data.items() if k in clean_headers}
             if not any(cleaned_data.values()):
@@ -357,6 +401,8 @@ class MaintenanceAPIView(TemplateView):
             try:
                 self.form_valid_import(cleaned_data)
             except Exception as e:  # NOQA
+                errors += 1
+                msg_error += str(e)
                 logger.error(f"{msg_error}. Error: {e}")
                 continue
             else:
@@ -365,13 +411,16 @@ class MaintenanceAPIView(TemplateView):
         if empty > 10:
             logger.error(f"{msg_error}. Empty lines: {empty}")
 
-        self.event = {
-            self.events_name[self.action]: (
+        success = errors == 0
+        msg = (
+            (
                 f"{new} {self.nombre.title() if new == 1 else self.nombre_plural.title()} "
                 f"importado{'' if new == 1 else 's'} correctamente"
             )
-        }
-        return self._render_no_html()
+            if success
+            else msg_error
+        )
+        return self._render_no_html(success, msg)
 
     def form_valid_import(self, cleaned_data: dict) -> None:
         _ = self.model.objects.create(**cleaned_data)
@@ -408,11 +457,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         API_ACTION_PARTIAL,
         API_ACTION_READ,
     )
-    events_name = {
-        API_ACTION_ADD: f"ObjectAdded{RELATED_NAME}",
-        API_ACTION_DELETE: f"ObjectDeleted{RELATED_NAME}",
-        API_ACTION_EDIT: f"ObjectEdited{RELATED_NAME}",
-    }
     parent_pk = None
     parent_object = None
     is_related = True
@@ -466,6 +510,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.template_name = (
             f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
         )
+        self.events = WebEvents(self.action, related=True)
         # Default
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
@@ -484,20 +529,13 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         qs = self.model.todos.select_related(*self.get_select_related()).filter(**filters)
         return self.apply_order_by(qs)
 
-    def _render_no_html(self):
-        if self.action in (API_ACTION_ADD, API_ACTION_EDIT):
-            event = {
-                self.events_name[self.action]: self.events_msg[self.action].format(
-                    self.nombre.title()
-                )
-            }
-        else:  # API_ACTION_DELETE:
-            event = self.event
-        related_event_name = self.events_name[self.action]
-        related_event_data = {"title": event[related_event_name], "pk": str(self.parent_pk)}
-        return HttpResponse(
-            status=204, headers={"HX-Trigger": json.dumps({related_event_name: related_event_data})}
-        )
+    def _render_no_html(self, success, msg):
+        if self.action in (API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_DELETE):
+            related_event_data = self.events.get_event(success, msg)
+            for k, v in related_event_data.items():
+                related_event_data[k] = v.update({"pk": str(self.parent_pk)})
+            return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_event_data)})
+        raise ImproperlyConfigured("Evento mal configurado")
 
     def form_valid_edit(self):
         obj = self.form.save(commit=False)
