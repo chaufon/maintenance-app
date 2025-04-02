@@ -104,7 +104,7 @@ class WebEvents:
         return self.events_fail_msg.get(self.action)
 
     def get_event(self, success: bool, msg: str = "") -> dict:
-        return self.get_success_event() if success else self.get_fail_event(msg)
+        return self.get_success_event(msg) if success else self.get_fail_event(msg)
 
     def get_success_event(self, msg: str = "") -> dict:
         title = self.get_msg().format(msg)
