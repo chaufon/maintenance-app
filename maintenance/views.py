@@ -88,8 +88,9 @@ class WebEvents:
         self.related = related
         if self.related:
             for k, v in self.events_name.items():
-                self.events_name.update({k: f"{v}{RELATED_NAME}"})
-                self.events_fail_name.update({k: f"{v}Fail{RELATED_NAME}"})
+                if not v.endswith(RELATED_NAME):  # TODO to avoid multiple adding, why?
+                    self.events_name[k] = f"{v}{RELATED_NAME}"
+                    self.events_fail_name[k] = f"{v}Fail{RELATED_NAME}"
 
     def get_name(self):
         return self.events_name.get(self.action)
@@ -106,11 +107,11 @@ class WebEvents:
     def get_event(self, success: bool, msg: str = "") -> dict:
         return self.get_success_event(msg) if success else self.get_fail_event(msg)
 
-    def get_success_event(self, msg: str = "") -> dict:
+    def get_success_event(self, msg: str) -> dict:
         title = self.get_msg().format(msg)
         return {self.get_name(): ({"title": title} if self.related else title)}
 
-    def get_fail_event(self, msg: str = "") -> dict:
+    def get_fail_event(self, msg: str) -> dict:
         fail_title = self.get_fail_msg().format(msg)
         return {self.get_fail_name(): ({"title": fail_title} if self.related else fail_title)}
 
