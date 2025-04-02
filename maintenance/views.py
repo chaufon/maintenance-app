@@ -534,7 +534,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         if self.action in (API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_DELETE):
             related_event_data = self.events.get_event(success, msg)
             for k, v in related_event_data.items():
-                related_event_data[k] = v.update({"pk": str(self.parent_pk)})
+                related_event_data[k].update({"pk": str(self.parent_pk)})
             return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_event_data)})
         raise ImproperlyConfigured("Evento mal configurado")
 
