@@ -286,9 +286,7 @@ class MaintenanceAPIView(TemplateView):
         if self.action == API_ACTION_HOME:
             self.form = self.search_formclass(**self.get_form_kwargs())
         elif self.action == API_ACTION_PARTIAL_SEARCH:
-            kwargs.update(
-                {"headers": {"HX-Trigger": "ForceSearch"}}
-            )  # only for venta supervisor filter
+            kwargs.update({"headers": {"HX-Trigger": "ForceSearch"}})  # TODO is still being used?
             self.form = self.search_formclass(request.GET, **self.get_form_kwargs())
         elif self.action == API_ACTION_LIST:
             self.paginator = Paginator(self.get_queryset(), self.objects_per_page)
@@ -490,10 +488,8 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
                 perm = self.user.eval_perm(API_ACTION_EDIT, self.parent_model_name)
             elif action in (API_ACTION_LIST, API_ACTION_READ):
                 perm = self.user.eval_perm(API_ACTION_LIST, self.parent_model_name)
-            elif action == API_ACTION_HISTORY:
-                perm = self.user.eval_perm(API_ACTION_HISTORY, self.parent_model_name)
             else:
-                perm = False
+                perm = self.user.eval_perm(action, self.parent_model_name)
             self.user_can[action] = perm
 
         if not self.user_can[self.action]:
