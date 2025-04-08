@@ -14,6 +14,7 @@ from maintenance.constants import (
     DPTO_CODIGO_CALLAO,
     DPTO_CODIGO_LIMA,
 )
+from maintenance.utils import true_false_str
 
 
 class ManagerOnlyActive(models.Manager):
@@ -120,6 +121,10 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
 
     class Meta:
         abstract = True
+
+    @property
+    def is_active_str(self):
+        return true_false_str(self.is_active)
 
     def save(self, *args, **kwargs):
         if self.name:

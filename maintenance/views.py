@@ -372,7 +372,7 @@ class MaintenanceAPIView(TemplateView):
         dataset = Dataset()
         dataset.headers = headers_list
         for data in data_list:
-            dataset.append([i["value"].upper() for i in data])
+            dataset.append([i["value"] for i in data])
         dataset.title = self.nombre_plural.upper()
         response = HttpResponse(dataset.xlsx, content_type=CONTENT_TYPE_XLSX)
         response["Content-Disposition"] = f"attachment; filename={filename}"
