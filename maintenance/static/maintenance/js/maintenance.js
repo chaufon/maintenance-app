@@ -80,6 +80,12 @@ document.addEventListener("ObjectEditedRelated", (e) => {
   })
 })
 
+document.addEventListener("ObjectsImportedRelated", (e) => {
+  swalSuccess.fire({
+    text: e.detail.value,
+  })
+})
+
 document.addEventListener("shown.bs.modal", () => {
   const btnEnviar = document.getElementById("btn-modal-enviar");
   const modalForm = document.querySelector(".modal form");
