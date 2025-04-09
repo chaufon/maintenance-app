@@ -48,6 +48,7 @@ from maintenance.forms import (
 )
 from maintenance.history import HistoryList
 from maintenance.models import Departamento, Distrito, Provincia
+from maintenance.utils import validar_si_bool
 
 logger = logging.getLogger(__name__)
 
@@ -372,7 +373,7 @@ class MaintenanceAPIView(TemplateView):
         dataset = Dataset()
         dataset.headers = headers_list
         for data in data_list:
-            dataset.append([i["value"] for i in data])
+            dataset.append([validar_si_bool(i["value"]) for i in data])
         dataset.title = self.nombre_plural.upper()
         response = HttpResponse(dataset.xlsx, content_type=CONTENT_TYPE_XLSX)
         response["Content-Disposition"] = f"attachment; filename={filename}"

@@ -8,3 +8,7 @@ def complete_todos_choices(choices: tuple, at_the_end: bool = True) -> tuple:
 
 def true_false_str(value: bool) -> str:
     return TRUE_STR if value else FALSE_STR
+
+
+def validar_si_bool(value: str | bool) -> str:
+    return true_false_str(value) if isinstance(value, bool) else value
