@@ -121,11 +121,6 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
-        if self.name:
-            self.name = self.name.upper()
-        super().save(*args, **kwargs)
-
     def delete(self, *args, **kwargs):
         self.is_active = False
         return self.save(*args, **kwargs)
@@ -135,6 +130,11 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
 class Departamento(BaseCatalogo):
     name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
+
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.name = self.name.upper()
+        super().save(*args, **kwargs)
 
     @property
     def es_lima_o_callao(self):
@@ -147,12 +147,22 @@ class Provincia(BaseCatalogo):
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.name = self.name.upper()
+        super().save(*args, **kwargs)
+
 
 @pghistory.track()
 class Distrito(BaseCatalogo):
     name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.name:
+            self.name = self.name.upper()
+        super().save(*args, **kwargs)
 
     @property
     def departamento_str(self):
