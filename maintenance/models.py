@@ -132,8 +132,7 @@ class Departamento(BaseCatalogo):
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
 
     def save(self, *args, **kwargs):
-        if self.name:
-            self.name = self.name.upper()
+        self.name = self.name.upper()
         super().save(*args, **kwargs)
 
     @property
@@ -148,8 +147,7 @@ class Provincia(BaseCatalogo):
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        if self.name:
-            self.name = self.name.upper()
+        self.name = self.name.upper()
         super().save(*args, **kwargs)
 
 
@@ -160,8 +158,7 @@ class Distrito(BaseCatalogo):
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        if self.name:
-            self.name = self.name.upper()
+        self.name = self.name.upper()
         super().save(*args, **kwargs)
 
     @property
