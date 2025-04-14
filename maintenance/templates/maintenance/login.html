@@ -167,10 +167,12 @@
 <main class="form-signin w-100 m-auto">
   <form method="post">
     {% csrf_token %}
+    {% block logo %}
     <div class="text-center mb-4">
     <img class="mb-4" src="{% static 'maintenance/img/tux.svg' %}" alt="" width="250">
       </div>
-    <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+    {% endblock %}
+    <h1 class="h3 mb-3 fw-normal text-center">Iniciar sesión</h1>
 
     <div class="form-floating">
       <input type="text" class="form-control" id="id_username" name="username" placeholder="" autofocus>
