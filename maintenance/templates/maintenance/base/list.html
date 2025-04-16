@@ -7,6 +7,7 @@
 {% endif %}
 
 <div class="row p-0" id="search-results{{ related_tag }}">
+  {% block before-table %}{% endblock before-table %}
   <div class="col-12 table-responsive">
     <table class="table {% if not is_related %}table-hover{% endif %} border-1">
       <thead class="table-light">
