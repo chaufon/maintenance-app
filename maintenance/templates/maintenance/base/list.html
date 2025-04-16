@@ -14,6 +14,7 @@
         {% for header in header_list %}
           <th>{{ header }}</th>
         {% endfor %}
+        {% block extra-headers %}{% endblock extra-headers %}
         <th class="text-center">Acciones</th>
       </tr>
       </thead>
@@ -32,8 +33,41 @@
                 {% endif %}
               </td>
             {% endfor %}
-            {% include "maintenance/base/list_actions.html" %}
-          </tr>
+            {% block extra-data %}{% endblock extra-data %}
+            <td class="align-middle text-end">
+              {% if object.is_active %}
+                {% block list-actions %}
+                  {% if object.has_related_model %}
+                    {% include "maintenance/components/buttons.html#related-hide" %}
+                    {% include "maintenance/components/buttons.html#related-show" %}
+                  {% endif %}
+                  {% if user_can.edit %}
+                    {% include "maintenance/components/buttons.html#edit" %}
+                  {% else %}
+                    {% include "maintenance/components/buttons.html#read" %}
+                  {% endif %}
+                  {% if user_can.delete %}
+                    {% include "maintenance/components/buttons.html#delete" %}
+                  {% endif %}
+                  {% if user_can.history %}
+                    {% include "maintenance/components/buttons.html#history" %}
+                  {% endif %}
+                {% endblock list-actions %}
+                </td>
+                {% if object.has_related_model %}
+                  </tr>
+                  <tr class="related-row">
+                  <td colspan="{{ related_length }}" class="py-0">
+                    <div class="collapse container border pb-5"
+                         id="collapse-related-{{ object.pk }}">
+                    </div>
+                  </td>
+                {% endif %}
+              {% else %}
+                Objeto eliminado / Reactivar (si se puede) {# TODO #}
+                </td>
+              {% endif %}
+              </tr>
         {% endwith %}
       {% endfor %}
       </tbody>
