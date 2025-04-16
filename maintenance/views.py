@@ -269,7 +269,7 @@ class MaintenanceAPIView(TemplateView):
         if self.action == API_ACTION_LIST:
             fields_list = self.field_list[self.action]
             context["header_list"] = self.model.get_headers_list(fields_list)
-            context["data_list"] = self.get_data_list(fields_list, add_obj=True)
+            context["row_list"] = self.get_row_list(fields_list)
             context["related_length"] = len(fields_list) + 1
             context["is_related"] = self.is_related
             context["button_no_text"] = self.button_no_text
@@ -349,9 +349,7 @@ class MaintenanceAPIView(TemplateView):
         qs = qs.filter(name__icontains=param) if param else qs
         return self.apply_order_by(qs)
 
-    def get_data_list(
-        self, fields_list: list, paginated: bool = True, add_obj: bool = True
-    ) -> list:
+    def get_row_list(self, fields_list: list, paginated: bool = True) -> list:
         data = list()
         object_list = list()
         if paginated:
@@ -362,18 +360,19 @@ class MaintenanceAPIView(TemplateView):
             object_list = self.get_queryset()
 
         for obj in object_list:
-            data.append(obj.get_row_data(fields_list, add_obj))
+            data.append(obj.get_row_data(fields_list))
+
         return data
 
     def render_xlsx(self):
         filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
         fields_list = self.field_list[self.action]  # API_ACTION_EXPORT
         headers_list = self.model.get_headers_list(fields_list)
-        data_list = self.get_data_list(fields_list, paginated=False, add_obj=False)
+        row_list = self.get_row_list(fields_list, paginated=False)
         dataset = Dataset()
         dataset.headers = headers_list
-        for data in data_list:
-            dataset.append([validar_si_bool(i["value"]) for i in data])
+        for row in row_list:
+            dataset.append([validar_si_bool(i["value"]) for i in row.data])
         dataset.title = self.nombre_plural.upper()
         response = HttpResponse(dataset.xlsx, content_type=CONTENT_TYPE_XLSX)
         response["Content-Disposition"] = f"attachment; filename={filename}"

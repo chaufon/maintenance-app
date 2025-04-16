@@ -18,10 +18,10 @@
       </tr>
       </thead>
       <tbody>
-      {% for row in data_list %}
-        <tr>
-          {% for data in row %}
-            {% if not data.object %}
+      {% for row in row_list %}
+        {% with object=row.object %}
+          <tr>
+            {% for data in row.data %}
               <td class="align-middle {{ data.class }}">
                 {% if data.value == 'True' or data.value == 'False' %}
                   {% with value=data.value %}
@@ -31,44 +31,41 @@
                   {{ data.value }}
                 {% endif %}
               </td>
-            {% else %}
-              {% with object=data.object %}
-                <td class="align-middle text-end">
-                  {% if object.is_active %}
-                    {% if object.has_related_model %}
-                      {% include "maintenance/components/buttons.html#related-hide" %}
-                      {% include "maintenance/components/buttons.html#related-show" %}
-                    {% endif %}
-                    {% if user_can.edit %}
-                      {% include "maintenance/components/buttons.html#edit" %}
-                    {% else %}
-                      {% include "maintenance/components/buttons.html#read" %}
-                    {% endif %}
-                    {% if user_can.delete %}
-                      {% include "maintenance/components/buttons.html#delete" %}
-                    {% endif %}
-                    {% if user_can.history %}
-                      {% include "maintenance/components/buttons.html#history" %}
-                    {% endif %}
+            {% endfor %}
+            <td class="align-middle text-end">
+              {% if object.is_active %}
+                {% if object.has_related_model %}
+                  {% include "maintenance/components/buttons.html#related-hide" %}
+                  {% include "maintenance/components/buttons.html#related-show" %}
+                {% endif %}
+                {% if user_can.edit %}
+                  {% include "maintenance/components/buttons.html#edit" %}
+                {% else %}
+                  {% include "maintenance/components/buttons.html#read" %}
+                {% endif %}
+                {% if user_can.delete %}
+                  {% include "maintenance/components/buttons.html#delete" %}
+                {% endif %}
+                {% if user_can.history %}
+                  {% include "maintenance/components/buttons.html#history" %}
+                {% endif %}
+                </td>
+                </tr>
+                {% if object.has_related_model %}
+                  <tr class="related-row">
+                    <td colspan="{{ related_length }}" class="py-0">
+                      <div class="collapse container border pb-5"
+                           id="collapse-related-{{ object.pk }}">
+                      </div>
                     </td>
-                    </tr>
-                    {% if object.has_related_model %}
-                      <tr class="related-row">
-                        <td colspan="{{ related_length }}" class="py-0">
-                          <div class="collapse container border pb-5"
-                               id="collapse-related-{{ object.pk }}">
-                          </div>
-                        </td>
-                      </tr>
-                    {% endif %}
-                  {% else %}
-                    Objeto eliminado / Reactivar (si se puede) {# TODO #}
-                    </td>
-                    </tr>
-                  {% endif %}
-              {% endwith %}
-            {% endif %}
-          {% endfor %}
+                  </tr>
+                {% endif %}
+              {% else %}
+                Objeto eliminado / Reactivar (si se puede) {# TODO #}
+                </td>
+                </tr>
+              {% endif %}
+        {% endwith %}
       {% endfor %}
       </tbody>
     </table>

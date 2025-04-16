@@ -94,7 +94,7 @@ class MaintenanceMixin:
                 headers.append(field_name.title())
         return headers
 
-    def get_row_data(self, fields_list: tuple, add_obj: bool) -> list:
+    def get_row_data(self, fields_list: tuple) -> dict:
         data = list()
         for field_name in fields_list:
             field_str = getattr(self, field_name + "_str", None)
@@ -104,9 +104,7 @@ class MaintenanceMixin:
                     "class": "",  # TODO
                 }
             )
-        if add_obj:
-            data.append({"object": self})
-        return data
+        return {"object": self, "data": data}
 
 
 class BaseCatalogo(BaseModel, MaintenanceMixin):
