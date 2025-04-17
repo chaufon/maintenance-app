@@ -12,10 +12,11 @@
     <table class="table {% if not is_related %}table-hover{% endif %} border-1">
       <thead class="table-light">
       <tr>
+        {% block extra-headers-start %}{% endblock extra-headers-start %}
         {% for header in header_list %}
           <th>{{ header }}</th>
         {% endfor %}
-        {% block extra-headers %}{% endblock extra-headers %}
+        {% block extra-headers-end %}{% endblock extra-headers-end %}
         <th class="text-center">Acciones</th>
       </tr>
       </thead>
@@ -23,6 +24,7 @@
       {% for row in row_list %}
         {% with object=row.object %}
           <tr>
+            {% block extra-data-start %}{% endblock extra-data-start %}
             {% for data in row.data %}
               <td class="align-middle {{ data.class }}">
                 {% if data.value == 'True' or data.value == 'False' %}
@@ -34,7 +36,7 @@
                 {% endif %}
               </td>
             {% endfor %}
-            {% block extra-data %}{% endblock extra-data %}
+            {% block extra-data-end %}{% endblock extra-data-end %}
             <td class="align-middle text-end">
               {% if object.is_active %}
                 {% block list-actions %}
