@@ -1,3 +1,4 @@
+{% block extra-actions-related %}
 {% if is_related and user_can.add %}
   <div class="row p-0 m-3">
     <div class="col-12 text-start">
@@ -5,6 +6,7 @@
     </div>
   </div>
 {% endif %}
+{% endblock extra-actions-related %}
 
 <div class="row p-0" id="search-results{{ related_tag }}">
   {% block before-table %}{% endblock before-table %}
