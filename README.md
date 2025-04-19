@@ -108,3 +108,5 @@ class MyLoginView(MaintenanceLoginView):
 * Command management to add new actions (ADVANCED)
 * Captcha
 * Sticky table headers
+* Re-enable objects after being deleted 
+* History is showing date_modified as a field edited (it shouldn't 'cause is a system managed field)

@@ -217,7 +217,6 @@ class MaintenanceAPIView(TemplateView):
         self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
         if not self.upload_files:  # if not explicitly enabled, check if action is import
             self.upload_files = self.action == API_ACTION_IMPORT
-        self.events = WebEvents(self.action)
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self) -> dict:
@@ -278,9 +277,10 @@ class MaintenanceAPIView(TemplateView):
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)
 
-    def _render_no_html(self, success, msg):
+    def render_no_html(self, success, msg):
+        events = WebEvents(self.action)
         return HttpResponse(
-            status=204, headers={"HX-Trigger": json.dumps(self.events.get_event(success, msg))}
+            status=204, headers={"HX-Trigger": json.dumps(events.get_event(success, msg))}
         )
 
     def get(self, request, *args, **kwargs):
@@ -325,7 +325,7 @@ class MaintenanceAPIView(TemplateView):
 
         if self.form.is_valid():
             self.form_valid_edit()
-            return self._render_no_html(success=True, msg=self.nombre.title())
+            return self.render_no_html(success=True, msg=self.nombre.title())
         else:
             self.form.format_errors()
             return self._render_html(**kwargs)
@@ -342,7 +342,7 @@ class MaintenanceAPIView(TemplateView):
         else:
             msg = self.nombre.title()
             success = True
-        return self._render_no_html(success, msg)
+        return self.render_no_html(success, msg)
 
     def form_valid_search(self, qs: QuerySet, cleaned_data: dict) -> QuerySet:
         param = cleaned_data["param"]
@@ -383,7 +383,7 @@ class MaintenanceAPIView(TemplateView):
         dataset = Dataset().load(file_to_import, format="xlsx")
 
         if not dataset.headers:
-            return self._render_no_html(success=False, msg="Error con el archivo")
+            return self.render_no_html(success=False, msg="Error con el archivo")
 
         clean_headers = [h for h in dataset.headers if h is not None]
 
@@ -419,7 +419,7 @@ class MaintenanceAPIView(TemplateView):
             if success
             else msg_error
         )
-        return self._render_no_html(success, msg)
+        return self.render_no_html(success, msg)
 
     def form_valid_import(self, cleaned_data: dict) -> None:
         _ = self.model.objects.create(**cleaned_data)
@@ -507,7 +507,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.template_name = (
             f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
         )
-        self.events = WebEvents(self.action, related=True)
         # Default
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
@@ -526,9 +525,10 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         qs = self.model.todos.select_related(*self.get_select_related()).filter(**filters)
         return self.apply_order_by(qs)
 
-    def _render_no_html(self, success, msg):
+    def render_no_html(self, success, msg):
+        events = WebEvents(self.action, related=True)
         if self.action in (API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_DELETE):
-            related_event_data = self.events.get_event(success, msg)
+            related_event_data = events.get_event(success, msg)
             for k in related_event_data.keys():
                 related_event_data[k].update({"pk": str(self.parent_pk)})
             return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_event_data)})
