@@ -518,6 +518,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return {
             "list_template": f"{self.app}/{self.parent_model_name}/{self.model_name}/{API_ACTION_LIST}.html",  # NOQA
             "subtitle": f"Listado de {self.nombre_plural.title()}",
+            "parent_object": self.parent_object,
         }
 
     def get_queryset(self):
