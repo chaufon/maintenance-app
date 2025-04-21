@@ -102,6 +102,7 @@ class MyLoginView(MaintenanceLoginView):
 * Pagination always at the end of the page
 * Remove modify_date from History detail
 * Autofocus on single field forms
+* return HttpResponseForbidden(), is that fine or can be improve.
 
 ## NEW FEATURES
 

@@ -208,7 +208,7 @@ class MaintenanceAPIView(TemplateView):
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
 
         base_url = f"{self.app}:{self.model_name}"
-        self.urls = {
+        self.urls = {  # TODO programmatically
             API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}"),
             API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}"),
             API_ACTION_EXPORT: reverse(f"{base_url}:{API_ACTION_EXPORT}"),

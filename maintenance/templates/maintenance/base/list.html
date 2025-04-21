@@ -69,7 +69,9 @@
                   </td>
                 {% endif %}
               {% else %}
+                {% block lista-actions-inactive %}
                 Objeto eliminado / Reactivar (si se puede) {# TODO #}
+                {% endblock lista-actions-inactive %}
                 </td>
               {% endif %}
               </tr>
