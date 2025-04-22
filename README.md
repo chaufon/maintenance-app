@@ -103,6 +103,8 @@ class MyLoginView(MaintenanceLoginView):
 * Remove modify_date from History detail
 * Autofocus on single field forms
 * return HttpResponseForbidden(), is that fine or can be improve.
+* Create/modify user is needed? or with user provided by pghistory is enough? 
+* Modal does not show errors when form is invalid
 
 ## NEW FEATURES
 
