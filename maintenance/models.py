@@ -94,7 +94,7 @@ class MaintenanceMixin:
 
     @property
     def can_add_new_related(self):
-        return True
+        return self.has_related_model and self.is_active
 
     @property
     def has_related_model(self):
@@ -141,7 +141,7 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
 
     def reactivate(self, *args, **kwargs):
         self.is_active = True
-        return self.save(*args, **kwargs)
+        self.save(*args, **kwargs)  # TODO need to use update_fields?
 
 
 @pghistory.track()
