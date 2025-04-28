@@ -97,7 +97,7 @@ function seekAndShow(el, val, dst, def = "") {
   }
 }
 
-const swalDelete = Swal.mixin({
+const swalWarning = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-danger ms-md-5',
     cancelButton: 'btn btn-secondary me-sm-5'
@@ -105,7 +105,6 @@ const swalDelete = Swal.mixin({
   buttonsStyling: false,
   icon: "warning",
   showCancelButton: true,
-  confirmButtonText: "Eliminar",
   cancelButtonText: "Cancelar",
   reverseButtons: true,
   title: "¿Está seguro?",
@@ -128,11 +127,28 @@ function loadDeletes() {
   document.querySelectorAll(".maintenance-delete").forEach(e => {
     e.addEventListener("click", (e) => {
       e.preventDefault();
-      swalDelete.fire({
-        text: `Se eliminará el ${this.dataset.modelName || 'registro'} seleccionado`
+      swalWarning.fire({
+        confirmButtonText: "Eliminar",
+        text: `Se eliminará el ${e.target.dataset.modelName || 'registro'} seleccionado`
       }).then((result) => {
         if (result.isConfirmed){
-          htmx.trigger(this, "MaintenanceDeleteConfirmed");
+          htmx.trigger(e.target, "MaintenanceDeleteConfirmed");
+        }
+      })
+    })
+  })
+}
+
+function loadReactivates() {
+  document.querySelectorAll(".maintenance-reactivate").forEach(e => {
+    e.addEventListener("click", (e) => {
+      e.preventDefault();
+      swalWarning.fire({
+        confirmButtonText: "Reactivar",
+        text: `Se reactivará el ${e.target.dataset.modelName || 'registro'} seleccionado`
+      }).then((result) => {
+        if (result.isConfirmed){
+          htmx.trigger(e.target, "MaintenanceReactivateConfirmed");
         }
       })
     })

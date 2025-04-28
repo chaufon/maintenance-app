@@ -31,6 +31,7 @@ from maintenance.constants import (
     API_ACTION_PARTIAL,
     API_ACTION_PARTIAL_PLUS,
     API_ACTION_PARTIAL_SEARCH,
+    API_ACTION_REACTIVATE,
     API_ACTION_READ,
     API_ACTION_RESET,
     CONTENT_TYPE_XLSX,
@@ -60,6 +61,7 @@ class WebEvents:
         API_ACTION_EDIT: "ObjectEdited",
         API_ACTION_IMPORT: "ObjectsImported",
         API_ACTION_RESET: "PasswordUpdated",
+        API_ACTION_REACTIVATE: "ObjectReactivated",
     }
     events_msg = {
         API_ACTION_ADD: "{} creado correctamente",
@@ -67,6 +69,7 @@ class WebEvents:
         API_ACTION_EDIT: "{} actualizado correctamente",
         API_ACTION_IMPORT: "Importación correcta. {}",
         API_ACTION_RESET: "Contraseña reseteada correctamente",
+        API_ACTION_REACTIVATE: "{} reactivado correctamente",
     }
     events_fail_name = {
         API_ACTION_ADD: "ObjectAddedFail",
@@ -74,6 +77,7 @@ class WebEvents:
         API_ACTION_EDIT: "ObjectEditedFail",
         API_ACTION_IMPORT: "ObjectsImportedFail",
         API_ACTION_RESET: "PasswordUpdatedFail",
+        API_ACTION_REACTIVATE: "ObjectReactivatedFail",
     }
     events_fail_msg = {
         API_ACTION_ADD: "{} no se ha creado",
@@ -81,6 +85,7 @@ class WebEvents:
         API_ACTION_EDIT: "{} no se guardaron los cambios",
         API_ACTION_IMPORT: "Se encontraron errores. {}",
         API_ACTION_RESET: "No se actualizó contraseña",
+        API_ACTION_REACTIVATE: "No se pudo reactivar {}",
     }
     related = False
 
@@ -175,6 +180,7 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_RESET,
         API_ACTION_HISTORY,
         API_ACTION_COMMENT,
+        API_ACTION_REACTIVATE,
     )
     user = None
     is_related = False
@@ -284,7 +290,9 @@ class MaintenanceAPIView(TemplateView):
         )
 
     def get(self, request, *args, **kwargs):
-        if self.action == API_ACTION_HOME:
+        if self.action == API_ACTION_REACTIVATE:
+            return self.reactivate(request, *args, **kwargs)
+        elif self.action == API_ACTION_HOME:
             self.form = self.search_formclass(**self.get_form_kwargs())
         elif self.action == API_ACTION_PARTIAL_SEARCH:
             kwargs.update({"headers": {"HX-Trigger": "ForceSearch"}})  # TODO is still being used?
@@ -329,6 +337,17 @@ class MaintenanceAPIView(TemplateView):
         else:
             self.form.format_errors()
             return self._render_html(**kwargs)
+
+    def reactivate(self, request, *args, **kwargs):
+        try:
+            self.object.reactivate()
+        except ValidationError as e:
+            success = False
+            msg = str(e.message)
+        else:
+            msg = self.nombre.title()
+            success = True
+        return self.render_no_html(success, msg)
 
     def delete(self, request, *args, **kwargs):
         if self.action != API_ACTION_DELETE:
@@ -455,6 +474,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         API_ACTION_HISTORY,
         API_ACTION_PARTIAL,
         API_ACTION_READ,
+        API_ACTION_REACTIVATE,
     )
     parent_pk = None
     parent_object = None
@@ -484,7 +504,13 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.model_name = self.model._meta.model_name
 
         for action in self.actions_with_perms:
-            if action in (API_ACTION_ADD, API_ACTION_DELETE, API_ACTION_EDIT, API_ACTION_PARTIAL):
+            if action in (
+                API_ACTION_ADD,
+                API_ACTION_DELETE,
+                API_ACTION_EDIT,
+                API_ACTION_PARTIAL,
+                API_ACTION_REACTIVATE,
+            ):
                 perm = self.user.eval_perm(API_ACTION_EDIT, self.parent_model_name)
             elif action in (API_ACTION_LIST, API_ACTION_READ):
                 perm = self.user.eval_perm(API_ACTION_LIST, self.parent_model_name)
@@ -528,7 +554,12 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
 
     def render_no_html(self, success, msg):
         events = WebEvents(self.action, related=True)
-        if self.action in (API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_DELETE):
+        if self.action in (
+            API_ACTION_ADD,
+            API_ACTION_EDIT,
+            API_ACTION_DELETE,
+            API_ACTION_REACTIVATE,
+        ):
             related_event_data = events.get_event(success, msg)
             for k in related_event_data.keys():
                 related_event_data[k].update({"pk": str(self.parent_pk)})

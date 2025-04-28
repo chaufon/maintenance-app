@@ -22,7 +22,7 @@
       {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"
       {% endif %}
-            >
+    >
       <i class="bi bi-trash {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
     </button>
   {% endpartialdef delete %}
@@ -30,17 +30,14 @@
 
 <div id="reactivate">
   {% partialdef reactivate %}
-    <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}danger"
-            hx-post="{{ object.reactivate_url }}" hx-trigger="confirmed"
+    <button type="button"
+            class="btn btn-{% if is_related %}outline-{% endif %}danger maintenance-reactivate"
+            hx-post="{{ object.reactivate_url }}" hx-trigger="MaintenanceReactivateConfirmed"
       {% if button_no_text %}
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Reactivar"
       {% endif %}
-            onClick="swalDelete.fire().then((r) => {
-                  if (r.isConfirmed) {
-                    htmx.trigger(this, 'confirmed');
-                  }
-                })">
-      <i class="bi bi-trash {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
+    >
+      <i class="bi bi-arrow-counterclockwise {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
     </button>
   {% endpartialdef reactivate %}
 </div>

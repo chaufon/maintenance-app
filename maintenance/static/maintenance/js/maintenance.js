@@ -9,6 +9,7 @@ htmx.on("htmx:afterSwap", (e) => {
   loadDatePicker();
   loadInputmask();
   loadDeletes();
+  loadReactivates();
 
   if (e.detail.target.id === "modal-form-dialog") {
     modalForm.show();

@@ -10,6 +10,7 @@ from maintenance.constants import (
     API_ACTION_IMPORT,
     API_ACTION_LIST,
     API_ACTION_PARTIAL,
+    API_ACTION_REACTIVATE,
     API_ACTION_READ,
 )
 from maintenance.views import ProvinciaAPIView
@@ -26,6 +27,11 @@ urlpatterns = [
         f"{API_ACTION_DELETE}/<str:object_pk>/",
         ProvinciaAPIView.as_view(),
         name=f"{API_ACTION_DELETE}",
+    ),
+    path(
+        f"{API_ACTION_REACTIVATE}/<str:object_pk>/",
+        ProvinciaAPIView.as_view(),
+        name=f"{API_ACTION_REACTIVATE}",
     ),
     path(f"{API_ACTION_LIST}/", ProvinciaAPIView.as_view(), name=f"{API_ACTION_LIST}"),
     path(f"{API_ACTION_PARTIAL}/", ProvinciaAPIView.as_view(), name=f"{API_ACTION_PARTIAL}"),
