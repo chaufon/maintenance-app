@@ -1,11 +1,13 @@
 {% block extra-actions-related %}
+  {% if is_related %}
   <div class="row p-0 m-3">
-    {% if is_related and user_can.add and parent_object.can_add_new_related %}
+    {% if user_can.add and parent_object.can_add_new_related %}
       <div class="col-12 text-start">
         {% include "maintenance/components/buttons.html#add" %}
       </div>
     {% endif %}
   </div>
+  {% endif %}
 {% endblock extra-actions-related %}
 
 <div class="row p-0" id="search-results{{ related_tag }}">
@@ -65,7 +67,7 @@
                     {% include "maintenance/components/buttons.html#related-show" %}
                   {% endif %}
                   {% if user_can.reactivate %}
-                    {% if parent_object %}
+                    {% if is_related %} {# is child #}
                       {% if parent_object.is_active %}
                         {% include "maintenance/components/buttons.html#reactivate" %}
                       {% endif %}
