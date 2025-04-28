@@ -1,11 +1,11 @@
 {% block extra-actions-related %}
-{% if is_related and user_can.add %}
-  <div class="row p-0 m-3">
-    <div class="col-12 text-start">
-      {% include "maintenance/components/buttons.html#add" %}
+  {% if is_related and user_can.add %}
+    <div class="row p-0 m-3">
+      <div class="col-12 text-start">
+        {% include "maintenance/components/buttons.html#add" %}
+      </div>
     </div>
-  </div>
-{% endif %}
+  {% endif %}
 {% endblock extra-actions-related %}
 
 <div class="row p-0" id="search-results{{ related_tag }}">
@@ -70,7 +70,12 @@
                 {% endif %}
               {% else %}
                 {% block list-actions-no-active %}
-                Objeto eliminado / Reactivar (si se puede) {# TODO #}
+                  {% if user_can.reactivate %}
+                    {% include "maintenance/components/buttons.html#reactivate" %}
+                  {% endif %}
+                  {% if user_can.history %}
+                    {% include "maintenance/components/buttons.html#history" %}
+                  {% endif %}
                 {% endblock list-actions-no-active %}
                 </td>
               {% endif %}
