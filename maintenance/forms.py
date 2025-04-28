@@ -68,7 +68,8 @@ class SearchForm(forms.Form):
                 "class": "form-control w-100",
                 "hx-trigger": (
                     "input changed delay:500ms, load, ObjectEdited from:body, "
-                    "ObjectAdded from:body, ObjectDeleted from:body, ObjectsImported from:body"
+                    "ObjectAdded from:body, ObjectDeleted from:body, ObjectsImported from:body, "
+                    "ObjectReactivated from:body"
                 ),
                 "hx-target": "#search-results",
                 "hx-indicator": "#search-indicator",
