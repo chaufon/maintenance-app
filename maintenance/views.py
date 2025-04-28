@@ -490,7 +490,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.parent_pk = kwargs.pop("parent_pk")
         if self.parent_pk:
             try:
-                self.parent_object = self.parent_model.objects.get(pk=self.parent_pk)
+                self.parent_object = self.parent_model.todos.get(pk=self.parent_pk)
             except self.parent_model.ObjectDoesNotExist:
                 return HttpResponseNotFound()
             else:
