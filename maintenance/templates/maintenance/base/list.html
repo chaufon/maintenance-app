@@ -1,11 +1,11 @@
 {% block extra-actions-related %}
-  {% if is_related and user_can.add and parent_object.can_add_new_related %}
-    <div class="row p-0 m-3">
+  <div class="row p-0 m-3">
+    {% if is_related and user_can.add and parent_object.can_add_new_related %}
       <div class="col-12 text-start">
         {% include "maintenance/components/buttons.html#add" %}
       </div>
-    </div>
-  {% endif %}
+    {% endif %}
+  </div>
 {% endblock extra-actions-related %}
 
 <div class="row p-0" id="search-results{{ related_tag }}">
@@ -83,7 +83,7 @@
               </td>
             {% endif %}
           {% endwith %}
-        </tr>
+          </tr>
       {% endfor %}
       </tbody>
     </table>
