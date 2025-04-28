@@ -92,6 +92,14 @@ class MaintenanceMixin:
             args=(self.pk,),
         )
 
+    @property
+    def can_add_new_related(self):
+        return True
+
+    @property
+    def has_related_model(self):
+        return False
+
     @classmethod
     def get_headers_list(cls, fields_list: list) -> list:
         headers = list()

@@ -1,5 +1,5 @@
 {% block extra-actions-related %}
-  {% if is_related and user_can.add %}
+  {% if is_related and user_can.add and parent_object.can_add_new_related %}
     <div class="row p-0 m-3">
       <div class="col-12 text-start">
         {% include "maintenance/components/buttons.html#add" %}
