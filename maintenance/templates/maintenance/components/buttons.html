@@ -33,6 +33,7 @@
     <button type="button"
             class="btn btn-{% if is_related %}outline-{% endif %}secondary maintenance-reactivate"
             hx-post="{{ object.reactivate_url }}" hx-trigger="MaintenanceReactivateConfirmed"
+            data-model-name="{{ nombre }}"
       {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Reactivar"
       {% endif %}
