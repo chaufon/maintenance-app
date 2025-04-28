@@ -70,6 +70,10 @@
                 {% endif %}
               {% else %}
                 {% block list-actions-no-active %}
+                  {% if object.has_related_model %}
+                    {% include "maintenance/components/buttons.html#related-hide" %}
+                    {% include "maintenance/components/buttons.html#related-show" %}
+                  {% endif %}
                   {% if user_can.reactivate %}
                     {% include "maintenance/components/buttons.html#reactivate" %}
                   {% endif %}
