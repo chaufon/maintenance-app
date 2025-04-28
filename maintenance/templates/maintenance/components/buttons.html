@@ -31,13 +31,13 @@
 <div id="reactivate">
   {% partialdef reactivate %}
     <button type="button"
-            class="btn btn-{% if is_related %}outline-{% endif %}danger maintenance-reactivate"
+            class="btn btn-{% if is_related %}outline-{% endif %}secondary maintenance-reactivate"
             hx-post="{{ object.reactivate_url }}" hx-trigger="MaintenanceReactivateConfirmed"
       {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Reactivar"
       {% endif %}
     >
-      <i class="bi bi-arrow-counterclockwise {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
+      <i class="bi bi-arrow-counterclockwise {% if button_no_text %}"></i>{% else %} me-1"></i>Reactivar{% endif %}
     </button>
   {% endpartialdef reactivate %}
 </div>
