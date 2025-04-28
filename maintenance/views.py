@@ -290,9 +290,7 @@ class MaintenanceAPIView(TemplateView):
         )
 
     def get(self, request, *args, **kwargs):
-        if self.action == API_ACTION_REACTIVATE:
-            return self.reactivate(request, *args, **kwargs)
-        elif self.action == API_ACTION_HOME:
+        if self.action == API_ACTION_HOME:
             self.form = self.search_formclass(**self.get_form_kwargs())
         elif self.action == API_ACTION_PARTIAL_SEARCH:
             kwargs.update({"headers": {"HX-Trigger": "ForceSearch"}})  # TODO is still being used?
@@ -328,6 +326,8 @@ class MaintenanceAPIView(TemplateView):
             )
         elif self.action == API_ACTION_IMPORT:
             self.form = self.import_formclass(request.POST, request.FILES, **self.get_form_kwargs())
+        elif self.action == API_ACTION_REACTIVATE:
+            return self.reactivate(request, *args, **kwargs)
         else:
             return HttpResponseNotAllowed(permitted_methods=["get"])
 
