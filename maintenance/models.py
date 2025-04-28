@@ -8,6 +8,7 @@ from maintenance.constants import (
     API_ACTION_EDIT,
     API_ACTION_HISTORY,
     API_ACTION_PARTIAL_PLUS,
+    API_ACTION_REACTIVATE,
     API_ACTION_READ,
     API_ACTION_RESET,
     DATETIME_FORMAT,
@@ -57,6 +58,13 @@ class MaintenanceMixin:
     def delete_url(self):
         return reverse(
             f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_DELETE}", args=(self.pk,)
+        )
+
+    @property
+    def reactivate_url(self):
+        return reverse(
+            f"{self._meta.app_label}:{self._meta.model_name}:{API_ACTION_REACTIVATE}",
+            args=(self.pk,),
         )
 
     @property
