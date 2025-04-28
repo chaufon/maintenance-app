@@ -15,8 +15,23 @@
 
 <div id="delete">
   {% partialdef delete %}
+    <button type="button"
+            class="btn btn-{% if is_related %}outline-{% endif %}danger maintenance-delete"
+            hx-delete="{{ object.delete_url }}" hx-trigger="MaintenanceDeleteConfirmed"
+            data-model-name="{{ nombre }}"
+      {% if button_no_text %}
+            data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"
+      {% endif %}
+            >
+      <i class="bi bi-trash {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
+    </button>
+  {% endpartialdef delete %}
+</div>
+
+<div id="reactivate">
+  {% partialdef reactivate %}
     <button type="button" class="btn btn-{% if is_related %}outline-{% endif %}danger"
-            hx-delete="{{ object.delete_url }}" hx-trigger="confirmed"
+            hx-post="{{ object.reactivate_url }}" hx-trigger="confirmed"
       {% if button_no_text %}
             data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar"
       {% endif %}
@@ -27,7 +42,7 @@
                 })">
       <i class="bi bi-trash {% if button_no_text %}"></i>{% else %} me-1"></i>Eliminar{% endif %}
     </button>
-  {% endpartialdef delete %}
+  {% endpartialdef reactivate %}
 </div>
 
 <div id="read">

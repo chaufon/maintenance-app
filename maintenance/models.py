@@ -123,6 +123,10 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
         self.is_active = False
         return self.save(*args, **kwargs)
 
+    def reactivate(self, *args, **kwargs):
+        self.is_active = True
+        return self.save(*args, **kwargs)
+
 
 @pghistory.track()
 class Departamento(BaseCatalogo):

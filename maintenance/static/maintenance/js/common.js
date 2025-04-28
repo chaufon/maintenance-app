@@ -109,7 +109,6 @@ const swalDelete = Swal.mixin({
   cancelButtonText: "Cancelar",
   reverseButtons: true,
   title: "¿Está seguro?",
-  text: "Se eliminará el registro seleccionado"
 });
 
 const swalSuccess = Swal.mixin({
@@ -124,3 +123,18 @@ const swalError = Swal.mixin({
   showConfirmButton: false,
   showCancelButton: true
 });
+
+function loadDeletes() {
+  document.querySelectorAll(".maintenance-delete").forEach(e => {
+    e.addEventListener("click", (e) => {
+      e.preventDefault();
+      swalDelete.fire({
+        text: `Se eliminará el ${this.dataset.modelName || 'registro'} seleccionado`
+      }).then((result) => {
+        if (result.isConfirmed){
+          htmx.trigger(this, "MaintenanceDeleteConfirmed");
+        }
+      })
+    })
+  })
+}

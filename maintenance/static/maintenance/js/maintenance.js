@@ -8,6 +8,7 @@ htmx.on("htmx:afterSwap", (e) => {
   loadToolTip();
   loadDatePicker();
   loadInputmask();
+  loadDeletes();
 
   if (e.detail.target.id === "modal-form-dialog") {
     modalForm.show();
