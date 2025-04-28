@@ -24,8 +24,8 @@
       </thead>
       <tbody>
       {% for row in row_list %}
-        {% with object=row.object %}
-          <td>
+        <tr>
+          {% with object=row.object %}
             {% block extra-data-start %}{% endblock extra-data-start %}
             {% for data in row.data %}
               <td class="align-middle {{ data.class }}">
@@ -38,51 +38,52 @@
                 {% endif %}
               </td>
             {% endfor %}
-          {% block extra-data-end %}{% endblock extra-data-end %}
-          <td class="align-middle text-end">
-            {% if object.is_active %}
-              {% block list-actions %}
-                {% if object.has_related_model %}
-                  {% include "maintenance/components/buttons.html#related-hide" %}
-                  {% include "maintenance/components/buttons.html#related-show" %}
-                {% endif %}
-                {% if user_can.edit %}
-                  {% include "maintenance/components/buttons.html#edit" %}
-                {% else %}
-                  {% include "maintenance/components/buttons.html#read" %}
-                {% endif %}
-                {% if user_can.delete %}
-                  {% include "maintenance/components/buttons.html#delete" %}
-                {% endif %}
-                {% if user_can.history %}
-                  {% include "maintenance/components/buttons.html#history" %}
-                {% endif %}
-              {% endblock list-actions %}
-            {% else %}
-              {% block list-actions-no-active %}
-                {% if object.has_related_model %}
-                  {% include "maintenance/components/buttons.html#related-hide" %}
-                  {% include "maintenance/components/buttons.html#related-show" %}
-                {% endif %}
-                {% if user_can.reactivate %}
-                  {% include "maintenance/components/buttons.html#reactivate" %}
-                {% endif %}
-                {% if user_can.history %}
-                  {% include "maintenance/components/buttons.html#history" %}
-                {% endif %}
-              {% endblock list-actions-no-active %}
-            {% endif %}
-          </td>
-          {% if object.has_related_model %}
-            <tr class="related-row">
+            {% block extra-data-end %}{% endblock extra-data-end %}
+            <td class="align-middle text-end">
+              {% if object.is_active %}
+                {% block list-actions %}
+                  {% if object.has_related_model %}
+                    {% include "maintenance/components/buttons.html#related-hide" %}
+                    {% include "maintenance/components/buttons.html#related-show" %}
+                  {% endif %}
+                  {% if user_can.edit %}
+                    {% include "maintenance/components/buttons.html#edit" %}
+                  {% else %}
+                    {% include "maintenance/components/buttons.html#read" %}
+                  {% endif %}
+                  {% if user_can.delete %}
+                    {% include "maintenance/components/buttons.html#delete" %}
+                  {% endif %}
+                  {% if user_can.history %}
+                    {% include "maintenance/components/buttons.html#history" %}
+                  {% endif %}
+                {% endblock list-actions %}
+              {% else %}
+                {% block list-actions-no-active %}
+                  {% if object.has_related_model %}
+                    {% include "maintenance/components/buttons.html#related-hide" %}
+                    {% include "maintenance/components/buttons.html#related-show" %}
+                  {% endif %}
+                  {% if user_can.reactivate %}
+                    {% include "maintenance/components/buttons.html#reactivate" %}
+                  {% endif %}
+                  {% if user_can.history %}
+                    {% include "maintenance/components/buttons.html#history" %}
+                  {% endif %}
+                {% endblock list-actions-no-active %}
+              {% endif %}
+            </td>
+            {% if object.has_related_model %}
+              </tr>
+              <tr class="related-row">
               <td colspan="{{ related_length }}" class="py-0">
                 <div class="collapse container border pb-5"
                      id="collapse-related-{{ object.pk }}">
                 </div>
               </td>
-            </tr>
-          {% endif %}
-        {% endwith %}
+            {% endif %}
+          {% endwith %}
+        </tr>
       {% endfor %}
       </tbody>
     </table>
