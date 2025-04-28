@@ -91,9 +91,9 @@ document.addEventListener("ObjectEditedRelated", (e) => {
     title: e.detail.title
   })
 })
-document.addEventListener("ObjectReactivateddRelated", (e) => {
+document.addEventListener("ObjectReactivatedRelated", (e) => {
   const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectReactivateddRelated" + e.detail.pk;
+  const relatedEvent = "ObjectReactivatedRelated" + e.detail.pk;
   htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
     title: e.detail.title
