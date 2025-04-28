@@ -64,8 +64,14 @@
                     {% include "maintenance/components/buttons.html#related-hide" %}
                     {% include "maintenance/components/buttons.html#related-show" %}
                   {% endif %}
-                  {% if user_can.reactivate and parent_object.is_active %}
-                    {% include "maintenance/components/buttons.html#reactivate" %}
+                  {% if user_can.reactivate %}
+                    {% if parent_object %}
+                      {% if parent_object.is_active %}
+                        {% include "maintenance/components/buttons.html#reactivate" %}
+                      {% endif %}
+                    {% else %}
+                      {% include "maintenance/components/buttons.html#reactivate" %}
+                    {% endif %}
                   {% endif %}
                   {% if user_can.history %}
                     {% include "maintenance/components/buttons.html#history" %}
