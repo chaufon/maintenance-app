@@ -64,7 +64,7 @@
                     {% include "maintenance/components/buttons.html#related-hide" %}
                     {% include "maintenance/components/buttons.html#related-show" %}
                   {% endif %}
-                  {% if user_can.reactivate %}
+                  {% if user_can.reactivate and parent_object.is_active %}
                     {% include "maintenance/components/buttons.html#reactivate" %}
                   {% endif %}
                   {% if user_can.history %}
