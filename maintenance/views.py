@@ -332,11 +332,16 @@ class MaintenanceAPIView(TemplateView):
             return HttpResponseNotAllowed(permitted_methods=["get"])
 
         if self.form.is_valid():
-            self.form_valid_edit()
-            return self.render_no_html(success=True, msg=self.nombre.title())
-        else:
-            self.form.format_errors()
-            return self._render_html(**kwargs)
+            if self.action == API_ACTION_IMPORT:
+                return self.import_xlsx()
+            try:
+                self.form_valid_edit()
+            except ValidationError:
+                pass
+            else:
+                return self.render_no_html(success=True, msg=self.nombre.title())
+        self.form.format_errors()
+        return self._render_html(**kwargs)
 
     def reactivate(self, request, *args, **kwargs):
         try:
@@ -444,9 +449,10 @@ class MaintenanceAPIView(TemplateView):
         _ = self.model.objects.create(**cleaned_data)
 
     def form_valid_edit(self):
-        if self.action == API_ACTION_IMPORT:
-            return self.import_xlsx()
-        _ = self.form.save()
+        try:
+            _ = self.form.save()
+        except ValidationError as e:
+            logger.error(f"Error al guardar {self.nombre.title()}: {e}")
 
     def get_modal_size(self):
         return (
