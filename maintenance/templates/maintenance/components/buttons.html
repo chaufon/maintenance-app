@@ -206,7 +206,8 @@
             hx-target="#collapse-related-{{ object.pk }}" hx-get="{{ object.related_url }}"
             hx-trigger="ObjectEditedRelated{{ object.pk }} from:body,
             ObjectAddedRelated{{ object.pk }} from:body,
-            ObjectDeletedRelated{{ object.pk }} from:body"
+            ObjectDeletedRelated{{ object.pk }} from:body,
+            ObjectReactivatedRelated{{ object.pk }} from:body"
     >
       <i class="bi bi-caret-up-fill{% if button_no_text %}"></i>{% else %} me-1"></i>
         Ocultar{% endif %}
