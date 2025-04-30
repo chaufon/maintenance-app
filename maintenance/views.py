@@ -599,6 +599,9 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
                 self.form.add_error(None, msg)
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
             raise ValidationError(msg)
+        except ValidationError as e:
+            self.form.add_error(None, str(e))
+            raise
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
