@@ -4,6 +4,7 @@ import logging
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.core.paginator import Paginator
+from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http import (
     HttpResponse,
@@ -187,6 +188,7 @@ class MaintenanceAPIView(TemplateView):
     upload_files = False
     button_no_text = False
     events = None
+    constraints = dict()
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -451,8 +453,17 @@ class MaintenanceAPIView(TemplateView):
     def form_valid_edit(self):
         try:
             _ = self.form.save()
-        except ValidationError as e:
+        except IntegrityError as e:
+            msg = str(e)
+            match = False
+            for c, txt in self.constraints.items():
+                if c in msg:
+                    match = True
+                    self.form.add_error(None, txt)
+            if not match:
+                self.form.add_error(None, msg)
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
+            raise ValidationError(msg)
 
     def get_modal_size(self):
         return (
@@ -575,7 +586,19 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     def form_valid_edit(self):
         obj = self.form.save(commit=False)
         setattr(obj, self.parent_model_name, self.parent_object)
-        obj.save()
+        try:
+            obj.save()
+        except IntegrityError as e:
+            msg = str(e)
+            match = False
+            for c, txt in self.constraints.items():
+                if c in msg:
+                    match = True
+                    self.form.add_error(None, txt)
+            if not match:
+                self.form.add_error(None, msg)
+            logger.error(f"Error al guardar {self.nombre.title()}: {e}")
+            raise ValidationError(msg)
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
