@@ -350,7 +350,7 @@ class MaintenanceAPIView(TemplateView):
             self.object.reactivate()
         except ValidationError as e:
             success = False
-            msg = str(e.message)
+            msg = ", ".join(e.messages)
         else:
             msg = self.nombre.title()
             success = True
@@ -364,7 +364,7 @@ class MaintenanceAPIView(TemplateView):
             self.object.delete()
         except (ValidationError, IntegrityError) as e:
             success = False
-            msg = str(e)
+            msg = ", ".join(e.messages) if hasattr(e, "messages") else str(e)
         else:
             msg = self.nombre.title()
             success = True
@@ -427,7 +427,7 @@ class MaintenanceAPIView(TemplateView):
                 self.form_valid_import(cleaned_data)
             except Exception as e:  # NOQA
                 errors += 1
-                msg_error += str(e)
+                msg_error += ", ".join(e.messages) if hasattr(e, "messages") else str(e)
                 logger.error(f"{msg_error}. Error: {e}")
                 continue
             else:
@@ -465,7 +465,7 @@ class MaintenanceAPIView(TemplateView):
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
             raise ValidationError(msg)
         except ValidationError as e:
-            self.form.add_error(None, str(e))
+            self.form.add_error(None, ", ".join(e.messages))
             raise
 
     def get_modal_size(self):
@@ -603,7 +603,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
             raise ValidationError(msg)
         except ValidationError as e:
-            self.form.add_error(None, str(e))
+            self.form.add_error(None, ", ".join(e.messages))
             raise
 
 
