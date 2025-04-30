@@ -59,34 +59,34 @@ class WebEvents:
     events_name = {
         API_ACTION_ADD: "ObjectAdded",
         API_ACTION_DELETE: "ObjectDeleted",
+        API_ACTION_REACTIVATE: "ObjectReactivated",
         API_ACTION_EDIT: "ObjectEdited",
         API_ACTION_IMPORT: "ObjectsImported",
         API_ACTION_RESET: "PasswordUpdated",
-        API_ACTION_REACTIVATE: "ObjectReactivated",
     }
     events_msg = {
         API_ACTION_ADD: "{} creado correctamente",
         API_ACTION_DELETE: "{} eliminado correctamente",
+        API_ACTION_REACTIVATE: "{} reactivado correctamente",
         API_ACTION_EDIT: "{} actualizado correctamente",
         API_ACTION_IMPORT: "Importación correcta. {}",
         API_ACTION_RESET: "Contraseña reseteada correctamente",
-        API_ACTION_REACTIVATE: "{} reactivado correctamente",
     }
     events_fail_name = {
         API_ACTION_ADD: "ObjectAddedFail",
         API_ACTION_DELETE: "ObjectDeletedFail",
+        API_ACTION_REACTIVATE: "ObjectReactivatedFail",
         API_ACTION_EDIT: "ObjectEditedFail",
         API_ACTION_IMPORT: "ObjectsImportedFail",
         API_ACTION_RESET: "PasswordUpdatedFail",
-        API_ACTION_REACTIVATE: "ObjectReactivatedFail",
     }
     events_fail_msg = {
-        API_ACTION_ADD: "{} no se ha creado",
-        API_ACTION_DELETE: "{} no se ha eliminado",
-        API_ACTION_EDIT: "{} no se guardaron los cambios",
+        API_ACTION_ADD: "Se encontraron errores. {}",
+        API_ACTION_DELETE: "No se pudo eliminar. {}",
+        API_ACTION_REACTIVATE: "No se pudo reactivar {}",
+        API_ACTION_EDIT: "Se encontraron errores. {}",
         API_ACTION_IMPORT: "Se encontraron errores. {}",
         API_ACTION_RESET: "No se actualizó contraseña",
-        API_ACTION_REACTIVATE: "No se pudo reactivar {}",
     }
     related = False
 
@@ -362,9 +362,9 @@ class MaintenanceAPIView(TemplateView):
 
         try:
             self.object.delete()
-        except ValidationError as e:
+        except (ValidationError, IntegrityError) as e:
             success = False
-            msg = str(e.message)
+            msg = str(e)
         else:
             msg = self.nombre.title()
             success = True
@@ -464,6 +464,9 @@ class MaintenanceAPIView(TemplateView):
                 self.form.add_error(None, msg)
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
             raise ValidationError(msg)
+        except ValidationError as e:
+            self.form.add_error(None, str(e))
+            raise
 
     def get_modal_size(self):
         return (
