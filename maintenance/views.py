@@ -205,12 +205,13 @@ class MaintenanceAPIView(TemplateView):
                 return HttpResponseNotFound()
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
-        if not self.user.eval_perm(self.action, self.model_name, self.object):
-            return HttpResponseForbidden()
-        self.user_can = {  # TODO remove
-            action: self.user.eval_perm(action, self.model_name)
+        self.user_can = {
+            action: self.user.eval_perm(action, self.model_name, self.object)
             for action in self.actions_with_perms
         }
+        if not self.user_can[self.action]:
+            return HttpResponseForbidden()
+
         self.app = self.model._meta.app_label
         self.nombre = self.model._meta.verbose_name.title()
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
@@ -531,12 +532,14 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
                 API_ACTION_PARTIAL,
                 API_ACTION_REACTIVATE,
             ):
-                perm = self.user.eval_perm(API_ACTION_EDIT, self.parent_model_name)
+                parent_action = API_ACTION_EDIT
             elif action in (API_ACTION_LIST, API_ACTION_READ):
-                perm = self.user.eval_perm(API_ACTION_LIST, self.parent_model_name)
+                parent_action = API_ACTION_LIST
             else:
-                perm = self.user.eval_perm(action, self.parent_model_name)
-            self.user_can[action] = perm
+                parent_action = action
+            self.user_can[action] = self.user.eval_perm(
+                parent_action, self.parent_model_name, self.parent_object
+            )
 
         if not self.user_can[self.action]:
             return HttpResponseForbidden()
