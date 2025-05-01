@@ -20,7 +20,6 @@ from tablib import Dataset
 
 from maintenance.constants import (
     API_ACTION_ADD,
-    API_ACTION_COMMENT,
     API_ACTION_DELETE,
     API_ACTION_EDIT,
     API_ACTION_EXPORT,
@@ -171,17 +170,19 @@ class MaintenanceAPIView(TemplateView):
     MODAL_SIZE_SM = "modal-sm"
     MODAL_SIZE_LG = "modal-lg"
     MODAL_SIZE_XL = "modal-xl"
-    actions_with_perms = (
-        API_ACTION_ADD,
-        API_ACTION_DELETE,
-        API_ACTION_EDIT,
+    actions_allowed = (
+        API_ACTION_HOME,
         API_ACTION_LIST,
+        API_ACTION_ADD,
+        API_ACTION_EDIT,
+        API_ACTION_DELETE,
+        API_ACTION_REACTIVATE,
+        API_ACTION_PARTIAL,
         API_ACTION_EXPORT,
         API_ACTION_IMPORT,
+        API_ACTION_READ,
         API_ACTION_RESET,
         API_ACTION_HISTORY,
-        API_ACTION_COMMENT,
-        API_ACTION_REACTIVATE,
     )
     user = None
     is_related = False
@@ -207,7 +208,7 @@ class MaintenanceAPIView(TemplateView):
         self.model_name = self.model._meta.model_name
         self.user_can = {
             action: self.user.eval_perm(action, self.model_name, self.object)
-            for action in self.actions_with_perms
+            for action in self.actions_allowed
         }
         if not self.user_can[self.action]:
             return HttpResponseForbidden()
@@ -487,15 +488,16 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     edit_formclass = None
     select_related = tuple()
     order_by = ("-is_active", "name")
-    actions_with_perms = (
-        API_ACTION_ADD,
-        API_ACTION_DELETE,
-        API_ACTION_EDIT,
+    actions_allowed = (
+        API_ACTION_HOME,
         API_ACTION_LIST,
-        API_ACTION_HISTORY,
+        API_ACTION_ADD,
+        API_ACTION_EDIT,
+        API_ACTION_DELETE,
+        API_ACTION_REACTIVATE,
         API_ACTION_PARTIAL,
         API_ACTION_READ,
-        API_ACTION_REACTIVATE,
+        API_ACTION_HISTORY,
     )
     parent_pk = None
     parent_object = None
@@ -524,7 +526,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.parent_model_name = self.parent_model._meta.model_name
         self.model_name = self.model._meta.model_name
 
-        for action in self.actions_with_perms:
+        for action in self.actions_allowed:  # TODO change name to actions_allowed
             if action in (
                 API_ACTION_ADD,
                 API_ACTION_DELETE,
