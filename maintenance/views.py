@@ -8,8 +8,8 @@ from django.db import IntegrityError
 from django.db.models import QuerySet
 from django.http import (
     HttpResponse,
+    HttpResponseBadRequest,
     HttpResponseForbidden,
-    HttpResponseNotAllowed,
     HttpResponseNotFound,
 )
 from django.urls import reverse
@@ -170,13 +170,12 @@ class MaintenanceAPIView(TemplateView):
     MODAL_SIZE_SM = "modal-sm"
     MODAL_SIZE_LG = "modal-lg"
     MODAL_SIZE_XL = "modal-xl"
-    actions_allowed = (
+    actions_with_no_template = (API_ACTION_DELETE, API_ACTION_REACTIVATE)
+    actions_get = (
         API_ACTION_HOME,
         API_ACTION_LIST,
         API_ACTION_ADD,
         API_ACTION_EDIT,
-        API_ACTION_DELETE,
-        API_ACTION_REACTIVATE,
         API_ACTION_PARTIAL,
         API_ACTION_EXPORT,
         API_ACTION_IMPORT,
@@ -184,6 +183,14 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_RESET,
         API_ACTION_HISTORY,
     )
+    actions_post = (
+        API_ACTION_ADD,
+        API_ACTION_EDIT,
+        API_ACTION_REACTIVATE,
+        API_ACTION_IMPORT,
+        API_ACTION_RESET,
+    )
+    actions_delete = (API_ACTION_DELETE,)
     user = None
     is_related = False
     upload_files = False
@@ -206,9 +213,10 @@ class MaintenanceAPIView(TemplateView):
                 return HttpResponseNotFound()
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
+
         self.user_can = {
             action: self.user.eval_perm(action, self.model_name, self.object)
-            for action in self.actions_allowed
+            for action in set(self.actions_get + self.actions_post + self.actions_delete)
         }
         if not self.user_can[self.action]:
             return HttpResponseForbidden()
@@ -230,14 +238,10 @@ class MaintenanceAPIView(TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_template_names(self):
-        template_suffix = self.action
-        # template_suffix = (
-        #     API_ACTION_HOME
-        #     if self.action in (API_ACTION_DELETE, API_ACTION_REACTIVATE)
-        #     else self.action
-        # )
-        self.template_name = f"{self.app}/{self.model_name}/{template_suffix}.html"
-        return [self.template_name]
+        template_suffix = (
+            API_ACTION_HOME if self.action in self.actions_with_no_template else self.action
+        )
+        return [f"{self.app}/{self.model_name}/{template_suffix}.html"]
 
     def get_form_kwargs(self) -> dict:
         kwargs = {"user": self.user}
@@ -304,6 +308,9 @@ class MaintenanceAPIView(TemplateView):
         )
 
     def get(self, request, *args, **kwargs):
+        if self.action not in self.actions_get:
+            return HttpResponseBadRequest()
+
         if self.action == API_ACTION_HOME:
             self.form = self.search_formclass(**self.get_form_kwargs())
         elif self.action == API_ACTION_PARTIAL_SEARCH:
@@ -330,6 +337,9 @@ class MaintenanceAPIView(TemplateView):
         return self._render_html(**kwargs)
 
     def post(self, request, *args, **kwargs):
+        if self.action not in self.actions_post:
+            return HttpResponseBadRequest()
+
         if self.action in (API_ACTION_ADD, API_ACTION_EDIT):
             self.form = self.edit_formclass(
                 request.POST, request.FILES, instance=self.object, **self.get_form_kwargs()
@@ -343,7 +353,7 @@ class MaintenanceAPIView(TemplateView):
         elif self.action == API_ACTION_REACTIVATE:
             return self.reactivate(request, *args, **kwargs)
         else:
-            return HttpResponseNotAllowed(permitted_methods=["get"])
+            return HttpResponseBadRequest()
 
         if self.form.is_valid():
             if self.action == API_ACTION_IMPORT:
@@ -369,8 +379,8 @@ class MaintenanceAPIView(TemplateView):
         return self.render_no_html(success, msg)
 
     def delete(self, request, *args, **kwargs):
-        if self.action != API_ACTION_DELETE:
-            return HttpResponseNotAllowed(permitted_methods=["get"])
+        if self.action not in self.actions_delete:
+            return HttpResponseBadRequest()
 
         try:
             self.object.delete()
@@ -498,17 +508,16 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     edit_formclass = None
     select_related = tuple()
     order_by = ("-is_active", "name")
-    actions_allowed = (
+    actions_get = (
         API_ACTION_HOME,
         API_ACTION_LIST,
         API_ACTION_ADD,
         API_ACTION_EDIT,
-        API_ACTION_DELETE,
-        API_ACTION_REACTIVATE,
         API_ACTION_PARTIAL,
         API_ACTION_READ,
         API_ACTION_HISTORY,
     )
+    actions_post = (API_ACTION_ADD, API_ACTION_EDIT, API_ACTION_REACTIVATE)
     parent_pk = None
     parent_object = None
     is_related = True
@@ -536,7 +545,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.parent_model_name = self.parent_model._meta.model_name
         self.model_name = self.model._meta.model_name
 
-        for action in self.actions_allowed:
+        for action in set(self.actions_get + self.actions_post + self.actions_delete):
             if action in (
                 API_ACTION_ADD,
                 API_ACTION_DELETE,
@@ -565,20 +574,19 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}", args=(self.parent_pk,)),
             API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}", args=(self.parent_pk,)),
         }
-        template_suffix = (
-            API_ACTION_HOME
-            if self.action in (API_ACTION_DELETE, API_ACTION_REACTIVATE)
-            else self.action
-        )
-        self.template_name = (
-            f"{self.app}/{self.parent_model_name}/{self.model_name}/{template_suffix}.html"
-        )
+
         # Default
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
         else:
             handler = self.http_method_not_allowed
         return handler(request, *args, **kwargs)
+
+    def get_template_names(self):
+        template_suffix = (
+            API_ACTION_HOME if self.action in self.actions_with_no_template else self.action
+        )
+        return [f"{self.app}/{self.parent_model_name}/{self.model_name}/{template_suffix}.html"]
 
     def update_context(self):
         return {
