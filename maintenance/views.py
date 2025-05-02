@@ -224,12 +224,20 @@ class MaintenanceAPIView(TemplateView):
             API_ACTION_EXPORT: reverse(f"{base_url}:{API_ACTION_EXPORT}"),
             API_ACTION_IMPORT: reverse(f"{base_url}:{API_ACTION_IMPORT}"),
         }
-        if self.action not in (API_ACTION_DELETE, API_ACTION_REACTIVATE):
-            self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
 
         if not self.upload_files:  # if not explicitly enabled, check if action is import
             self.upload_files = self.action == API_ACTION_IMPORT
         return super().dispatch(request, *args, **kwargs)
+
+    def get_template_names(self):
+        template_suffix = self.action
+        # template_suffix = (
+        #     API_ACTION_HOME
+        #     if self.action in (API_ACTION_DELETE, API_ACTION_REACTIVATE)
+        #     else self.action
+        # )
+        self.template_name = f"{self.app}/{self.model_name}/{template_suffix}.html"
+        return [self.template_name]
 
     def get_form_kwargs(self) -> dict:
         kwargs = {"user": self.user}
@@ -557,10 +565,14 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}", args=(self.parent_pk,)),
             API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}", args=(self.parent_pk,)),
         }
-        if self.action not in (API_ACTION_DELETE, API_ACTION_REACTIVATE):
-            self.template_name = (
-                f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
-            )
+        template_suffix = (
+            API_ACTION_HOME
+            if self.action in (API_ACTION_DELETE, API_ACTION_REACTIVATE)
+            else self.action
+        )
+        self.template_name = (
+            f"{self.app}/{self.parent_model_name}/{self.model_name}/{template_suffix}.html"
+        )
         # Default
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
