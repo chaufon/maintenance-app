@@ -224,7 +224,9 @@ class MaintenanceAPIView(TemplateView):
             API_ACTION_EXPORT: reverse(f"{base_url}:{API_ACTION_EXPORT}"),
             API_ACTION_IMPORT: reverse(f"{base_url}:{API_ACTION_IMPORT}"),
         }
-        self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
+        if self.action not in (API_ACTION_DELETE, API_ACTION_REACTIVATE):
+            self.template_name = f"{self.app}/{self.model_name}/{self.action}.html"
+
         if not self.upload_files:  # if not explicitly enabled, check if action is import
             self.upload_files = self.action == API_ACTION_IMPORT
         return super().dispatch(request, *args, **kwargs)
@@ -526,7 +528,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.parent_model_name = self.parent_model._meta.model_name
         self.model_name = self.model._meta.model_name
 
-        for action in self.actions_allowed:  # TODO change name to actions_allowed
+        for action in self.actions_allowed:
             if action in (
                 API_ACTION_ADD,
                 API_ACTION_DELETE,
@@ -555,9 +557,10 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}", args=(self.parent_pk,)),
             API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}", args=(self.parent_pk,)),
         }
-        self.template_name = (
-            f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
-        )
+        if self.action not in (API_ACTION_DELETE, API_ACTION_REACTIVATE):
+            self.template_name = (
+                f"{self.app}/{self.parent_model_name}/{self.model_name}/{self.action}.html"
+            )
         # Default
         if request.method.lower() in self.http_method_names:
             handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
