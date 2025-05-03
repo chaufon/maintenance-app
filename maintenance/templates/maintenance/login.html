@@ -168,18 +168,26 @@
   <form method="post">
     {% csrf_token %}
     {% block logo %}
-    <div class="text-center mb-4">
-    <img class="mb-4" src="{% static 'maintenance/img/tux.svg' %}" alt="" width="250">
+      <div class="text-center mb-4">
+        <img class="mb-4" src="{% static 'maintenance/img/tux.svg' %}" alt="" width="250">
       </div>
     {% endblock %}
     <h1 class="h3 mb-3 fw-normal text-center">Iniciar sesión</h1>
-
+    {% if form.errors %}
+      {% for error in form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% endif %}
     <div class="form-floating">
-      <input type="text" class="form-control" id="id_username" name="username" placeholder="" autofocus>
+      <input type="text" class="form-control" id="id_username" name="username" placeholder=""
+             autofocus>
       <label for="id_username">Usuario</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="id_password" name="password" placeholder="contraseña">
+      <input type="password" class="form-control" id="id_password" name="password"
+             placeholder="contraseña">
       <label for="id_password">Contraseña</label>
     </div>
 
