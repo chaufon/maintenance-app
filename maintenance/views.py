@@ -470,7 +470,8 @@ class MaintenanceAPIView(TemplateView):
         return self.render_no_html(success, msg)
 
     def form_valid_import(self, cleaned_data: dict) -> None:
-        _ = self.model.objects.create(**cleaned_data)
+        obj = self.model(**cleaned_data)
+        obj.save()
 
     def form_valid_edit(self):
         try:
