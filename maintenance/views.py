@@ -561,8 +561,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
                 API_ACTION_REACTIVATE,
             ):
                 parent_action = API_ACTION_EDIT
-            elif action in (API_ACTION_LIST, API_ACTION_READ):
-                parent_action = API_ACTION_LIST
             else:
                 parent_action = action
             self.user_can[action] = self.user.eval_perm(
