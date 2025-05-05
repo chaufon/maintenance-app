@@ -564,7 +564,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             else:
                 parent_action = action
             self.user_can[action] = self.user.eval_perm(
-                parent_action, self.parent_model_name, self.object
+                parent_action, self.parent_model_name, self.object, self.parent_object
             )
 
         if not self.user_can[self.action]:
