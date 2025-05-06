@@ -74,6 +74,7 @@ class SearchForm(forms.Form):
                 "hx-indicator": "#search-indicator",
                 "hx-swap": "outerHTML",
                 "autocomplete": "off",
+                "hx-include": "#search-filters",
             }
         ),
     )
