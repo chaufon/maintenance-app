@@ -18,19 +18,19 @@
   {% endwith %}
 {% endblock extra-buttons %}
 
-<div class="row">
-  {% include "maintenance/forms/non_field_errors.html" %}
-</div>
-<div class="row mb-1 mb-lg-0">
-  {% block filters %}
-    <form class="col-md-6 col-lg-8" id="search-filters">
-      {{ form.param }}
-    </form>
-  {% endblock filters %}
-  <div id="search-indicator">
-    {% include 'maintenance/components/icons.html#searching' %}
+{% block filters %}
+  <div class="row">
+    {% include "maintenance/forms/non_field_errors.html" %}
   </div>
-</div>
+  <div class="row">
+    <form class="col-12" id="search-filters">
+      {{ form }}
+    </form>
+    <div id="search-indicator">
+      {% include 'maintenance/components/icons.html#searching' %}
+    </div>
+  </div>
+{% endblock filters %}
 
 {% block content %}
   <div class="modal fade" tabindex="-1" data-bs-keyboard="false" data-bs-backdrop="static"
