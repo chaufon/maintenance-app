@@ -212,7 +212,7 @@ class MaintenanceAPIView(TemplateView):
             except self.model.ObjectDoesNotExist:
                 return HttpResponseNotFound()
             else:
-                if self.action == API_ACTION_EDIT and not self.object.is_active:  # not allowed
+                if self.action == API_ACTION_EDIT and not getattr(self.object, "is_active", True):
                     return HttpResponseForbidden()
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
@@ -546,7 +546,9 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
                     except self.model.ObjectDoesNotExist:
                         return HttpResponseNotFound()
                     else:
-                        if self.action == API_ACTION_EDIT and not self.object.is_active:
+                        if self.action == API_ACTION_EDIT and not getattr(
+                            self.object, "is_active", True
+                        ):
                             return HttpResponseForbidden()
 
         self.parent_model_name = self.parent_model._meta.model_name
