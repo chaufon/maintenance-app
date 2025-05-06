@@ -553,13 +553,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.model_name = self.model._meta.model_name
 
         for action in set(self.actions_get + self.actions_post + self.actions_delete):
-            if action in (
-                API_ACTION_ADD,
-                API_ACTION_DELETE,
-                API_ACTION_EDIT,
-                API_ACTION_PARTIAL,
-                API_ACTION_REACTIVATE,
-            ):
+            if action in (API_ACTION_EDIT, API_ACTION_PARTIAL, API_ACTION_REACTIVATE):
                 parent_action = API_ACTION_EDIT
             else:
                 parent_action = action
