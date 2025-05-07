@@ -60,6 +60,7 @@ class MaintenanceBaseModelForm(forms.ModelForm, BootstrapFormatMixin):
 
 
 class SearchForm(forms.Form):
+    default_renderer = TemplatesSetting
     template_name = "maintenance/forms/search_form.html"
 
     param = forms.CharField(
