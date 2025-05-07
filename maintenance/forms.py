@@ -84,7 +84,7 @@ class SearchForm(forms.Form):
     def __init__(self, *args, **kwargs):
         placeholder = kwargs.pop("placeholder", "")
         hx_get = kwargs.pop("hx_get", "")
-        _ = kwargs.pop("user", None)
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
         self.fields["param"].widget.attrs.update({"placeholder": placeholder, "hx-get": hx_get})
         self.fields["param"].label = placeholder
