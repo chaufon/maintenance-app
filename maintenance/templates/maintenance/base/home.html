@@ -22,13 +22,11 @@
   <div class="row">
     {% include "maintenance/forms/non_field_errors.html" %}
   </div>
-  <div class="row">
-    <form class="col-12" id="search-filters">
-      {{ form }}
-    </form>
-    <div id="search-indicator">
-      {% include 'maintenance/components/icons.html#searching' %}
-    </div>
+  <form class="row g-2" id="search-filters">
+    {{ form }}
+  </form>
+  <div id="search-indicator">
+    {% include 'maintenance/components/icons.html#searching' %}
   </div>
 {% endblock filters %}
 
