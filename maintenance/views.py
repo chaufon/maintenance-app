@@ -204,10 +204,12 @@ class MaintenanceAPIView(TemplateView):
         self.action = request.path.split("/")[3] or API_ACTION_HOME
         self.object_pk = kwargs.pop("object_pk", None)
         if self.object_pk:
+            qs = self.model.todos.all()
+            if select_related := self.get_select_related():
+                qs = qs.select_related(*select_related)
+
             try:
-                self.object = self.model.todos.select_related(*self.get_select_related()).get(
-                    pk=self.object_pk
-                )
+                self.object = qs.get(pk=self.object_pk)
             except self.model.ObjectDoesNotExist:
                 return HttpResponseNotFound()
             else:
@@ -258,19 +260,25 @@ class MaintenanceAPIView(TemplateView):
             kwargs.update({"readonly": True})
         return kwargs
 
-    def apply_order_by(self, qs: QuerySet) -> QuerySet:
-        return qs.order_by(*self.order_by) if self.order_by else qs
+    def get_order_by(self):
+        return self.order_by
 
     def get_select_related(self) -> tuple:
-        return self.select_related or tuple()
+        return self.select_related
+
+    def apply_post_filter(self, qs: QuerySet) -> QuerySet:
+        if select_related := self.get_select_related():
+            qs = qs.select_related(*select_related)
+
+        if order_by := self.get_order_by():
+            qs = qs.order_by(*order_by)
+        return qs
 
     def get_queryset(self):
         self.form = self.search_formclass(self.request.GET, **self.get_form_kwargs())
         if self.form.is_valid():
-            qs = self.form_valid_search(
-                self.model.todos.select_related(*self.get_select_related()), self.form.cleaned_data
-            )
-            return self.apply_order_by(qs)
+            qs_filtered = self.form_valid_search(self.model.todos.all(), self.form.cleaned_data)
+            return self.apply_post_filter(qs_filtered)
         return self.model.objects.none()
 
     def _render_html(self, **kwargs):
@@ -403,8 +411,9 @@ class MaintenanceAPIView(TemplateView):
 
     def form_valid_search(self, qs: QuerySet, cleaned_data: dict) -> QuerySet:
         param = cleaned_data["param"]
-        qs = qs.filter(name__icontains=param) if param else qs
-        return self.apply_order_by(qs)
+        if param:
+            qs = qs.filter(name__icontains=param)
+        return qs
 
     def render_xlsx(self):
         row_list = list()
@@ -504,8 +513,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     parent_model = None
     parent_model_name = ""
     edit_formclass = None
-    select_related = tuple()
-    order_by = ("-is_active", "name")
     actions_get = (
         API_ACTION_HOME,
         API_ACTION_LIST,
@@ -585,8 +592,8 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
 
     def get_queryset(self):
         filters = {self.parent_model_name: self.parent_object}
-        qs = self.model.todos.select_related(*self.get_select_related()).filter(**filters)
-        return self.apply_order_by(qs)
+        qs = self.model.todos.filter(**filters)
+        return self.apply_post_filter(qs)
 
     def render_no_html(self, success, msg):
         events = WebEvents(self.action, related=True)
