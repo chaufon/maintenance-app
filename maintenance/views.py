@@ -279,8 +279,6 @@ class MaintenanceAPIView(TemplateView):
         context["subtitle"] = subtitle
         context["menu_active"] = self.menu_active
         context["form"] = self.form
-        context["page_obj"] = self.paginator.get_page(self.page) if self.paginator else None
-        context["pages"] = self.paginator.get_elided_page_range(self.page) if self.paginator else ()
         context["list_template"] = f"{self.app}/{self.model_name}/{API_ACTION_LIST}.html"
         context["nombre"] = self.nombre.title()
         context["modal_title"] = f"{API_ACTION_MODAL_TITLE.get(self.action)} {self.nombre.title()}"
@@ -293,8 +291,11 @@ class MaintenanceAPIView(TemplateView):
         context["object"] = self.object
         if self.action == API_ACTION_LIST:
             fields_list = self.field_list[self.action]
+            page_obj = self.paginator.get_page(self.page)
             context["header_list"] = self.model.get_headers_list(fields_list)
-            context["row_list"] = self.get_row_list(fields_list)
+            context["row_list"] = self.get_row_list(fields_list, page_obj)
+            context["page_obj"] = page_obj
+            context["pages"] = self.paginator.get_elided_page_range(self.page)
             context["related_length"] = len(fields_list) + 1
             context["is_related"] = self.is_related
             context["button_no_text"] = self.button_no_text
@@ -399,15 +400,9 @@ class MaintenanceAPIView(TemplateView):
         qs = qs.filter(name__icontains=param) if param else qs
         return self.apply_order_by(qs)
 
-    def get_row_list(self, fields_list: list, paginated: bool = True) -> list:
+    def get_row_list(self, fields_list: list, page_obj=None) -> list:
         data = list()
-        object_list = list()
-        if paginated:
-            page_obj = self.paginator.get_page(self.page) if self.paginator else None
-            if page_obj:
-                object_list = page_obj.object_list
-        else:
-            object_list = self.get_queryset()
+        object_list = page_obj.object_list if page_obj else self.get_queryset()
 
         for obj in object_list:
             data.append(obj.get_row_data(fields_list))
@@ -418,7 +413,7 @@ class MaintenanceAPIView(TemplateView):
         filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
         fields_list = self.field_list[self.action]  # API_ACTION_EXPORT
         headers_list = self.model.get_headers_list(fields_list)
-        row_list = self.get_row_list(fields_list, paginated=False)
+        row_list = self.get_row_list(fields_list)
         dataset = Dataset()
         dataset.headers = headers_list
         for row in row_list:
