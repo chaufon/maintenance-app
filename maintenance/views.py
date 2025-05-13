@@ -161,6 +161,7 @@ class MaintenanceAPIView(TemplateView):
     object = None
     object_pk = None
     paginator = None
+    object_list = None
     page = 1
     objects_per_page = 20
     form = None
@@ -290,10 +291,15 @@ class MaintenanceAPIView(TemplateView):
         context["user"] = self.user
         context["object"] = self.object
         if self.action == API_ACTION_LIST:
+            row_list = list()
             fields_list = self.field_list[self.action]
             page_obj = self.paginator.get_page(self.page)
+            self.object_list = page_obj.object_list
+            for obj in self.object_list:
+                row_list.append(obj.get_row_data(fields_list))
+
             context["header_list"] = self.model.get_headers_list(fields_list)
-            context["row_list"] = self.get_row_list(fields_list, page_obj)
+            context["row_list"] = row_list
             context["page_obj"] = page_obj
             context["pages"] = self.paginator.get_elided_page_range(self.page)
             context["related_length"] = len(fields_list) + 1
@@ -400,20 +406,14 @@ class MaintenanceAPIView(TemplateView):
         qs = qs.filter(name__icontains=param) if param else qs
         return self.apply_order_by(qs)
 
-    def get_row_list(self, fields_list: list, page_obj=None) -> list:
-        data = list()
-        object_list = page_obj.object_list if page_obj else self.get_queryset()
-
-        for obj in object_list:
-            data.append(obj.get_row_data(fields_list))
-
-        return data
-
     def render_xlsx(self):
+        row_list = list()
         filename = f"{self.nombre_plural}_{timezone.now().strftime(XLSX_DATETIME_FORMAT)}.xlsx"
         fields_list = self.field_list[self.action]  # API_ACTION_EXPORT
         headers_list = self.model.get_headers_list(fields_list)
-        row_list = self.get_row_list(fields_list)
+        for obj in self.get_queryset():
+            row_list.append(obj.get_row_data(fields_list))
+
         dataset = Dataset()
         dataset.headers = headers_list
         for row in row_list:
