@@ -40,6 +40,7 @@ from maintenance.constants import (
     RELATED_TAG,
     XLSX_DATETIME_FORMAT,
 )
+from maintenance.exceptions import FormIsNotValid
 from maintenance.forms import (
     DepartamentoEditForm,
     DistritoEditForm,
@@ -377,7 +378,7 @@ class MaintenanceAPIView(TemplateView):
                 return self.import_xlsx()
             try:
                 self.form_valid_edit()
-            except ValidationError:
+            except FormIsNotValid:
                 pass
             else:
                 return self.render_no_html(success=True, msg=self.nombre.title())
