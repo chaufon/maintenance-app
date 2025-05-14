@@ -124,7 +124,7 @@ class MaintenanceMixin:
 
 
 class BaseCatalogo(BaseModel, MaintenanceMixin):
-    name = models.CharField("Nombre", max_length=250, unique=True)
+    name = models.CharField("Nombre", max_length=250)
     is_active = models.BooleanField("Activo", default=True)
     objects = ManagerOnlyActive()
     todos = models.Manager()
@@ -146,7 +146,6 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
 
 @pghistory.track()
 class Departamento(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
 
     def save(self, *args, **kwargs):
@@ -160,7 +159,6 @@ class Departamento(BaseCatalogo):
 
 @pghistory.track()
 class Provincia(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
 
@@ -171,7 +169,6 @@ class Provincia(BaseCatalogo):
 
 @pghistory.track()
 class Distrito(BaseCatalogo):
-    name = models.CharField(max_length=250, verbose_name="Nombre")  # not unique
     codigo = models.CharField(max_length=8, primary_key=True, verbose_name="Código")
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE)
 
