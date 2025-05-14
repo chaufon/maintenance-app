@@ -480,9 +480,12 @@ class MaintenanceAPIView(TemplateView):
         obj = self.model(**cleaned_data)
         obj.save()
 
-    def form_valid_edit(self):
+    def form_valid_edit(self, obj=None):
         try:
-            _ = self.form.save()
+            if obj:
+                obj.save()
+            else:
+                _ = self.form.save()
         except IntegrityError as e:
             msg = str(e)
             match = False
