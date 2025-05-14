@@ -493,10 +493,10 @@ class MaintenanceAPIView(TemplateView):
             if not match:
                 self.form.add_error(None, msg)
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
-            raise ValidationError(msg)
+            raise FormIsNotValid
         except ValidationError as e:
             self.form.add_error(None, ", ".join(e.messages))
-            raise
+            raise FormIsNotValid
 
     def get_modal_size(self):
         return (
@@ -625,10 +625,10 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             if not match:
                 self.form.add_error(None, msg)
             logger.error(f"Error al guardar {self.nombre.title()}: {e}")
-            raise ValidationError(msg)
+            raise FormIsNotValid
         except ValidationError as e:
             self.form.add_error(None, ", ".join(e.messages))
-            raise
+            raise FormIsNotValid
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
