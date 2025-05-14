@@ -614,8 +614,9 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         raise ImproperlyConfigured("Evento mal configurado")
 
     def form_valid_edit(self, obj=None):
-        obj = self.form.save(commit=False)
-        setattr(obj, self.parent_model_name, self.parent_object)
+        if not obj:
+            obj = self.form.save(commit=False)
+            setattr(obj, self.parent_model_name, self.parent_object)
         super().form_valid_edit(obj)
 
 
