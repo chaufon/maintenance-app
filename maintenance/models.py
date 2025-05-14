@@ -125,7 +125,7 @@ class MaintenanceMixin:
 
 class BaseCatalogo(BaseModel, MaintenanceMixin):
     name = models.CharField("Nombre", max_length=250)
-    is_active = models.BooleanField("Activo", default=True)
+    is_active = models.BooleanField("Activo", default=True, editable=False)
     objects = ManagerOnlyActive()
     todos = models.Manager()
 
