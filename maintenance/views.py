@@ -613,25 +613,10 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_event_data)})
         raise ImproperlyConfigured("Evento mal configurado")
 
-    def form_valid_edit(self):
+    def form_valid_edit(self, obj=None):
         obj = self.form.save(commit=False)
         setattr(obj, self.parent_model_name, self.parent_object)
-        try:
-            obj.save()
-        except IntegrityError as e:
-            msg = str(e)
-            match = False
-            for c, txt in self.constraints.items():
-                if c in msg:
-                    match = True
-                    self.form.add_error(None, txt)
-            if not match:
-                self.form.add_error(None, msg)
-            logger.error(f"Error al guardar {self.nombre.title()}: {e}")
-            raise FormIsNotValid
-        except ValidationError as e:
-            self.form.add_error(None, ", ".join(e.messages))
-            raise FormIsNotValid
+        super().form_valid_edit(obj)
 
 
 class DepartamentoAPIView(MaintenanceAPIView):
