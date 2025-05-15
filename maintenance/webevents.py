@@ -33,13 +33,13 @@ EVENTS_MSG_FEM = {
     API_ACTION_IMPORT: "Importación correcta. {}",
     API_ACTION_RESET: "Contraseña reseteada correctamente",
 }
-EVENTS_NAME_FAIL = {
+EVENTS_FAIL_NAME = {
     API_ACTION_DELETE: "ObjectDeletedFail",
     API_ACTION_REACTIVATE: "ObjectReactivatedFail",
     API_ACTION_IMPORT: "ObjectsImportedFail",
     API_ACTION_RESET: "PasswordUpdatedFail",
 }
-EVENTS_MSG_FAIL = {
+EVENTS_FAIL_MSG = {
     API_ACTION_ADD: "No se pudo crear. {}",
     API_ACTION_DELETE: "No se pudo eliminar. {}",
     API_ACTION_REACTIVATE: "No se pudo reactivar {}",
@@ -48,14 +48,14 @@ EVENTS_MSG_FAIL = {
     API_ACTION_RESET: "No se actualizó contraseña",
 }
 
-EVENTS_RELATED_NAME = {
+EVENTS_NAME_RELATED = {
     API_ACTION_ADD: "ObjectAddedRelated",
     API_ACTION_DELETE: "ObjectDeletedRelated",
     API_ACTION_REACTIVATE: "ObjectReactivatedRelated",
     API_ACTION_EDIT: "ObjectEditedRelated",
     API_ACTION_IMPORT: "ObjectsImportedRelated",
 }
-EVENTS_RELATED_NAME_FAIL = {
+EVENTS_FAIL_NAME_RELATED = {
     API_ACTION_DELETE: "ObjectDeletedFailRelated",
     API_ACTION_REACTIVATE: "ObjectReactivatedFailRelated",
     API_ACTION_IMPORT: "ObjectsImportedFail",
@@ -96,13 +96,14 @@ class WebEvent:
 
 def get_webevent(action: str, is_masc: bool = True, is_related: bool = False, **kwargs) -> WebEvent:
     events_name = kwargs.get("events_name") or (
-        EVENTS_RELATED_NAME.copy() if is_related else EVENTS_NAME.copy()
+        EVENTS_NAME_RELATED.copy() if is_related else EVENTS_NAME.copy()
     )
     events_msg = kwargs.get("events_msg") or (
         EVENTS_MSG_MASC.copy() if is_masc else EVENTS_MSG_FEM.copy()
     )
     events_fail_name = kwargs.get("events_fail_name") or (
-        EVENTS_RELATED_NAME_FAIL.copy() if is_related else EVENTS_RELATED_NAME.copy()
+        EVENTS_FAIL_NAME_RELATED.copy() if is_related else EVENTS_FAIL_NAME.copy()
     )
-    events_fail_msg = kwargs.get("events_fail_msg") or EVENTS_MSG_MASC.copy()
+    events_fail_msg = kwargs.get("events_fail_msg") or EVENTS_FAIL_MSG.copy()
+
     return WebEvent(action, events_name, events_msg, events_fail_name, events_fail_msg)
