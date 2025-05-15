@@ -24,44 +24,55 @@ htmx.on("htmx:beforeSwap", (e) => {
 
 document.addEventListener("ObjectAdded", (e) => {
   swalSuccess.fire({
-    title: e.detail.value
+    title: e.detail.title
   })
 })
 document.addEventListener("ObjectDeleted", (e) => {
   swalSuccess.fire({
-    title: e.detail.value
+    title: e.detail.title
   })
 })
 document.addEventListener("ObjectReactivated", (e) => {
   swalSuccess.fire({
-    title: e.detail.value
+    title: e.detail.title
   })
 })
 document.addEventListener("ObjectEdited", (e) => {
   swalSuccess.fire({
-    title: e.detail.value
+    title: e.detail.title
   })
 })
 document.addEventListener("ObjectsImported", (e) => {
   swalSuccess.fire({
-    text: e.detail.value,
+    text: e.detail.title
   })
 })
 document.addEventListener("PasswordUpdated", (e) => {
   swalSuccess.fire({
-    title: e.detail.value
+    title: e.detail.title
   })
 })
 document.addEventListener("ObjectDeletedFail", (e) => {
   swalError.fire({
-    text: e.detail.value,
+    text: e.detail.title
   })
 })
 document.addEventListener("ObjectReactivatedFail", (e) => {
   swalError.fire({
-    text: e.detail.value,
+    text: e.detail.title
   })
 })
+document.addEventListener("ObjectsImportedFail", (e) => {
+  swalError.fire({
+    text: e.detail.title
+  })
+})
+document.addEventListener("PasswordUpdatedFail", (e) => {
+  swalError.fire({
+    text: e.detail.title
+  })
+})
+
 document.addEventListener("ObjectAddedRelated", (e) => {
   const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
   const relatedEvent = "ObjectAddedRelated" + e.detail.pk;
@@ -94,10 +105,27 @@ document.addEventListener("ObjectEditedRelated", (e) => {
     title: e.detail.title
   })
 })
-
 document.addEventListener("ObjectsImportedRelated", (e) => {
+  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
+  const relatedEvent = "ObjectsImportedRelated" + e.detail.pk;
+  htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
-    text: e.detail.value,
+    title: e.detail.title
+  })
+})
+document.addEventListener("ObjectDeletedFailRelated", (e) => {
+  swalError.fire({
+    text: e.detail.title
+  })
+})
+document.addEventListener("ObjectReactivatedFailRelated", (e) => {
+  swalError.fire({
+    text: e.detail.title
+  })
+})
+document.addEventListener("ObjectsImportedFail", (e) => {
+  swalError.fire({
+    text: e.detail.title
   })
 })
 

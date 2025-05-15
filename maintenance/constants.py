@@ -81,4 +81,3 @@ TRUE_STR = "SÍ"
 FALSE_STR = "NO"
 
 RELATED_TAG = "-related"
-RELATED_NAME = "Related"

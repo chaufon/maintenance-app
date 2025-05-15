@@ -2,7 +2,7 @@ import json
 import logging
 
 from django.contrib.auth.views import LoginView, LogoutView
-from django.core.exceptions import ImproperlyConfigured, ValidationError
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import QuerySet
@@ -36,7 +36,6 @@ from maintenance.constants import (
     API_ACTION_RESET,
     CONTENT_TYPE_XLSX,
     MENU_MANTENIMIENTOS,
-    RELATED_NAME,
     RELATED_TAG,
     XLSX_DATETIME_FORMAT,
 )
@@ -51,76 +50,17 @@ from maintenance.forms import (
 from maintenance.history import HistoryList
 from maintenance.models import Departamento, Distrito, Provincia
 from maintenance.utils import validar_si_bool
+from maintenance.webevents import (
+    EVENTS_MSG_FAIL,
+    EVENTS_MSG_MASC,
+    EVENTS_NAME,
+    EVENTS_NAME_FAIL,
+    EVENTS_RELATED_NAME,
+    EVENTS_RELATED_NAME_FAIL,
+    WebEvent,
+)
 
 logger = logging.getLogger(__name__)
-
-
-class WebEvents:
-    events_name = {
-        API_ACTION_ADD: "ObjectAdded",
-        API_ACTION_DELETE: "ObjectDeleted",
-        API_ACTION_REACTIVATE: "ObjectReactivated",
-        API_ACTION_EDIT: "ObjectEdited",
-        API_ACTION_IMPORT: "ObjectsImported",
-        API_ACTION_RESET: "PasswordUpdated",
-    }
-    events_msg = {
-        API_ACTION_ADD: "{} creado correctamente",
-        API_ACTION_DELETE: "{} eliminado correctamente",
-        API_ACTION_REACTIVATE: "{} reactivado correctamente",
-        API_ACTION_EDIT: "{} actualizado correctamente",
-        API_ACTION_IMPORT: "Importación correcta. {}",
-        API_ACTION_RESET: "Contraseña reseteada correctamente",
-    }
-    events_fail_name = {
-        API_ACTION_ADD: "ObjectAddedFail",
-        API_ACTION_DELETE: "ObjectDeletedFail",
-        API_ACTION_REACTIVATE: "ObjectReactivatedFail",
-        API_ACTION_EDIT: "ObjectEditedFail",
-        API_ACTION_IMPORT: "ObjectsImportedFail",
-        API_ACTION_RESET: "PasswordUpdatedFail",
-    }
-    events_fail_msg = {
-        API_ACTION_ADD: "Se encontraron errores. {}",
-        API_ACTION_DELETE: "No se pudo eliminar. {}",
-        API_ACTION_REACTIVATE: "No se pudo reactivar {}",
-        API_ACTION_EDIT: "Se encontraron errores. {}",
-        API_ACTION_IMPORT: "Se encontraron errores. {}",
-        API_ACTION_RESET: "No se actualizó contraseña",
-    }
-    related = False
-
-    def __init__(self, action: str, related: bool = False):
-        self.action = action
-        self.related = related
-        if self.related:
-            for k, v in self.events_name.items():
-                if not v.endswith(RELATED_NAME):  # TODO to avoid multiple adding, why?
-                    self.events_name[k] = f"{v}{RELATED_NAME}"
-                    self.events_fail_name[k] = f"{v}Fail{RELATED_NAME}"
-
-    def get_name(self):
-        return self.events_name.get(self.action)
-
-    def get_msg(self):
-        return self.events_msg.get(self.action)
-
-    def get_fail_name(self):
-        return self.events_fail_name.get(self.action)
-
-    def get_fail_msg(self):
-        return self.events_fail_msg.get(self.action)
-
-    def get_event(self, success: bool, msg: str = "") -> dict:
-        return self.get_success_event(msg) if success else self.get_fail_event(msg)
-
-    def get_success_event(self, msg: str) -> dict:
-        title = self.get_msg().format(msg)
-        return {self.get_name(): ({"title": title} if self.related else title)}
-
-    def get_fail_event(self, msg: str) -> dict:
-        fail_title = self.get_fail_msg().format(msg)
-        return {self.get_fail_name(): ({"title": fail_title} if self.related else fail_title)}
 
 
 class MaintenanceLoginView(LoginView):
@@ -320,9 +260,12 @@ class MaintenanceAPIView(TemplateView):
         return self.render_to_response(context, **kwargs)
 
     def render_no_html(self, success, msg):
-        events = WebEvents(self.action)
+        if not self.events:
+            self.events = WebEvent(
+                self.action, EVENTS_NAME, EVENTS_MSG_MASC, EVENTS_NAME_FAIL, EVENTS_MSG_FAIL
+            )
         return HttpResponse(
-            status=204, headers={"HX-Trigger": json.dumps(events.get_event(success, msg))}
+            status=204, headers={"HX-Trigger": json.dumps(self.events.get_event(success, msg))}
         )
 
     def get(self, request, *args, **kwargs):
@@ -600,18 +543,18 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return self.apply_post_filter(qs)
 
     def render_no_html(self, success, msg):
-        events = WebEvents(self.action, related=True)
-        if self.action in (
-            API_ACTION_ADD,
-            API_ACTION_EDIT,
-            API_ACTION_DELETE,
-            API_ACTION_REACTIVATE,
-        ):
-            related_event_data = events.get_event(success, msg)
-            for k in related_event_data.keys():
-                related_event_data[k].update({"pk": str(self.parent_pk)})
-            return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_event_data)})
-        raise ImproperlyConfigured("Evento mal configurado")
+        if not self.events:
+            self.events = WebEvent(
+                self.action,
+                EVENTS_RELATED_NAME,
+                EVENTS_MSG_MASC,
+                EVENTS_RELATED_NAME_FAIL,
+                EVENTS_MSG_FAIL,
+            )
+        related_data = self.events.get_event(success, msg)
+        for k in related_data.keys():
+            related_data[k].update({"pk": str(self.parent_pk)})
+        return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_data)})
 
     def form_valid_edit(self, obj=None):
         if not obj:
