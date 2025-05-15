@@ -50,15 +50,7 @@ from maintenance.forms import (
 from maintenance.history import HistoryList
 from maintenance.models import Departamento, Distrito, Provincia
 from maintenance.utils import validar_si_bool
-from maintenance.webevents import (
-    EVENTS_MSG_FAIL,
-    EVENTS_MSG_MASC,
-    EVENTS_NAME,
-    EVENTS_NAME_FAIL,
-    EVENTS_RELATED_NAME,
-    EVENTS_RELATED_NAME_FAIL,
-    WebEvent,
-)
+from maintenance.webevents import get_webevent
 
 logger = logging.getLogger(__name__)
 
@@ -137,7 +129,7 @@ class MaintenanceAPIView(TemplateView):
     is_related = False
     upload_files = False
     button_no_text = False
-    events = None
+    webevent = None
     constraints = dict()
 
     def dispatch(self, request, *args, **kwargs):
@@ -260,12 +252,10 @@ class MaintenanceAPIView(TemplateView):
         return self.render_to_response(context, **kwargs)
 
     def render_no_html(self, success, msg):
-        if not self.events:
-            self.events = WebEvent(
-                self.action, EVENTS_NAME, EVENTS_MSG_MASC, EVENTS_NAME_FAIL, EVENTS_MSG_FAIL
-            )
+        if not self.webevent:
+            self.webevent = get_webevent(self.action)
         return HttpResponse(
-            status=204, headers={"HX-Trigger": json.dumps(self.events.get_event(success, msg))}
+            status=204, headers={"HX-Trigger": json.dumps(self.webevent.get_event(success, msg))}
         )
 
     def get(self, request, *args, **kwargs):
@@ -543,15 +533,9 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         return self.apply_post_filter(qs)
 
     def render_no_html(self, success, msg):
-        if not self.events:
-            self.events = WebEvent(
-                self.action,
-                EVENTS_RELATED_NAME,
-                EVENTS_MSG_MASC,
-                EVENTS_RELATED_NAME_FAIL,
-                EVENTS_MSG_FAIL,
-            )
-        related_data = self.events.get_event(success, msg)
+        if not self.webevent:
+            self.webevent = get_webevent(self.action, is_related=True)
+        related_data = self.webevent.get_event(success, msg)
         for k in related_data.keys():
             related_data[k].update({"pk": str(self.parent_pk)})
         return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_data)})

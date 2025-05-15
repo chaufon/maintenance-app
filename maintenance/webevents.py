@@ -92,3 +92,17 @@ class WebEvent:
     def get_fail_event(self, msg: str) -> dict:
         fail_title = self.get_fail_msg().format(msg)
         return {self.get_fail_name(): {"title": fail_title}}
+
+
+def get_webevent(action: str, is_masc: bool = True, is_related: bool = False, **kwargs) -> WebEvent:
+    events_name = kwargs.get("events_name") or (
+        EVENTS_RELATED_NAME.copy() if is_related else EVENTS_NAME.copy()
+    )
+    events_msg = kwargs.get("events_msg") or (
+        EVENTS_MSG_MASC.copy() if is_masc else EVENTS_MSG_FEM.copy()
+    )
+    events_fail_name = kwargs.get("events_fail_name") or (
+        EVENTS_RELATED_NAME_FAIL.copy() if is_related else EVENTS_RELATED_NAME.copy()
+    )
+    events_fail_msg = kwargs.get("events_fail_msg") or EVENTS_MSG_MASC.copy()
+    return WebEvent(action, events_name, events_msg, events_fail_name, events_fail_msg)
