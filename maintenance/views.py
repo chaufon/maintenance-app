@@ -537,7 +537,9 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
             self.webevent = get_webevent(self.action, is_related=True)
         related_data = self.webevent.get_event(success, msg)
         for k in related_data.keys():
-            related_data[k].update({"pk": str(self.parent_pk)})
+            related_data[k].update(
+                {"parent_pk": str(self.parent_pk), "object_pk": str(self.object_pk)}
+            )
         return HttpResponse(status=204, headers={"HX-Trigger": json.dumps(related_data)})
 
     def form_valid_edit(self, obj=None):

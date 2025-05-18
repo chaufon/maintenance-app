@@ -74,32 +74,32 @@ document.addEventListener("PasswordUpdatedFail", (e) => {
 })
 
 document.addEventListener("ObjectAddedRelated", (e) => {
-  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectAddedRelated" + e.detail.pk;
+  const relatedBtn = document.getElementById("related-show-" + e.detail.parent_pk);
+  const relatedEvent = "ObjectAddedRelated" + e.detail.parent_pk;
   htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
     title: e.detail.title
   })
 })
 document.addEventListener("ObjectDeletedRelated", (e) => {
-  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectDeletedRelated" + e.detail.pk;
+  const relatedBtn = document.getElementById("related-show-" + e.detail.parent_pk);
+  const relatedEvent = "ObjectDeletedRelated" + e.detail.parent_pk;
   htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
     title: e.detail.title
   })
 })
 document.addEventListener("ObjectReactivatedRelated", (e) => {
-  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectReactivatedRelated" + e.detail.pk;
+  const relatedBtn = document.getElementById("related-show-" + e.detail.parent_pk);
+  const relatedEvent = "ObjectReactivatedRelated" + e.detail.parent_pk;
   htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
     title: e.detail.title
   })
 })
 document.addEventListener("ObjectEditedRelated", (e) => {
-  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectEditedRelated" + e.detail.pk;
+  const relatedBtn = document.getElementById("related-show-" + e.detail.parent_pk);
+  const relatedEvent = "ObjectEditedRelated" + e.detail.parent_pk;
   htmx.trigger(relatedBtn, relatedEvent);
   swalSuccess.fire({
     title: e.detail.title
