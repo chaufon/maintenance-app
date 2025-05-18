@@ -53,7 +53,6 @@ EVENTS_NAME_RELATED = {
     API_ACTION_DELETE: "ObjectDeletedRelated",
     API_ACTION_REACTIVATE: "ObjectReactivatedRelated",
     API_ACTION_EDIT: "ObjectEditedRelated",
-    API_ACTION_IMPORT: "ObjectsImportedRelated",
 }
 EVENTS_FAIL_NAME_RELATED = {
     API_ACTION_DELETE: "ObjectDeletedFailRelated",

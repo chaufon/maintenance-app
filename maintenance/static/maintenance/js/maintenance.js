@@ -105,14 +105,6 @@ document.addEventListener("ObjectEditedRelated", (e) => {
     title: e.detail.title
   })
 })
-document.addEventListener("ObjectsImportedRelated", (e) => {
-  const relatedBtn = document.getElementById("related-show-" + e.detail.pk);
-  const relatedEvent = "ObjectsImportedRelated" + e.detail.pk;
-  htmx.trigger(relatedBtn, relatedEvent);
-  swalSuccess.fire({
-    title: e.detail.title
-  })
-})
 document.addEventListener("ObjectDeletedFailRelated", (e) => {
   swalError.fire({
     text: e.detail.title
