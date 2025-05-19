@@ -10,11 +10,11 @@ from maintenance.constants import (
     API_ACTION_ADD_STR,
     API_ACTION_DELETE_STR,
     API_ACTION_EDIT_STR,
+    API_ACTION_REACTIVATE_STR,
     API_ACTION_RESET_STR,
     DATETIME_FORMAT,
-    HISTORY_EDITOR,
-    HISTORY_EDITOR_CANCEL,
 )
+from maintenance.utils import true_false_str
 
 User = get_user_model()
 
@@ -32,6 +32,14 @@ class History:
         self.user = self._get_user()
         self.id = str(self.event.pgh_id)
         self.empty = "-"
+        self._clean_diffs()
+
+    def _clean_diffs(self) -> None:
+        if self.diffs:
+            try:
+                _ = self.diffs.pop("modify_date")
+            except KeyError:
+                pass
 
     def get_accordion_item(self, parent_id) -> str:
         html = ""
@@ -108,6 +116,9 @@ class History:
             related_model = field.related_model
             before = str(related_model.todos.get(pk=before)) if before else self.empty
             after = str(related_model.todos.get(pk=after)) if after else self.empty
+        elif isinstance(field, models.BooleanField):
+            before = true_false_str(before)
+            after = true_false_str(after)
         elif field.choices:
             if before:
                 display_value = next((label for val, label in field.choices if val == before), None)
@@ -145,15 +156,15 @@ class History:
                 if "password" in self.diffs:
                     self.accordion_body = False
                     accion = API_ACTION_RESET_STR
+                if "is_active" in self.diffs:
+                    self.accordion_body = False
+                    accion = (
+                        API_ACTION_DELETE_STR
+                        if self.diffs["is_active"][0]
+                        else API_ACTION_REACTIVATE_STR
+                    )
                 elif "last_login" in self.diffs:
                     self.show_accordion = False
-            elif len(self.diffs) == 2 and all(
-                [i in self.diffs for i in ("current_editor_id", "current_editor_fecha")]
-            ):  # TODO project related
-                self.accordion_body = False
-                accion = (
-                    HISTORY_EDITOR_CANCEL if self.diffs["current_editor_id"][0] else HISTORY_EDITOR
-                )
         return accion
 
 

@@ -68,9 +68,6 @@ API_ACTION_MODAL_TITLE = {
 TODOS_STR = "TODOS"
 TODOS = ""
 
-HISTORY_EDITOR = "Tramitador en curso"
-HISTORY_EDITOR_CANCEL = "Tramitador en curso Cancelar"
-
 ACCORDION_CSS_DISABLED = "bg-body-tertiary text-body-tertiary"
 EMPTY_VALUE = "-"
 
