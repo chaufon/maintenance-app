@@ -23,7 +23,7 @@ class History:
     def __init__(self, event, obj):
         self.event = event
         self.obj = obj
-        self.diffs = event.pgh_diff
+        self.diffs = self._get_cleaned_diffs()
         self.show_accordion = True
         self.accordion_body = bool(self.diffs)
         self.accion = self.get_accion()
@@ -32,14 +32,17 @@ class History:
         self.user = self._get_user()
         self.id = str(self.event.pgh_id)
         self.empty = "-"
-        self._clean_diffs()
+        self.empty_user = "POR SISTEMA"
 
-    def _clean_diffs(self) -> None:
-        if self.diffs:
-            try:
-                _ = self.diffs.pop("modify_date")
-            except KeyError:
-                pass
+    def _get_cleaned_diffs(self):
+        cleaned_diffs = self.event.pgh_diff
+        try:
+            _ = cleaned_diffs.pop("modify_date")
+        except KeyError:
+            pass
+        except AttributeError:
+            pass
+        return cleaned_diffs
 
     def get_accordion_item(self, parent_id) -> str:
         html = ""
@@ -52,7 +55,7 @@ class History:
                         {'' if self.accordion_body else ACCORDION_CSS_DISABLED}"
                         type="button" data-bs-toggle="collapse"
                         data-bs-target="#{child}" aria-expanded="false" aria-controls="{child}">
-                {self.accion.upper()} - {self.user or self.empty} -
+                {self.accion.upper()} - {self.user or self.empty_user} -
                 {self.datetime.strftime(DATETIME_FORMAT)}
                 </button>
               </h2>
