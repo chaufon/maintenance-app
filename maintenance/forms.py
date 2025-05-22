@@ -10,10 +10,6 @@ class FloatingFormRenderer(TemplatesSetting):
     field_template_name = "maintenance/forms/floating_field.html"
 
 
-class SearchInput(forms.TextInput):
-    input_type = "search"
-
-
 class BootstrapFormatMixin:
     radio_template = "maintenance/forms/radio_field.html"
     file_template = "maintenance/forms/file_field.html"
@@ -65,7 +61,7 @@ class SearchForm(forms.Form):
 
     param = forms.CharField(
         required=False,
-        widget=SearchInput(
+        widget=forms.SearchInput(
             attrs={
                 "class": "form-control w-100",
                 "hx-trigger": (
