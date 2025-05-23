@@ -96,21 +96,15 @@ class MyLoginView(MaintenanceLoginView):
 * Modal size customization per variable
 * Javascript/CSS sources integration
 * SCSS customization
-* Show error message on login form
 * Show error when importing
 * Change password for everybody
 * Pagination always at the end of the page
-* Remove modify_date from History detail
 * Autofocus on single field forms
-* return HttpResponseForbidden(), is that fine or can be improve.
 * Create/modify user is needed? or with user provided by pghistory is enough????
-* Modal does not show errors when form is invalid
-* Include "Reactivate" in history Class
+* Optimize queries for identifying users to avoid n+1
 
 ## NEW FEATURES
 
 * Command management to add new actions (ADVANCED)
 * Captcha
 * Sticky table headers
-* Re-enable objects after being deleted 
-* History is showing date_modified as a field edited (it shouldn't 'cause is a system managed field)
