@@ -131,6 +131,7 @@ class MaintenanceAPIView(TemplateView):
     button_no_text = False
     webevent = None
     constraints = dict()
+    form_show = True
 
     def dispatch(self, request, *args, **kwargs):
         self.user = request.user
@@ -231,6 +232,7 @@ class MaintenanceAPIView(TemplateView):
         context["urls"] = self.urls
         context["user"] = self.user
         context["object"] = self.object
+        context["form_show"] = self.form_show
         if self.action == API_ACTION_LIST:
             row_list = list()
             fields_list = self.field_list[self.action]
@@ -247,6 +249,9 @@ class MaintenanceAPIView(TemplateView):
             context["is_related"] = self.is_related
             context["button_no_text"] = self.button_no_text
             context["related_tag"] = RELATED_TAG if self.is_related else ""
+        elif self.action == API_ACTION_IMPORT:
+            context["form_accordion_enable"] = True
+            context["form_accordion_show"] = False
 
         context.update(self.update_context())
         return self.render_to_response(context, **kwargs)

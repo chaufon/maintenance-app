@@ -97,6 +97,7 @@ class ImportForm(forms.Form, BootstrapFormatMixin):
     error_css_class = "is-invalid"
     required_css_class = "fw-bolder"
     default_renderer = FloatingFormRenderer
+    template_name = "maintenance/forms/import_form.html"
 
     file = forms.FileField(label="Archivo", required=True, validators=(is_xlsx,))
 
