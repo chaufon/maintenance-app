@@ -90,7 +90,8 @@ class MaintenanceAPIView(TemplateView):
         API_ACTION_LIST: ["id", "name", "create_date", "modify_date", "is_active"],
     }
     select_related = tuple()
-    title = "Project"
+    title = ""
+    subtitle = ""
     object = None
     object_pk = None
     paginator = None
@@ -170,6 +171,8 @@ class MaintenanceAPIView(TemplateView):
         self.app = self.model._meta.app_label
         self.nombre = self.model._meta.verbose_name.title()
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
+        self.subtitle = self.subtitle or f"Mantenimiento de {self.nombre_plural.title()}"
+        self.title = f"{self.title or 'Project'} | {self.subtitle}"
 
         base_url = f"{self.app}:{self.model_name}"
         for action in self.actions_with_no_object:
@@ -221,9 +224,8 @@ class MaintenanceAPIView(TemplateView):
 
     def _render_html(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        subtitle = f"Mantenimiento de {self.nombre_plural.title()}"
-        context["title"] = f"{self.title} | {subtitle}"
-        context["subtitle"] = subtitle
+        context["title"] = self.title
+        context["subtitle"] = self.subtitle
         context["menu_active"] = self.menu_active
         context["form"] = self.form
         context["list_template"] = f"{self.app}/{self.model_name}/{API_ACTION_LIST}.html"
@@ -511,6 +513,8 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.app = self.model._meta.app_label
         self.nombre = self.model._meta.verbose_name.title()
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
+        self.subtitle = self.subtitle or f"Listado de {self.nombre_plural.title()}"
+        self.title = f"{self.title or 'Project'} | {self.subtitle}"
 
         base_url = f"{self.app}:{self.parent_model_name}:{self.model_name}"
         for action in self.actions_with_no_object:
@@ -533,7 +537,6 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     def update_context(self):
         return {
             "list_template": f"{self.app}/{self.parent_model_name}/{self.model_name}/{API_ACTION_LIST}.html",  # NOQA
-            "subtitle": f"Listado de {self.nombre_plural.title()}",
             "parent_object": self.parent_object,
         }
 
