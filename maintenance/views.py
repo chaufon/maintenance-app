@@ -105,6 +105,13 @@ class MaintenanceAPIView(TemplateView):
     MODAL_SIZE_LG = "modal-lg"
     MODAL_SIZE_XL = "modal-xl"
     actions_with_no_template = (API_ACTION_DELETE, API_ACTION_REACTIVATE)
+    actions_with_no_object = (
+        API_ACTION_HOME,
+        API_ACTION_LIST,
+        API_ACTION_ADD,
+        API_ACTION_EXPORT,
+        API_ACTION_IMPORT,
+    )
     actions_get = (
         API_ACTION_HOME,
         API_ACTION_LIST,
@@ -153,9 +160,11 @@ class MaintenanceAPIView(TemplateView):
         self.page = self.request.GET.get("page", 1)
         self.model_name = self.model._meta.model_name
 
+        all_actions_allowed = set(self.actions_get + self.actions_post + self.actions_delete)
+
         self.user_can = {
             action: self.user.eval_perm(action, self.model_name, self.object)
-            for action in set(self.actions_get + self.actions_post + self.actions_delete)
+            for action in all_actions_allowed
         }
         if not self.user_can[self.action]:
             return HttpResponseForbidden()
@@ -165,12 +174,9 @@ class MaintenanceAPIView(TemplateView):
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
 
         base_url = f"{self.app}:{self.model_name}"
-        self.urls = {  # TODO programmatically
-            API_ACTION_ADD: reverse(f"{base_url}:{API_ACTION_ADD}"),
-            API_ACTION_LIST: reverse(f"{base_url}:{API_ACTION_LIST}"),
-            API_ACTION_EXPORT: reverse(f"{base_url}:{API_ACTION_EXPORT}"),
-            API_ACTION_IMPORT: reverse(f"{base_url}:{API_ACTION_IMPORT}"),
-        }
+        for action in self.actions_with_no_object:
+            if action in all_actions_allowed:
+                self.urls[action] = reverse(f"{base_url}:{action}")
 
         if not self.upload_files:  # if not explicitly enabled, check if action is import
             self.upload_files = self.action == API_ACTION_IMPORT
