@@ -461,9 +461,8 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
     parent_model = None
     parent_model_name = ""
     edit_formclass = None
-    actions_with_no_object = (API_ACTION_HOME, API_ACTION_LIST, API_ACTION_ADD)
+    actions_with_no_object = (API_ACTION_LIST, API_ACTION_ADD)
     actions_get = (
-        API_ACTION_HOME,
         API_ACTION_LIST,
         API_ACTION_ADD,
         API_ACTION_EDIT,
@@ -530,7 +529,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
 
     def get_template_names(self):
         template_suffix = (
-            API_ACTION_HOME if self.action in self.actions_with_no_template else self.action
+            API_ACTION_LIST if self.action in self.actions_with_no_template else self.action
         )
         return [f"{self.app}/{self.parent_model_name}/{self.model_name}/{template_suffix}.html"]
 
