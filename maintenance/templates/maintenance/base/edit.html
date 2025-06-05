@@ -7,6 +7,7 @@
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row g-1 pt-2">
+        {% block edit-extra-start %}{% endblock edit-extra-start %}
         {% if form_show %}
           {{ form }}
         {% endif %}
