@@ -7,7 +7,7 @@
   <div class="modal-body">
     <div class="container-fluid">
       <div class="row g-1 pt-2">
-      {% if form_show %}
+        {% if form_show %}
           {{ form }}
         {% endif %}
         {% if form_accordion_enable %}
@@ -50,6 +50,7 @@
             </div>
           </div>
         {% endif %}
+        {% block edit-extra-end %}{% endblock edit-extra-end %}
       </div>
     </div>
   </div>
