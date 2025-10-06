@@ -137,11 +137,11 @@ class BaseCatalogo(BaseModel, MaintenanceMixin):
 
     def delete(self, *args, **kwargs):
         self.is_active = False
-        return self.save(*args, **kwargs)
+        return self.save(update_fields=("is_active",))
 
     def reactivate(self, *args, **kwargs):
         self.is_active = True
-        self.save(*args, **kwargs)  # TODO need to use update_fields?
+        return self.save(update_fields=("is_active",))
 
 
 @pghistory.track()
