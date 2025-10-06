@@ -332,13 +332,12 @@ class MaintenanceAPIView(TemplateView):
     def reactivate(self, request, *args, **kwargs):
         try:
             self.object.reactivate()
-        except ValidationError as e:
+        except Exception as e:
+            logger.error(f"Error while reactivating object pk {self.object.pk}: {e}")
             success = False
-            msg = ", ".join(e.messages)
         else:
-            msg = self.nombre.title()
             success = True
-        return self.render_no_html(success, msg)
+        return self.render_no_html(success, self.nombre.title())
 
     def delete(self, request, *args, **kwargs):
         if self.action not in self.actions_delete:
@@ -346,13 +345,12 @@ class MaintenanceAPIView(TemplateView):
 
         try:
             self.object.delete()
-        except (ValidationError, IntegrityError) as e:
+        except Exception as e:
+            logger.error(f"Error while deleting object pk {self.object.pk}: {e}")
             success = False
-            msg = ", ".join(e.messages) if hasattr(e, "messages") else str(e)
         else:
-            msg = self.nombre.title()
             success = True
-        return self.render_no_html(success, msg)
+        return self.render_no_html(success, self.nombre.title())
 
     def form_valid_search(self, qs: QuerySet, cleaned_data: dict) -> QuerySet:
         param = cleaned_data["param"]
