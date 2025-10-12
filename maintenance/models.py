@@ -15,6 +15,7 @@ from maintenance.constants import (
     DPTO_CODIGO_CALLAO,
     DPTO_CODIGO_LIMA,
 )
+from maintenance.utils import get_header_from_field
 
 
 class ManagerOnlyActive(models.Manager):
@@ -102,13 +103,7 @@ class MaintenanceMixin:
 
     @classmethod
     def get_headers_list(cls, fields_list: list) -> list:
-        headers = list()
-        for field_name in fields_list:
-            try:
-                headers.append(cls._meta.get_field(field_name).verbose_name.title())
-            except Exception:  # NOQA
-                headers.append(field_name.title())
-        return headers
+        return [get_header_from_field(cls, field_name).title() for field_name in fields_list]
 
     def get_row_data(self, fields_list: tuple) -> dict:
         data = list()

@@ -41,3 +41,14 @@ def format_to_str(value) -> str:
     elif value is None or value == "":
         return EMPTY_VALUE
     return str(value)
+
+
+def get_verbose_name(instance, field_name: str) -> str:
+    return instance._meta.get_field(field_name).verbose_name
+
+
+def get_header_from_field(instance, field_name: str) -> str:
+    header = getattr(instance, field_name + "_header", None)
+    if header is None:
+        header = get_verbose_name(instance, field_name)
+    return header
