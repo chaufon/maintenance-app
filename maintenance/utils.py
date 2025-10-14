@@ -3,6 +3,7 @@ from datetime import date, datetime, time
 from maintenance.constants import (
     DATE_FORMAT,
     DATETIME_FORMAT,
+    DATETIME_FULL,
     EMPTY_VALUE,
     FALSE_STR,
     TIME_FORMAT,
@@ -29,11 +30,11 @@ def validar_si_bool(value: str) -> str:
     return true_false_str(value) if isinstance(value, bool) else value
 
 
-def format_to_str(value) -> str:
+def format_to_str(value, omit_seconds=True) -> str:
     if isinstance(value, bool):
         return true_false_str(value)
     elif isinstance(value, datetime):
-        return value.strftime(DATETIME_FORMAT)
+        return value.strftime(DATETIME_FORMAT if omit_seconds else DATETIME_FULL)
     elif isinstance(value, date):
         return value.strftime(DATE_FORMAT)
     elif isinstance(value, time):
