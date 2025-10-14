@@ -239,6 +239,7 @@ class MaintenanceAPIView(TemplateView):
         context["user"] = self.user
         context["object"] = self.object
         context["form_show"] = self.form_show
+        context["model_name"] = self.model_name
         if self.action == API_ACTION_LIST:
             row_list = list()
             fields_list = self.field_list[self.action]
