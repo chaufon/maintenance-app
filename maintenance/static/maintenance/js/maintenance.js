@@ -132,6 +132,10 @@ document.addEventListener("shown.bs.modal", () => {
     })
   }
 
+  const nameInput = document.getElementById("id_name");
+  if (nameInput) {
+    nameInput.focus();
+  }
 })
 
 htmx.on("htmx:afterSettle", (e) => {
