@@ -7,7 +7,7 @@
             {% if page_obj.has_previous %}
                   hx-get="{{ urls.list }}?page={{ page_obj.previous_page_number }}"
             {% endif %}
-                  hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                  hx-target="#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}search-results{% endif %}"
                   hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
                   hx-indicator="#search-indicator"
                   {% if not is_related %}hx-include="#search-filters"{% endif %}>
@@ -28,7 +28,7 @@
             <li class="page-item">
               <button type="button" class="page-link"
                       hx-get="{{ urls.list }}?page={{ num }}"
-                      hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                      hx-target="#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}search-results{% endif %}"
                       hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
                       hx-indicator="#search-indicator"
                       {% if not is_related %}hx-include="#search-filters"{% endif %}>
@@ -43,7 +43,7 @@
             {% if page_obj.has_next %}
                   hx-get="{{ urls.list }}?page={{ page_obj.next_page_number }}"
             {% endif %}
-                  hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                  hx-target="#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}search-results{% endif %}"
                   hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
                   hx-indicator="#search-indicator"
                   {% if not is_related %}hx-include="#search-filters"{% endif %}>
