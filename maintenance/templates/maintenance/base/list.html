@@ -13,10 +13,7 @@
 <div class="row p-0" id="search-results{{ related_tag }}">
   {% block before-table %}{% endblock before-table %}
   <div class="col-12 table-responsive">
-    <table
-      class="table table-hover border-1
-        {# UI: avoiding not enough white space #}
-        {% if is_related and user_can.add and parent_object.can_add_new_related %}mb-5{% endif %}">
+    <table class="table table-hover border-1">
       <thead class="table-light">
       <tr>
         {% block extra-headers-start %}{% endblock extra-headers-start %}
@@ -89,7 +86,7 @@
               </tr>
               <tr class="related-row">
               <td colspan="{{ related_length }}" class="py-0">
-                <div class="collapse container border pb-3" id="collapse-related-{{ object.pk }}">
+                <div class="collapse container border pb-2" id="collapse-related-{{ object.pk }}">
                 </div>
               </td>
             {% endif %}
@@ -100,7 +97,5 @@
       </tbody>
     </table>
   </div>
-  {% if not is_related %}
-    {% include "maintenance/components/pagination.html" %}
-  {% endif %}
+  {% include "maintenance/components/pagination.html" %}
 </div>

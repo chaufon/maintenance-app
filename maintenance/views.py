@@ -513,6 +513,7 @@ class RelatedMaintenanceAPIView(MaintenanceAPIView):
         self.nombre_plural = self.model._meta.verbose_name_plural.title()
         self.subtitle = self.subtitle or f"Listado de {self.nombre_plural.title()}"
         self.title = f"{self.title or 'Project'} | {self.subtitle}"
+        self.page = self.request.GET.get("page", 1)
 
         base_url = f"{self.app}:{self.parent_model_name}:{self.model_name}"
         for action in self.actions_with_no_object:

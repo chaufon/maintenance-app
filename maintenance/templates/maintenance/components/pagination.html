@@ -7,8 +7,10 @@
             {% if page_obj.has_previous %}
                   hx-get="{{ urls.list }}?page={{ page_obj.previous_page_number }}"
             {% endif %}
-                  hx-target="#search-results" hx-indicator="#search-indicator"
-                  hx-swap="outerHTML" hx-include="#search-filters">
+                  hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                  hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
+                  hx-indicator="#search-indicator"
+                  {% if not is_related %}hx-include="#search-filters"{% endif %}>
             <i class="bi bi-chevron-left px-3"></i>
           </button>
         </li>
@@ -26,8 +28,10 @@
             <li class="page-item">
               <button type="button" class="page-link"
                       hx-get="{{ urls.list }}?page={{ num }}"
-                      hx-target="#search-results" hx-indicator="#search-indicator"
-                      hx-swap="outerHTML" hx-include="#search-filters">
+                      hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                      hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
+                      hx-indicator="#search-indicator"
+                      {% if not is_related %}hx-include="#search-filters"{% endif %}>
                 {{ num }}
               </button>
             </li>
@@ -39,8 +43,10 @@
             {% if page_obj.has_next %}
                   hx-get="{{ urls.list }}?page={{ page_obj.next_page_number }}"
             {% endif %}
-                  hx-target="#search-results" hx-indicator="#search-indicator"
-                  hx-swap="outerHTML" hx-include="#search-filters">
+                  hx-target=#{% if is_related %}collapse-related-{{ parent_object.pk }}{% else %}"search-results"{% endif %}
+                  hx-swap="{% if is_related %}innerHTML{% else %}outerHTML{% endif %}"
+                  hx-indicator="#search-indicator"
+                  {% if not is_related %}hx-include="#search-filters"{% endif %}>
             <i class="bi bi-chevron-right px-3"></i>
           </button>
         </li>
